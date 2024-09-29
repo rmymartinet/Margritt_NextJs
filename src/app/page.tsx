@@ -5,8 +5,8 @@ export default function Home() {
         The site is coming soon
       </h1>
       <p className="italic">
-        If you're interested in purchasing some of my works or prints, they will
-        be available soon. <span className="font-semibold">Margritt</span>
+        If you&apos;re interested in purchasing some of my works or prints, they
+        will be available soon. <span className="font-semibold">Margritt</span>
       </p>
     </div>
   );
