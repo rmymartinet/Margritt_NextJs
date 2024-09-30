@@ -69,17 +69,19 @@ const AboutInfos = () => {
 
   return (
     <div className="flex flex-col gap-40">
-      <p className="text-2xl text-center md:text-start md:text-4xl lg:text-5xl text-pretty">
-        <span className="font-semibold">Margritt Martinet</span> is a visual
-        artist from Charente, dedicated to her creations, providing a space for
-        her creativity to flourish
-      </p>
+      <div className="text-2xl inline-block text-center md:text-start md:text-4xl lg:text-5xl text-pretty">
+        <p>
+          <span className="font-semibold">Margritt Martinet</span> is a visual
+          artist from Charente, dedicated to her creations, providing a space
+          for her creativity to flourish
+        </p>
+      </div>
       <div className="lg:grid lg:grid-cols-2 gap-20">
         <div
           ref={leftContainerRef}
           className="flex flex-col items-center justify-center gap-20 lg:px-40"
         >
-          <div className="text-lg text-center md:text-2xl md:text-start lg:text-xl text-pretty flex flex-col gap-6">
+          <div className="text-lg text-center md:text-2xl md:text-start  text-pretty flex flex-col gap-6">
             <p>
               Trained in cabinetmaking at the École Boulle, she obtained a
               bachelor’s degree in Fine Arts from the European School of Art in

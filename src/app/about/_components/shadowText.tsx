@@ -1,12 +1,13 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { MotionValue, motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
 interface ParagraphProps {
   paragraph: string;
 }
+
 interface WordProps {
   children: React.ReactNode;
-  progress: any;
+  progress: MotionValue;
   range: number[];
 }
 

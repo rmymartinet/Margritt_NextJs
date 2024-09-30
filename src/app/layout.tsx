@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import Copyright from "./_components/Copyright";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -26,9 +27,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased px-[4vw]`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased px-[4vw] relative`}
       >
         {children}
+        <Copyright />
       </body>
     </html>
   );
