@@ -22,7 +22,7 @@ export default function Paragraph({ paragraph }: ParagraphProps) {
   return (
     <p
       ref={container}
-      className="flex justify-center flex-wrap text-md lg:text-2xl lg:justify-start text-pretty"
+      className="text-md flex flex-wrap justify-center text-pretty lg:justify-start lg:text-2xl"
     >
       {words.map((word, i) => {
         const start = i / words.length;
@@ -40,7 +40,7 @@ export default function Paragraph({ paragraph }: ParagraphProps) {
 const Word = ({ children, progress, range }: WordProps) => {
   const opacity = useTransform(progress, range, [0, 1]);
   return (
-    <span className="relative leading-6 lg:leading-10 mr-2 w-max">
+    <span className="relative mr-2 w-max leading-6 lg:leading-10">
       <span className="absolute opacity-20">{children}</span>
       <motion.span style={{ opacity: opacity }}>{children}</motion.span>
     </span>

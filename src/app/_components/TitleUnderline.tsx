@@ -19,7 +19,7 @@ const TitleUnderline = () => {
   return (
     <div
       ref={dividerRef}
-      className="absolute bottom-0 h-[2px] bg-black w-0"
+      className="absolute bottom-0 h-[2px] w-0 bg-black"
     ></div>
   );
 };

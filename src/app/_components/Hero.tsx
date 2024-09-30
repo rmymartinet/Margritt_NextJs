@@ -7,8 +7,8 @@ interface HeroProps {
 
 const Hero = ({ title }: HeroProps) => {
   return (
-    <div className="relative flex items-center justify-start w-full my-[10vh]">
-      <div className="text-5xl lg:text-8xl font-semibold uppercase overflow-hidden">
+    <div className="relative my-[10vh] flex w-full items-center justify-start">
+      <div className="overflow-hidden text-5xl font-semibold uppercase lg:text-8xl">
         <TitleTransition yposition={500}>
           <p>{title}</p>
         </TitleTransition>
