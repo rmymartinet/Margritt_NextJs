@@ -2,7 +2,7 @@ import { useInView } from "framer-motion";
 import gsap from "gsap";
 import { useEffect, useRef } from "react";
 
-const Divider = () => {
+const Divider = ({ bgColor = "white" }: { bgColor?: string }) => {
   const dividerRef = useRef(null);
   const isInView = useInView(dividerRef);
 
@@ -21,7 +21,7 @@ const Divider = () => {
   return (
     <div
       ref={dividerRef}
-      className="absolute bottom-0 h-[1px] bg-white w-full origin-center scale-x-0"
+      className={`absolute bottom-0 h-[1px] bg-${bgColor} w-full origin-center scale-x-0`}
     ></div>
   );
 };
