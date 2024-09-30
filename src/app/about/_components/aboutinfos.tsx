@@ -69,7 +69,6 @@ const AboutInfos = () => {
 
   return (
     <div className="flex flex-col gap-40">
-      <div className="h-[70vh]"></div>
       <p className="text-2xl text-center md:text-start lg:text-5xl text-pretty">
         <span className="font-semibold">Margritt Martinet</span> is a visual
         artist from Charente, dedicated to her creations, providing a space for
@@ -128,7 +127,6 @@ const AboutInfos = () => {
           </div>
         )}
       </div>
-      <div className="h-[70vh]"></div>
     </div>
   );
 };
