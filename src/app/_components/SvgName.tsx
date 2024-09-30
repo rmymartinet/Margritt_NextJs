@@ -23,7 +23,7 @@ export default function SvgName({ textColor }: SvgNameProps) {
   const animateRef = (
     ref: React.RefObject<HTMLElement>,
     y: number,
-    delay?: number
+    delay?: number,
   ) => {
     gsap.to(ref.current, {
       y: y,
@@ -34,15 +34,15 @@ export default function SvgName({ textColor }: SvgNameProps) {
 
   useGSAP(
     () => {
-      animateRef(mRef, 200);
-      animateRef(aRef, 200);
-      animateRef(rRef, 200);
-      animateRef(gRef, 200);
-      animateRef(rRef2, 200);
-      animateRef(iRef, 200);
-      animateRef(tRef, 200);
-      animateRef(t2Ref, 200);
-      animateRef(eRef, 200);
+      animateRef(mRef, 400);
+      animateRef(aRef, 400);
+      animateRef(rRef, 400);
+      animateRef(gRef, 400);
+      animateRef(rRef2, 400);
+      animateRef(iRef, 400);
+      animateRef(tRef, 400);
+      animateRef(t2Ref, 400);
+      animateRef(eRef, 400);
 
       if (isInView) {
         animateRef(mRef, 0, 0.98);
@@ -55,7 +55,7 @@ export default function SvgName({ textColor }: SvgNameProps) {
         animateRef(t2Ref, 0, 0.98);
       }
     },
-    { dependencies: [isInView] }
+    { dependencies: [isInView] },
   );
   return (
     <svg
