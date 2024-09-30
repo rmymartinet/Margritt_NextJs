@@ -1,5 +1,6 @@
 "use client";
 
+import Footer from "../_components/Footer/Footer";
 import Hero from "../_components/Hero";
 import AboutInfos from "./_components/aboutInfos";
 import Quote from "./_components/quote";
@@ -10,6 +11,7 @@ export default function About() {
       <Hero title="About" />
       <AboutInfos />
       <Quote />
+      <Footer />
     </div>
   );
 }
