@@ -69,7 +69,7 @@ const AboutInfos = () => {
 
   return (
     <div className="flex flex-col gap-40">
-      <p className="text-2xl text-center md:text-start lg:text-5xl text-pretty">
+      <p className="text-2xl text-center md:text-start md:text-4xl lg:text-5xl text-pretty">
         <span className="font-semibold">Margritt Martinet</span> is a visual
         artist from Charente, dedicated to her creations, providing a space for
         her creativity to flourish
