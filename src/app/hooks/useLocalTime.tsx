@@ -4,7 +4,7 @@ export default function UseLocalTime(timezone = "Europe/Paris") {
   const [time, setTime] = useState(
     new Date().toLocaleTimeString("fr-FR", {
       timeZone: timezone,
-    })
+    }),
   );
 
   useEffect(() => {
