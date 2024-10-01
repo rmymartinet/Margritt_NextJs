@@ -11,7 +11,7 @@ const Footer = () => {
 
   return (
     <motion.footer
-      className="-mx-[4vw] mt-40 flex h-screen flex-col justify-between bg-black px-5 py-10 text-white lg:p-20"
+      className="-mx-[4vw] mt-40 flex h-screen flex-col justify-between overflow-hidden bg-black px-5 py-10 text-white lg:p-20"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -65,7 +65,7 @@ const Footer = () => {
           }
         />
       </div>
-      <div className="mt-12 w-full">
+      <div className="mt-12">
         <SvgName textColor={"white"} />
       </div>
     </motion.footer>
