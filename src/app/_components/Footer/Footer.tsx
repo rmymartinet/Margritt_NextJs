@@ -17,7 +17,7 @@ const Footer = () => {
       exit={{ opacity: 0 }}
     >
       {/* Contact Section */}
-      <div className="flex flex-col items-center justify-between px-6 lg:flex-row lg:px-20">
+      <div className="flex flex-col flex-wrap items-center justify-between px-6 lg:flex-row lg:px-20">
         <div className="text-4xl lg:text-8xl">Contact</div>
         <div className="mt-4 lg:mt-0">
           <Link
