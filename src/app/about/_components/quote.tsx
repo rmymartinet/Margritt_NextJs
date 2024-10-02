@@ -1,4 +1,4 @@
-import ShadowText from "./shadowText";
+import ShadowText from "./ShadowText";
 
 const Quote = () => {
   return (
