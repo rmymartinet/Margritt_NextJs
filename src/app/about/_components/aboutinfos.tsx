@@ -1,5 +1,3 @@
-"use client";
-
 import { LARGE_SCREEN_SIZE } from "@/app/constants/constants";
 import useWindowWidth from "@/app/hooks/useWindowWidth";
 import { useGSAP } from "@gsap/react";
