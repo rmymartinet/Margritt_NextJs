@@ -3,9 +3,9 @@
 import { CONTACT_INFO } from "@/data/user";
 import { motion } from "framer-motion";
 import Link from "next/link.js";
-import Divider from "../_components/Divider";
-import InfoItem from "../_components/InfosItem";
-import SvgName from "../_components/SvgName";
+import Divider from "../components/Divider";
+import InfoItem from "../components/InfosItem";
+import SvgName from "../components/SvgName";
 import UseLocalTime from "../hooks/useLocalTime";
 
 export default function Contact() {

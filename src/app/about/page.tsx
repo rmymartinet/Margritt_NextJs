@@ -1,9 +1,9 @@
 "use client";
 
-import Footer from "../_components/Footer/Footer";
-import Hero from "../_components/Hero";
-import AboutInfos from "./_components/AboutInfos";
-import Quote from "./_components/Quote";
+import Footer from "../components/Footer/Footer";
+import Hero from "../components/Hero";
+import AboutInfos from "./components/AboutInfos";
+import Quote from "./components/Quote";
 
 export default function About() {
   return (

@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useItemsFiltered } from "../hooks/useFilteredData";
-import Filter from "./_components/Filter";
-import GalleryContainer from "./_components/GalleryContainer";
+import Filter from "./components/Filter";
+import GalleryContainer from "./components/GalleryContainer";
 
 export default function Gallery() {
   const [active, setActive] = useState("gallery");

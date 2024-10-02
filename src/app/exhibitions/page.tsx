@@ -1,8 +1,8 @@
 "use client";
 
-import Footer from "../_components/Footer/Footer";
-import Hero from "../_components/Hero";
-import Projects from "./_components/Projects";
+import Footer from "../components/Footer/Footer";
+import Hero from "../components/Hero";
+import Projects from "./components/Projects";
 
 export default function Exhibitions() {
   return (
