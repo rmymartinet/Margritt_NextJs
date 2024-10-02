@@ -22,7 +22,7 @@ model Originals {
   dimension String
   date      String
   format    String
-  price     String
+  price     Int
   papier    String?
   imageUrls String[] @map("imageUrls")
   stock     String
