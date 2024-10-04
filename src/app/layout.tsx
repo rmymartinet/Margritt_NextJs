@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import Copyright from "./components/Copyright";
+import { CartProvider } from "./context/CardContext";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -29,8 +29,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} relative p-2 antialiased md:px-[4vw]`}
       >
-        {children}
-        <Copyright />
+        <CartProvider>{children}</CartProvider>
       </body>
     </html>
   );
