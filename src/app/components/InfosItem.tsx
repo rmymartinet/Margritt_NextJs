@@ -6,7 +6,7 @@ interface InfosItemProps {
 
 const InfosItem = ({ label, value }: InfosItemProps) => {
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex w-full flex-row items-center justify-between gap-4">
       <span className="text-md md:text-xl">{label}</span>
       <p className="opacity-70">{value}</p>
     </div>
