@@ -1,21 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { IoIosArrowForward } from "react-icons/io";
-
-interface Item {
-  _id: string;
-  category?: string;
-  title: string;
-  serie?: string;
-  piece?: string;
-  dimension?: string;
-  date: string;
-  format?: string;
-  price?: number;
-  papier?: string;
-  imageUrls: string[];
-  stock?: string;
-}
+import { Item } from "../types/dataTypes";
 
 interface ImagesContainerProps {
   item: Item[];
@@ -59,7 +45,7 @@ const ImagesContainer = ({
                 {isTirage && (
                   <div className="md:text-md flex gap-10 lg:text-lg">
                     <p>Price: (imgData.price) €</p>
-                    {imgData.stock === "0" ? (
+                    {imgData.stock === 0 ? (
                       <p className="text-red-500">Out of stock</p>
                     ) : (
                       <p>In stock: {imgData.stock}</p>

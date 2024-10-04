@@ -29,3 +29,10 @@ export interface ProductItem extends Item {
   tempQuantity?: number;
   finalPrice?: number;
 }
+
+export interface ImageContainer extends Item {
+  item: Item[];
+  isCursorPointer?: boolean;
+  isOriginal?: boolean;
+  isTirage?: boolean;
+}

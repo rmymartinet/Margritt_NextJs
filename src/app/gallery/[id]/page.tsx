@@ -1,6 +1,6 @@
 "use client";
 
-import { useItemsFiltered } from "@/app/hooks/useFilteredData";
+import { useFilteredData } from "@/app/hooks/useFilteredData";
 import useWindowWidth from "@/app/hooks/useWindowWidth";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
@@ -17,7 +17,7 @@ interface Params {
 
 export default function GalleryItem({ params }: { params: Params }) {
   const { id } = params;
-  const { data } = useItemsFiltered();
+  const { data } = useFilteredData();
   const timelineRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);

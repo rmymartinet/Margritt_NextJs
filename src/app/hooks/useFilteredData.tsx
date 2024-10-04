@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Item } from "../types/dataTypes";
 
-export function useItemsFiltered(filter?: string) {
+export function useFilteredData(filter?: string) {
   const [data, setData] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
