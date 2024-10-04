@@ -1,6 +1,6 @@
 "use client";
 
-import ProductPage from "@/app/components/ProductPage";
+import ProductPage from "@/app/components/Product/ProductPage";
 
 interface OriginalItemProps {
   params: {
