@@ -21,4 +21,11 @@ export interface Item {
   papier?: string;
   imageUrls: string[];
   stock?: number;
+  tempQuantity?: number;
+  finalPrice?: number;
+}
+
+export interface ProductItem extends Item {
+  tempQuantity?: number;
+  finalPrice?: number;
 }
