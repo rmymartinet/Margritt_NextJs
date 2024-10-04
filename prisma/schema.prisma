@@ -25,7 +25,7 @@ model Originals {
   price     Int
   papier    String?
   imageUrls String[] @map("imageUrls")
-  stock     String
+  stock     Int
 }
 
 model Gallery {
