@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { IoIosArrowForward } from "react-icons/io";
 import { Item } from "../types/dataTypes";
-
 interface ImagesContainerProps {
   item: Item[];
   isCursorPointer?: boolean;
@@ -22,15 +21,17 @@ const ImagesContainer = ({
       <div className="flex flex-col gap-40 md:h-[70vw] md:w-[70vw]">
         {item.map((imgData: Item, id: number) => (
           <div className="flex flex-col gap-10" key={id}>
-            <Image
-              className={`${isCursorPointer && "cursor-pointer"}`}
-              width={500}
-              height={500}
-              layout="responsive"
-              objectFit="contain"
-              src={imgData.imageUrls[0]}
-              alt="Image"
-            />
+            <Link href={`originals/${imgData.id}`}>
+              <Image
+                className={`${isCursorPointer && "cursor-pointer"}`}
+                width={500}
+                height={500}
+                layout="responsive"
+                objectFit="contain"
+                src={imgData.imageUrls[0]}
+                alt="Image"
+              />
+            </Link>
             <div
               className={`flex flex-col items-start md:flex-row md:px-10 ${isTirage ? "md:items-start" : "md:items-center"} md:justify-between md:gap-0`}
             >
