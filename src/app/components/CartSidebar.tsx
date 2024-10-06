@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import { IoClose } from "react-icons/io5";
 import { useCart } from "../context/CardContext";
-import { useRemoveFromCart } from "../hooks/useRemoveToCart";
+import { useRemoveFromCart } from "../hooks/useRemoveFromCart";
 
 const CartSideBar = () => {
   const { cart, isShoppingOpen, setIsShoppingOpen } = useCart();
@@ -107,7 +107,7 @@ const CartSideBar = () => {
               </div>
               <p
                 className="cursor-pointer text-sm text-red-500"
-                onClick={() => removeFromCart(item.id)}
+                onClick={() => removeFromCart()}
               >
                 Delete
               </p>
