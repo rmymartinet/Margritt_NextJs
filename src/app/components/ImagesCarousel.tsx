@@ -7,30 +7,33 @@ const ImageCarousel = ({ imageUrls }: { imageUrls: string[] }) => {
     useCarousel(imageUrls);
 
   return (
-    <section>
-      <Image
-        className="flex h-full w-full object-cover"
-        width={600}
-        height={600}
-        layout="responsive"
-        loading="lazy"
-        src={imageUrls[carouselIndex] || ""}
-        alt=""
-      />
-      <div className="absolute left-1/2 top-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 justify-between md:px-10">
-        <div
-          className="grid h-8 w-8 cursor-pointer place-content-center rounded-full bg-white md:-translate-x-10"
-          onClick={handlePrevSlide}
-          style={{ userSelect: "none" }}
-        >
-          <IoIosArrowBack size={20} />
-        </div>
-        <div
-          className="grid h-8 w-8 cursor-pointer place-content-center rounded-full bg-white md:translate-x-10"
-          onClick={handleNextSlide}
-          style={{ userSelect: "none" }}
-        >
-          <IoIosArrowForward size={20} />
+    <section className="w-full">
+      <div className="relative h-[300px] md:h-[400px] lg:h-[500px]">
+        <Image
+          className="h-full w-full object-contain"
+          width={2000}
+          height={2000}
+          loading="lazy"
+          src={imageUrls[carouselIndex] || ""}
+          alt=""
+        />
+
+        {/* Les flèches de navigation positionnées par rapport au conteneur, pas à l'image */}
+        <div className="absolute inset-0 flex items-center justify-between px-5">
+          <div
+            className="grid h-8 w-8 cursor-pointer place-content-center rounded-full bg-white"
+            onClick={handlePrevSlide}
+            style={{ userSelect: "none" }}
+          >
+            <IoIosArrowBack size={20} />
+          </div>
+          <div
+            className="grid h-8 w-8 cursor-pointer place-content-center rounded-full bg-white"
+            onClick={handleNextSlide}
+            style={{ userSelect: "none" }}
+          >
+            <IoIosArrowForward size={20} />
+          </div>
         </div>
       </div>
     </section>
