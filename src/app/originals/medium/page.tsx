@@ -1,5 +1,6 @@
 "use client";
 
+import Footer from "@/app/components/Footer/Footer";
 import ImagesContainer from "../../components/ImageContainer";
 import { useFilteredData } from "../../hooks/useFilteredData";
 
@@ -19,6 +20,7 @@ export default function Originals() {
         isOriginal={true}
         path={path}
       />
+      <Footer />
     </div>
   );
 }

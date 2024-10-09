@@ -1,5 +1,6 @@
 "use client";
 
+import Footer from "@/app/components/Footer/Footer";
 import ImagesContainer from "../../components/ImageContainer";
 import { useFilteredData } from "../../hooks/useFilteredData";
 
@@ -16,9 +17,10 @@ export default function Originals() {
     <div>
       <ImagesContainer
         item={filteredDatByDimension}
-        isOriginal={true}
+        isTirage={true}
         path={path}
       />
+      <Footer />
     </div>
   );
 }

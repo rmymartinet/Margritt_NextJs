@@ -1,12 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
+import { useCart } from "../context/CardContext";
+import { useAddToCart } from "../hooks/useAddToCart";
 import { Item } from "../types/dataTypes";
+import AddToCartButton from "./addToCartButton";
 interface ImagesContainerProps {
   item: Item[];
   isCursorPointer?: boolean;
   isOriginal?: boolean;
   isTirage?: boolean;
+  path?: string;
 }
 
 const ImagesContainer = ({
@@ -14,14 +19,21 @@ const ImagesContainer = ({
   isCursorPointer,
   isOriginal,
   isTirage,
+  path,
 }: ImagesContainerProps) => {
+  const [tempQuantity, setTempQuantity] = useState(1);
+  const { isShoppingOpen, setIsShoppingOpen } = useCart();
+  const addToCart = useAddToCart();
+
   return (
-    <section className="flex h-screen justify-center">
+    <section
+      className={`flex justify-center ${isShoppingOpen ? "opacity-60" : "opacity-100"}`}
+    >
       {/*AJOUT DE HEROSUBCONTENT*/}
-      <div className="flex flex-col gap-40 md:h-[70vw] md:w-[70vw]">
+      <div className="flex flex-col gap-40">
         {item.map((imgData: Item, id: number) => (
           <div className="flex flex-col gap-10" key={id}>
-            <Link href={`originals/${imgData.id}`}>
+            <Link href={`${path}/${imgData.id}`}>
               <Image
                 className={`${isCursorPointer && "cursor-pointer"}`}
                 width={500}
@@ -45,7 +57,7 @@ const ImagesContainer = ({
                 </div>
                 {isTirage && (
                   <div className="md:text-md flex gap-10 lg:text-lg">
-                    <p>Price: (imgData.price) €</p>
+                    <p>Price: {imgData.price} €</p>
                     {imgData.stock === 0 ? (
                       <p className="text-red-500">Out of stock</p>
                     ) : (
@@ -66,11 +78,14 @@ const ImagesContainer = ({
               )}
               {isTirage && (
                 <div className="mt-5 flex items-center gap-6 text-blue-500 md:mt-0 md:flex-col md:items-start">
-                  <Link href={"/"}>
-                    <div className="group grid scale-100 place-content-center rounded-2xl px-2 py-1 transition-all duration-200 ease-in-out hover:bg-blue-500 hover:text-white">
-                      <span className="cursor-pointer">Add to cart</span>
-                    </div>
-                  </Link>
+                  <AddToCartButton
+                    product={imgData}
+                    finalPrice={imgData?.price ?? 0} // Utilisation de imgData au lieu de item
+                    tempQuantity={tempQuantity}
+                    setIsShoppingOpen={setIsShoppingOpen}
+                    addToCart={addToCart}
+                    setTempQuantity={setTempQuantity}
+                  />
                   <Link href={"/"}>
                     <div className="group flex items-center gap-2">
                       <span className="cursor-pointer">Learn more</span>
