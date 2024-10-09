@@ -1,36 +1,84 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
+"use client";
+
+import { ClerkProvider } from "@clerk/nextjs";
+import { motion } from "framer-motion";
+import { useEffect } from "react";
+import "../app/globals.css";
+import Transition from "./components/Animations/pagetransition/PageTransition";
+import CartSideBar from "./components/CartSidebar";
+import MobileNav from "./components/Nav/MobileNavBar";
+import Nav from "./components/Nav/NavBar";
 import { CartProvider } from "./context/CardContext";
-import "./globals.css";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
-
-export const metadata: Metadata = {
-  title: "Margritt",
-  description: "Margritt is an artist who shows her art gallery",
-};
+import useWindowWidth from "./hooks/useWindowWidth";
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
+  const width = useWindowWidth();
+  // const [showLanding, setShowLanding] = useState(
+  //   !localStorage.getItem("visited"),
+  // );
+  // const [count, setCount] = useState(0);
+  // const [isRender, setIsRender] = useState(false);
+  // const { setFromLoadingPage } = useStore();
+
+  useEffect(() => {
+    document.title = "Margritt.com";
+  }, []);
+
+  // const startCounting = useCallback(() => {
+  //   const start = Date.now();
+  //   const intervalId = setInterval(() => {
+  //     const elapsed = Date.now() - start;
+  //     const newCount = Math.min(Math.floor(elapsed / 30), 100);
+  //     setCount(newCount);
+
+  //     if (newCount === 100) {
+  //       clearInterval(intervalId);
+  //       setIsRender(true);
+  //     }
+  //   }, 30);
+  // }, []);
+
+  // const handleRender = useCallback(() => {
+  //   if (count === 100) {
+  //     const timer = setTimeout(() => {
+  //       localStorage.setItem("visited", "true");
+  //       setShowLanding(false);
+  //       document.body.style.cursor = "default";
+  //       setFromLoadingPage(true);
+  //     }, 1600);
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [count, setFromLoadingPage]);
+
+  // useEffect(() => {
+  //   if (localStorage.getItem("visited")) {
+  //     setShowLanding(false);
+  //   } else {
+  //     startCounting();
+  //   }
+  // }, [startCounting]);
+
+  // useEffect(() => {
+  //   handleRender();
+  // }, [handleRender]);
+
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} relative p-2 antialiased md:px-[4vw]`}
-      >
-        <CartProvider>{children}</CartProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="fr">
+        <body className={`relative p-2 antialiased md:px-[4vw]`}>
+          {width <= 1024 ? <MobileNav /> : <Nav />}
+          <motion.div>
+            <CartProvider>
+              <Transition>{children}</Transition>
+              <CartSideBar />
+            </CartProvider>
+          </motion.div>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
