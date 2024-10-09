@@ -31,55 +31,22 @@ const CartSideBar = () => {
       duration: 0.5,
       ease: "power3.out",
     });
+
+    if (isShoppingOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
   }, [isShoppingOpen]);
 
   const handleCloseClick = () => {
     setIsShoppingOpen(false);
-    // if (locomotiveScroll) locomotiveScroll.start();
-    // document.body.style.overflow = "auto";
   };
-
-  // useEffect(() => {
-  //   if (isShoppingOpen) {
-  //     if (locomotiveScroll) {
-  //       locomotiveScroll.stop(); // Stopper Locomotive Scroll lorsque le shopping cart s'ouvre
-  //     }
-  //     document.body.style.overflow = "hidden"; // Désactiver le scroll global de la page
-  //   } else {
-  //     if (locomotiveScroll) {
-  //       locomotiveScroll.start(); // Reprendre Locomotive Scroll à la fermeture du shopping cart
-  //     }
-  //     document.body.style.overflow = "auto"; // Réactiver le scroll global de la page
-  //   }
-  // }, [isShoppingOpen, locomotiveScroll]);
-
-  // const stopPropagation = (e) => {
-  //   e.stopPropagation();
-  // };
-
-  // useEffect(() => {
-  //   const handleWheel = (event) => {
-  //     if (isShoppingOpen) {
-  //       event.stopPropagation(); // Empêcher la propagation du scroll à Locomotive Scroll
-  //     }
-  //   };
-
-  //   const shoppingContainer = document.querySelector(".shopping-container");
-  //   if (shoppingContainer) {
-  //     shoppingContainer.addEventListener("wheel", handleWheel);
-  //   }
-
-  //   return () => {
-  //     if (shoppingContainer) {
-  //       shoppingContainer.removeEventListener("wheel", handleWheel);
-  //     }
-  //   };
-  // }, [isShoppingOpen]);
 
   return (
     <div
       ref={shoppingContainerRef}
-      className="pointer-events-auto fixed right-0 top-0 z-50 flex h-screen w-[400px] flex-col overflow-y-auto bg-white shadow-lg"
+      className="pointer-events-auto fixed right-0 top-0 z-50 flex h-screen w-screen flex-col overflow-y-auto bg-white shadow-lg md:w-[400px]"
     >
       <div className="cursor-pointer p-5">
         <IoClose onClick={handleCloseClick} size={20} />
@@ -105,12 +72,12 @@ const CartSideBar = () => {
                 <p className="mb-1 text-sm font-bold">{item.finalPrice} €</p>
                 <p className="text-sm">Quantity: {item.tempQuantity}</p>
               </div>
-              <p
+              <button
                 className="cursor-pointer text-sm text-red-500"
-                onClick={() => removeFromCart()}
+                onClick={() => removeFromCart(item.id)}
               >
-                Delete
-              </p>
+                Remove
+              </button>
             </div>
           ))
         ) : (
