@@ -12,6 +12,16 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      height: {
+        checkoutlg: "calc(100vh - 20rem)",
+        checkoutmd: "calc(100vh - 14rem)",
+      },
+    },
+  },
+
+  variants: {
+    extends: {
+      height: ["responsive", "hover", "focus"],
     },
   },
   plugins: [],
