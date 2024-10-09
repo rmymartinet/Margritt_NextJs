@@ -77,7 +77,7 @@ const AboutInfos = () => {
       <div className="gap-20 lg:grid lg:grid-cols-2">
         <div
           ref={leftContainerRef}
-          className="flex flex-col items-center justify-center gap-20 lg:px-40"
+          className="flex flex-col items-center justify-center gap-20 xl:px-40"
         >
           <div className="flex flex-col gap-6 text-pretty text-center text-lg md:text-start md:text-2xl">
             <p>
