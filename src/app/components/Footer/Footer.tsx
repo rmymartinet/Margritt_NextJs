@@ -17,7 +17,7 @@ const Footer = () => {
       exit={{ opacity: 0 }}
     >
       {/* Contact Section */}
-      <div className="flex flex-col flex-wrap items-center justify-between px-6 lg:flex-row lg:px-20">
+      <div className="flex flex-col flex-wrap items-center justify-between gap-8 px-6 lg:flex-row lg:px-20">
         <div className="text-4xl lg:text-8xl">Contact</div>
         <div className="mt-4 lg:mt-0">
           <Link
@@ -28,17 +28,20 @@ const Footer = () => {
           </Link>
         </div>
       </div>
-
       {/* Divider */}
       <div className="relative my-8">
         <Divider />
       </div>
-
       {/* Information Section */}
       <div className="grid grid-cols-2 grid-rows-2 justify-items-center gap-10 lg:flex lg:justify-around lg:space-y-0 lg:px-20 lg:text-center">
-        <InfoItem label="Local Time" value={localTime} />
-        <InfoItem label="Number" value={CONTACT_INFO.number} />
+        <InfoItem className="flex-col" label="Local Time" value={localTime} />
         <InfoItem
+          className="flex-col"
+          label="Number"
+          value={CONTACT_INFO.number}
+        />
+        <InfoItem
+          className="flex-col"
           label="Instagram"
           value={
             <Link
@@ -52,6 +55,7 @@ const Footer = () => {
           }
         />
         <InfoItem
+          className="flex-col"
           label="TikTok"
           value={
             <Link
