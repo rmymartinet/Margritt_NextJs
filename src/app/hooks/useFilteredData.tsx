@@ -9,7 +9,7 @@ export function useFilteredData(filter?: string) {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get<Item[]>("/api/get");
+        const response = await axios.get<Item[]>("/api/getData");
         let filteredData = response.data;
         if (filter) {
           filteredData = response.data.filter(
