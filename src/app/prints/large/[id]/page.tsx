@@ -10,10 +10,11 @@ interface OriginalItemProps {
 
 export default function OriginalItem({ params }: OriginalItemProps) {
   const { id } = params;
+  const path = "large";
 
   return (
     <div>
-      <ProductPage id={id} />
+      <ProductPage path={path} id={id} />
     </div>
   );
 }

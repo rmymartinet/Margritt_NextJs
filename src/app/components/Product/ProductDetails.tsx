@@ -8,8 +8,15 @@ import { useCallback, useRef, useState } from "react";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import InfosItem from "../InfosItem";
 import QuantitySelector from "../QuantitySelector";
+import AddToCartButton from "../addToCartButton";
 
-const ProductDetails = ({ product }: { product: ProductItem }) => {
+const ProductDetails = ({
+  product,
+  path,
+}: {
+  product: ProductItem;
+  path: string;
+}) => {
   const arrowRef = useRef(null);
   const [tempQuantity, setTempQuantity] = useState(1);
   const router = useRouter();
@@ -60,8 +67,8 @@ const ProductDetails = ({ product }: { product: ProductItem }) => {
   }, [tempQuantity]);
 
   const handleNavigateNextItem = useCallback(() => {
-    router.push(`/originals/${nextItem.id}`);
-  }, [router, nextItem]);
+    router.push(`/originals/${path}/${nextItem.id}`);
+  }, [router, nextItem, path]);
 
   return (
     <div className="flex flex-col items-center justify-between gap-4 px-2 md:px-0">
@@ -124,31 +131,15 @@ const ProductDetails = ({ product }: { product: ProductItem }) => {
           isQuantityGreaterThanStock={isQuantityGreaterThanStock}
         />
       </div>
-      <div className="mb-10 flex w-full items-center justify-between">
-        <span
-          className="contact cursor-pointer rounded-[20px] border-2 border-blue-500 px-2.5 py-1 transition-colors duration-200 ease-in-out hover:bg-blue-500 hover:text-white"
-          onClick={() => {
-            setIsShoppingOpen(true);
-            if (product?.stock === 0) {
-              alert("This item is out of stock.");
-            } else if (
-              product?.id &&
-              product?.title &&
-              product?.date &&
-              product?.format &&
-              product?.imageUrls
-            ) {
-              addToCart({
-                ...product,
-                finalPrice,
-                tempQuantity,
-              });
-              setTempQuantity(1);
-            }
-          }}
-        >
-          Add to Cart
-        </span>
+      <div className="flex w-full items-center justify-between">
+        <AddToCartButton
+          product={product}
+          finalPrice={finalPrice}
+          tempQuantity={tempQuantity}
+          setIsShoppingOpen={setIsShoppingOpen}
+          addToCart={addToCart}
+          setTempQuantity={setTempQuantity}
+        />
         <div
           className="flex scale-100 cursor-pointer items-center justify-center gap-3"
           onMouseEnter={() => handleEnterHovered()}
