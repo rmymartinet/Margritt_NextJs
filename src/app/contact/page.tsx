@@ -38,9 +38,14 @@ export default function Contact() {
       </div>
       {/* Information Section */}
       <div className="mb-40 grid grid-cols-2 grid-rows-2 justify-items-center gap-10 lg:flex lg:justify-around lg:space-y-0 lg:px-20 lg:text-center">
-        <InfoItem label="Local Time" value={localTime} />
-        <InfoItem label="Number" value={CONTACT_INFO.number} />
+        <InfoItem className="flex-col" label="Local Time" value={localTime} />
         <InfoItem
+          className="flex-col"
+          label="Number"
+          value={CONTACT_INFO.number}
+        />
+        <InfoItem
+          className="flex-col"
           label="Instagram"
           value={
             <Link
@@ -54,6 +59,7 @@ export default function Contact() {
           }
         />
         <InfoItem
+          className="flex-col"
           label="TikTok"
           value={
             <Link
