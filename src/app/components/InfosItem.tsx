@@ -9,8 +9,8 @@ const InfosItem = ({ label, value, className }: InfosItemProps) => {
     <div
       className={`flex w-full flex-row items-center justify-between gap-4 ${className}`}
     >
-      <span className="text-md md:text-xl">{label}</span>
-      <p className="opacity-70">{value}</p>
+      <div className="text-md md:text-xl">{label}</div>
+      <div className="opacity-70">{value}</div>
     </div>
   );
 };
