@@ -1,7 +1,10 @@
 import prisma from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req, { params }) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { userId: string } },
+) {
   const { userId } = params;
 
   const cleanedUserId = userId.trim();
@@ -13,7 +16,7 @@ export async function GET(req, { params }) {
 
     console.log("user", user); // Log de l'utilisateur
 
-    const userisequal = user.clerkId === cleanedUserId;
+    const userisequal = user?.clerkId === cleanedUserId; // Ajout d'un "?" pour éviter une erreur si user est undefined
 
     console.log("userisequal", userisequal); // Log de la comparaison
 
