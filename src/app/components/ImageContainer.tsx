@@ -70,7 +70,9 @@ const ImagesContainer = ({
               {isOriginal && (
                 <Link href={"/"}>
                   <div className="group flex items-center gap-2 text-blue-500">
-                    <span className="cursor-pointer">Learn more</span>
+                    <Link href={`${path}/${imgData.id}`}>
+                      <button className="cursor-pointer">Learn more</button>
+                    </Link>
                     <div className="icon transition-all duration-200 ease-in-out group-hover:translate-x-1">
                       <IoIosArrowForward />
                     </div>
@@ -87,9 +89,9 @@ const ImagesContainer = ({
                     addToCart={addToCart}
                     setTempQuantity={setTempQuantity}
                   />
-                  <Link href={"/"}>
+                  <Link href={`${path}/${imgData.id}`}>
                     <div className="group flex items-center gap-2">
-                      <span className="cursor-pointer">Learn more</span>
+                      <button className="cursor-pointer">Learn more</button>
                       <div className="icon transition-all duration-200 ease-in-out group-hover:translate-x-1">
                         <IoIosArrowForward />
                       </div>
