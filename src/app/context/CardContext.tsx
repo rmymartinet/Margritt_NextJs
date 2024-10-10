@@ -18,7 +18,7 @@ const getUserId = () => {
 
       // Si aucun ID de session n'existe, en créer un
       if (!sessionUserId) {
-        sessionUserId = `guest_${Math.random().toString(36).substring(2, 15)}`;
+        sessionUserId = generateUUID(); // Appel de la fonction pour générer un UUID
         sessionStorage.setItem("sessionUserId", sessionUserId);
       }
       return sessionUserId;
@@ -26,6 +26,10 @@ const getUserId = () => {
     return userId; // Retourner l'ID utilisateur si connecté
   }
   return null;
+};
+
+const generateUUID = () => {
+  return "guest_" + Math.random().toString(36).substr(2, 9);
 };
 
 interface CartContextProps {
