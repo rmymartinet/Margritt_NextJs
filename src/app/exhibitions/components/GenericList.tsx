@@ -20,7 +20,7 @@ const GenericList = ({
   mainTitle: string;
 }) => {
   const itemRef = useRef<React.RefObject<HTMLDivElement>[]>([]);
-  const width = useWindowWidth();
+  const { width } = useWindowWidth();
 
   // Initialisation des références
   useEffect(() => {

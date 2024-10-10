@@ -22,7 +22,7 @@ export default function GalleryItem({ params }: { params: Params }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
   const markersRef = useRef<HTMLElement[]>([]);
-  const width = useWindowWidth();
+  const { width } = useWindowWidth();
   const router = useRouter();
 
   const handleBackToPreviousPage = () => {

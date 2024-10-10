@@ -141,7 +141,7 @@ const ProductDetails = ({
           setTempQuantity={setTempQuantity}
         />
         <div
-          className="flex scale-100 cursor-pointer items-center justify-center gap-3"
+          className="user-select-none flex scale-100 cursor-pointer items-center justify-center gap-3"
           onMouseEnter={() => handleEnterHovered()}
           onMouseLeave={() => handleEnterHovered()}
           onClick={() => handleNavigateNextItem()}
