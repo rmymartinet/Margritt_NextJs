@@ -29,24 +29,21 @@ const ImagesContainer = ({
     <section
       className={`flex min-h-screen justify-center ${isShoppingOpen ? "opacity-60" : "opacity-100"}`}
     >
-      {/*AJOUT DE HEROSUBCONTENT*/}
       <div className="flex flex-col gap-40">
         {item.map((imgData: Item, id: number) => (
           <div className="flex flex-col gap-10" key={id}>
             <Link href={`${path}/${imgData.id}`}>
               <Image
                 className={`${isCursorPointer && "cursor-pointer"}`}
-                style={{ width: "100%", height: "100%" }}
                 objectFit="contain"
                 src={imgData.imageUrls[0]}
                 alt="Image"
                 width={1000}
                 height={1000}
-                layout="responsive"
               />
             </Link>
             <div
-              className={`flex flex-col items-start md:flex-row md:px-10 ${isTirage ? "md:items-start" : "md:items-center"} md:justify-between md:gap-0`}
+              className={`flex flex-col items-center md:flex-row md:px-10 ${isTirage ? "md:items-start" : "md:items-center"} md:justify-between md:gap-0`}
             >
               <div className="flex flex-col gap-6">
                 <div className="md:text-md flex flex-wrap gap-3 lg:text-lg">
@@ -57,7 +54,7 @@ const ImagesContainer = ({
                   <p>{imgData.date}</p>
                 </div>
                 {isTirage && (
-                  <div className="md:text-md flex gap-10 lg:text-lg">
+                  <div className="md:text-md flex justify-center gap-10 md:justify-start lg:text-lg">
                     <p>Price: {imgData.price} €</p>
                     {imgData.stock === 0 ? (
                       <p className="text-red-500">Out of stock</p>
@@ -83,7 +80,7 @@ const ImagesContainer = ({
                 <div className="mt-5 flex items-center gap-6 text-blue-500 md:mt-0 md:flex-col md:items-start">
                   <AddToCartButton
                     product={imgData}
-                    finalPrice={imgData?.price ?? 0} // Utilisation de imgData au lieu de item
+                    finalPrice={imgData?.price ?? 0}
                     tempQuantity={tempQuantity}
                     setIsShoppingOpen={setIsShoppingOpen}
                     addToCart={addToCart}
