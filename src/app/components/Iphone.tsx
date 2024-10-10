@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
-const Iphone = ({ videoUrl }) => {
-  const videoRef = useRef(null);
+const Iphone = ({ videoUrl }: { videoUrl: string }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {

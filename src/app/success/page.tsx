@@ -6,16 +6,15 @@ import { CiCircleCheck } from "react-icons/ci";
 import { useCart } from "../context/CardContext";
 
 const PaymentSuccess = () => {
-  const [sessionId, setSessionId] = useState(null);
+  const [sessionId, setSessionId] = useState<string | null>(null); // Préciser le type ici
   const [paymentVerified, setPaymentVerified] = useState(false);
-  const [error, setError] = useState(null); // Added state for error messages
+  const [error, setError] = useState<string | null>(null); // Définir l'état d'erreur comme string | null
   const { setCart } = useCart();
-  const router = useRouter(); // Utilisez useRouter
+  const router = useRouter();
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const sessionId = params.get("session_id");
-
     setSessionId(sessionId);
   }, []);
 
@@ -32,11 +31,10 @@ const PaymentSuccess = () => {
             setError(data.error || "Payment verification failed."); // Set error message
           }
         })
-
         .catch((error) => {
           console.error(error);
           setPaymentVerified(false);
-          setError("An unexpected error occurred."); // Handle unexpected errors
+          setError("An error occurred during payment verification."); // Optional: set error on catch
         });
     }
   }, [sessionId, setCart]);

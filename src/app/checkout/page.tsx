@@ -20,7 +20,10 @@ export default function Checkout() {
   useEffect(() => {
     const total = cart
       .flat()
-      .reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
+      .reduce(
+        (sum, item) => sum + (item?.price ?? 0) * (item?.tempQuantity || 1),
+        0,
+      );
     setTotalAmount(total);
   }, [cart]);
 
