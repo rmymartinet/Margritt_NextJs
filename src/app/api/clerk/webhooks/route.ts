@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import { Webhook } from "svix";
 
 export async function POST(req: Request) {
-  const WEBHOOK_SECRET = process.env.CLERK_SECRET_KEY;
+  const WEBHOOK_SECRET = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
   if (!WEBHOOK_SECRET) {
     throw new Error(
