@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
 
 export default function useWindowWidth() {
-  const [width, setWidth] = useState(0); // Initialisez à 0 au lieu de window.innerWidth
+  const [width, setWidth] = useState(0);
+  const [isMounted, setIsMounted] = useState(false); // Ajout d'un état pour le rendu
 
   useEffect(() => {
-    // Vérifiez si window est défini avant de l'utiliser
     if (typeof window !== "undefined") {
-      setWidth(window.innerWidth);
-
       const handleResize = () => setWidth(window.innerWidth);
+
+      handleResize(); // Met à jour la largeur initialement
+      setIsMounted(true); // Indique que le composant est monté
+
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
     }
   }, []);
 
-  return width;
+  return { width, isMounted }; // Renvoie également isMounted
 }
