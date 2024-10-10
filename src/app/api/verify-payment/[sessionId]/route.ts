@@ -1,10 +1,15 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
-export async function GET(request: Request, { params }) {
-  const { sessionId } = params; // Assurez-vous que cela récupère bien l'ID de session
+interface Params {
+  sessionId: string; // Type pour sessionId
+}
+
+export async function GET(request: Request, { params }: { params: Params }) {
+  const { sessionId } = params; // Récupération de l'ID de session
 
   if (!sessionId) {
     return NextResponse.json(
@@ -23,17 +28,20 @@ export async function GET(request: Request, { params }) {
     if (paymentStatus === "paid") {
       // Mettre à jour la base de données pour marquer la commande comme payée
 
-      const userId = session.metadata.user_id;
-      const productIds = JSON.parse(session.metadata.product_id);
-      const quantities = JSON.parse(session.metadata.quantity); // Assurez-vous que c'est un tableau
+      const userId = session.metadata?.user_id; // Add null check using '?'
+      const productIds = JSON.parse(session.metadata?.product_id ?? "[]"); // Add null check using '?' and provide a default value
+      const quantities = JSON.parse(session.metadata?.quantity ?? "[]"); // Add null check using '?' and provide a default value
 
       console.log("Product IDs:", productIds);
       console.log("User ID:", userId);
       console.log("Quantités:", quantities);
 
-      // Appel de la fonction pour mettre à jour le stock et enregistrer l'achat
-      await updateStockAndRecordPurchase(userId, productIds, quantities);
-      console.log("Stock mis à jour et achat enregistré");
+      // Add null check for userId
+      if (userId !== undefined) {
+        // Appel de la fonction pour mettre à jour le stock et enregistrer l'achat
+        await updateStockAndRecordPurchase(userId, productIds, quantities);
+        console.log("Stock mis à jour et achat enregistré");
+      }
     }
 
     return NextResponse.json({ success: true, paymentStatus });
@@ -46,7 +54,11 @@ export async function GET(request: Request, { params }) {
   }
 }
 
-async function updateStockAndRecordPurchase(userId, productIds, quantities) {
+async function updateStockAndRecordPurchase(
+  userId: string,
+  productIds: string[],
+  quantities: number[],
+) {
   for (let i = 0; i < productIds.length; i++) {
     const productId = productIds[i];
     const quantity = quantities[i];
@@ -73,8 +85,6 @@ async function updateStockAndRecordPurchase(userId, productIds, quantities) {
     const product = await prisma.originals.findUnique({
       where: { id: productId },
     });
-
-    console.log("Produit trouvé:", product.id);
 
     try {
       if (product) {
