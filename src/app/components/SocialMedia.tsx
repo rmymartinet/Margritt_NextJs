@@ -7,7 +7,7 @@ const SocialMedia = () => {
       <h2 className="mb-5 text-center text-5xl">
         Follow my artist&apos;s daily life.
       </h2>
-      <div className="mb-20 flex gap-44">
+      <div className="mb-20 flex gap-10 lg:gap-44">
         <InstagramButton />
         <TiktokButton />
       </div>
