@@ -1,17 +1,12 @@
 import { useCart } from "@/app/context/CardContext";
-import gsap from "gsap";
-import { Flip, ScrollTrigger } from "gsap/all";
 import Image from "next/image";
 import useFilteredDataById from "../../hooks/useFilteredDataById";
 import ImageCarousel from "../ImagesCarousel";
 import ProductDetails from "./ProductDetails";
 
-gsap.registerPlugin(ScrollTrigger, Flip);
-
 const ProductPage = ({ id, path }: { id: string; path: string }) => {
   const product = useFilteredDataById(id);
   const { isShoppingOpen } = useCart();
-
   if (!product) {
     return <div>Produit non trouvé</div>;
   }
@@ -21,7 +16,7 @@ const ProductPage = ({ id, path }: { id: string; path: string }) => {
       <section
         className={`flex items-start justify-center ${isShoppingOpen ? "opacity-60" : "opacity-100"}`}
       >
-        <div className="grid w-screen grid-rows-2 gap-20 lg:grid lg:grid-cols-2 lg:grid-rows-none">
+        <div className="grid w-screen grid-rows-2 gap-5 md:gap-20 lg:grid lg:grid-cols-2 lg:grid-rows-none">
           <div className="relative flex items-center justify-center">
             {product && product.imageUrls.length > 2 ? (
               <div className="w-full">
@@ -38,7 +33,6 @@ const ProductPage = ({ id, path }: { id: string; path: string }) => {
               />
             )}
           </div>
-
           <ProductDetails path={path} product={product} />
         </div>
       </section>
