@@ -18,7 +18,7 @@ const Footer = () => {
     >
       {/* Contact Section */}
       <div className="flex flex-col flex-wrap items-center justify-between gap-8 px-6 lg:flex-row lg:px-20">
-        <div className="text-4xl lg:text-8xl">Contact</div>
+        <h1 className="text-4xl lg:text-8xl">Contact</h1>
         <div className="mt-4 lg:mt-0">
           <Link
             href={`mailto:${CONTACT_INFO.email}`}

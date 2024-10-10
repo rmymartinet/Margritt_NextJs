@@ -13,9 +13,9 @@ export default function Contact() {
 
   return (
     <motion.section className="-mx-[4vw] mt-40 flex h-screen flex-col justify-between px-5 py-10 lg:p-20">
-      <div className="mb-32 text-6xl font-semibold uppercase lg:mb-[35vh] lg:text-8xl">
+      <h1 className="mb-32 text-6xl font-semibold uppercase lg:mb-[35vh] lg:text-8xl">
         Contact
-      </div>
+      </h1>
       <div className="flex flex-col-reverse items-center gap-6 text-center lg:flex-row lg:justify-between">
         <div>
           <div className="mt-4 lg:mt-0">
