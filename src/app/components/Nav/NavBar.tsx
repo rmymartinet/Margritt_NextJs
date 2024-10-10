@@ -95,6 +95,7 @@ export default function Nav() {
     <nav className="mb-72 flex items-center justify-center p-2 pt-10">
       <div className="text-md flex gap-20 p-4 font-semibold">
         <Link href="/">Home</Link>
+        <Link href="/gallery">Gallery</Link>
         {/* Menu Originals */}
         <div
           className="relative"
