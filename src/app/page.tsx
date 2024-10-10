@@ -23,7 +23,7 @@ export default function Home() {
         <div className="mb-[40vh] flex flex-col items-center">
           <div className="overflow-hidden font-semibold uppercase">
             <TitleTransition yposition={500}>
-              <h1 className="text-center text-6xl md:text-9xl lg:text-[17rem]">
+              <h1 className="text-center text-6xl md:text-9xl xl:text-[15rem]">
                 Margritt
               </h1>
             </TitleTransition>
