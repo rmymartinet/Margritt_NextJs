@@ -21,7 +21,6 @@ async function getActiveProducts() {
   );
   return activeProducts;
 }
-
 export async function POST(request: NextRequest) {
   try {
     const { products, userId } = await request.json();
@@ -42,45 +41,40 @@ export async function POST(request: NextRequest) {
           product.tempQuantity <= (product.stock ?? 0)
         ) {
           checkoutStripeProducts.push({
-            price: stripeProduct.default_price,
+            price: Number(stripeProduct.default_price),
             quantity: product.tempQuantity,
           });
         } else {
           console.log(`Stock insuffisant pour : ${product.title}`);
           return NextResponse.json(
-            {
-              error: `Stock insuffisant pour ${product.title}`,
-            },
+            { error: `Stock insuffisant pour ${product.title}` },
             { status: 400 },
           );
         }
       } else {
-        // Optionnel : Créer le produit s'il n'existe pas déjà dans Stripe
-        const unitAmount = Math.round(product.price * 100);
+        // Create product and price in Stripe
+        const unitAmount = Math.round((product.price ?? 0) * 100);
         const prod = await stripe.products.create({
           name: product.title,
-          default_price_data: {
-            unit_amount: unitAmount,
-            currency: "eur",
-          },
           images: [product.imageUrls[0]],
         });
+
+        await stripe.prices.create({
+          unit_amount: unitAmount,
+          currency: "eur",
+          product: prod.id,
+        });
+
         console.log(`Produit créé : ${prod.name}`);
 
         checkoutStripeProducts.push({
-          price: prod.default_price,
+          price: prod.default_price, // You might need to store the price ID here
           quantity: product.tempQuantity,
         });
       }
     }
 
-    // Création de la session de paiement
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-
-    const productIds = products.map((product) => product.id);
-    const quantity = products.map((product) => product.tempQuantity);
-    console.log("Quantité:", quantity); // Affiche la quantité de chaque produit
-    console.log("Product IDs:", productIds); // Affiche les IDs des produits
 
     const session = await stripe.checkout.sessions.create({
       line_items: checkoutStripeProducts,
@@ -92,26 +86,20 @@ export async function POST(request: NextRequest) {
         allowed_countries: ["FR"],
       },
       metadata: {
-        product_id: JSON.stringify(productIds),
+        product_id: JSON.stringify(products.map((p) => p.id)),
         user_id: userId,
-        quantity: JSON.stringify(quantity),
+        quantity: JSON.stringify(products.map((p) => p.tempQuantity)),
       },
     });
 
-    console.log("Metadata sent:", {
-      product_ids: JSON.stringify(productIds),
-      user_id: userId,
-      quantity: JSON.stringify(quantity),
-    });
-
-    // Retourner l'URL pour rediriger l'utilisateur vers Stripe Checkout
     return NextResponse.json({
       url: session.url,
+      sessionId: session.id, // Include the session ID if needed
     });
   } catch (error) {
     console.error("Erreur lors de la création de la session :", error);
     return NextResponse.json(
-      { error: "Erreur lors de la création de la session" },
+      { error: error.message || "Erreur lors de la création de la session" },
       { status: 500 },
     );
   }
