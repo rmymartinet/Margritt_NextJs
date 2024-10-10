@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import { currentUser } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -7,31 +8,52 @@ export async function GET(
 ) {
   const { userId } = params;
 
+  // Nettoyer l'ID utilisateur
   const cleanedUserId = userId.trim();
 
   try {
-    const user = await prisma.user.findUnique({
-      where: { clerkId: cleanedUserId }, // Requête avec le clerkId
+    // Vérifier si l'utilisateur existe déjà dans la base de données
+    let user = await prisma.user.findUnique({
+      where: { clerkId: cleanedUserId },
     });
 
-    console.log("user", user); // Log de l'utilisateur
-
-    const userisequal = user?.clerkId === cleanedUserId; // Ajout d'un "?" pour éviter une erreur si user est undefined
-
-    console.log("userisequal", userisequal); // Log de la comparaison
-
+    // Si l'utilisateur n'existe pas, le créer
     if (!user) {
-      return NextResponse.json(
-        { message: "Utilisateur non trouvé" },
-        { status: 404 },
+      console.log(
+        "Utilisateur non trouvé, création d'un nouvel utilisateur...",
       );
+      // Récupérer les détails supplémentaires de l'utilisateur via Clerk
+      const currentUserDetails = await currentUser();
+
+      // Extraire les informations nécessaires
+      const email =
+        currentUserDetails?.emailAddresses[0]?.emailAddress ||
+        "inconnu@example.com";
+
+      // Créer un nouvel utilisateur dans la base de données
+      user = await prisma.user.create({
+        data: {
+          clerkId: cleanedUserId,
+          email: email,
+          name: currentUserDetails?.fullName,
+          image: currentUserDetails?.imageUrl,
+        },
+      });
+
+      console.log("Nouvel utilisateur créé:", user);
+    } else {
+      console.log("Utilisateur existant:", user);
     }
 
-    return NextResponse.json(user);
+    // Retourner l'utilisateur trouvé ou créé
+    return NextResponse.json(user, { status: 200 });
   } catch (error) {
-    console.error("Erreur :", error); // Log de l'erreur
+    console.error(
+      "Erreur lors de la vérification/ajout de l'utilisateur:",
+      error,
+    );
     return NextResponse.json(
-      { error: "Erreur lors de la récupération de l'utilisateur" },
+      { error: "Erreur lors de la récupération ou création de l'utilisateur" },
       { status: 500 },
     );
   }

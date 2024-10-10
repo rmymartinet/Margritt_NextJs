@@ -33,9 +33,6 @@ export default function Checkout() {
   const compare = data.filter((item) => allProducts.includes(item.id));
   const outOfStockProduct = compare.find((item) => item.stock === 0);
 
-  // const allProductsData = product.filter((item) => isInStock.includes(item.id));
-  // console.log(allProductsData);
-
   //vérification du stock et paiement
 
   async function checkout() {
