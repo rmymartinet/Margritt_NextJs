@@ -74,14 +74,16 @@ export default function Nav() {
         y: 10,
         opacity: 0,
         onComplete: () => {
-          printsMenuRef.current.style.display = "none"; // Masque l'élément après l'animation
+          if (printsMenuRef.current) {
+            gsap.to(printsMenuRef.current, { display: "none" });
+          }
         },
       });
     }
 
     // Afficher le menu après la première animation
-    if (showPrints) {
-      printsMenuRef.current.style.display = "block";
+    if (showPrints && printsMenuRef.current) {
+      gsap.to(printsMenuRef.current, { display: "block" });
     }
 
     return () => {
