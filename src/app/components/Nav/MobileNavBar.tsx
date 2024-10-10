@@ -1,5 +1,6 @@
 "use client";
 
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Link from "next/link";
@@ -157,11 +158,16 @@ export default function MobileNav() {
         </div>
 
         <Link
-          onClick={() => handleClickCloseMenu()}
           href={"/checkout"}
-          className="absolute right-10 top-40 p-5"
+          className="absolute top-40 flex w-full justify-between p-5"
         >
-          <FaShoppingCart size={20} />
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+          <FaShoppingCart onClick={() => handleClickCloseMenu()} size={20} />
         </Link>
       </nav>
     </>
