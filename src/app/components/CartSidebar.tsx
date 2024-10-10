@@ -28,7 +28,6 @@ const CartSideBar = () => {
   useGSAP(() => {
     gsap.set(shoppingContainerRef.current, {
       x: "200%",
-      pointerEvents: "none",
     });
     gsap.to(shoppingContainerRef.current, {
       x: isShoppingOpen ? "0%" : "200%",
@@ -50,7 +49,7 @@ const CartSideBar = () => {
   return (
     <div
       ref={shoppingContainerRef}
-      className="pointer-events-auto fixed right-0 top-0 z-50 flex h-screen w-screen flex-col overflow-y-auto bg-white shadow-lg md:w-[400px]"
+      className="pointer-events-auto fixed right-0 top-0 z-50 flex h-screen w-screen flex-col overflow-y-auto border-2 bg-white shadow-lg md:w-[400px]"
     >
       <div className="cursor-pointer p-5">
         <IoClose onClick={handleCloseClick} size={20} />
@@ -105,7 +104,7 @@ const CartSideBar = () => {
         </div>
         <Link href="/checkout">
           <button
-            onClick={() => setIsShoppingOpen(true)}
+            onClick={() => setIsShoppingOpen(false)}
             className="w-full border border-black bg-white py-2 text-sm uppercase transition hover:bg-black hover:text-white"
           >
             Basket
