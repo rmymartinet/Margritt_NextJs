@@ -6,7 +6,7 @@ import Footer from "./components/Footer/Footer";
 import SocialMedia from "./components/SocialMedia";
 
 export default function Home() {
-  const videoRef = useRef(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
