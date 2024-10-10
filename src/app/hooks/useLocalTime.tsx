@@ -1,21 +1,22 @@
 import { useEffect, useState } from "react";
 
 export default function UseLocalTime(timezone = "Europe/Paris") {
-  const [time, setTime] = useState(
-    new Date().toLocaleTimeString("fr-FR", {
-      timeZone: timezone,
-    }),
-  );
+  const [time, setTime] = useState<string | null>(null);
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    // Fonction pour mettre à jour l'heure
+    const updateTime = () => {
       setTime(new Date().toLocaleTimeString("fr-FR", { timeZone: timezone }));
-    }, 1000);
+    };
+
+    updateTime();
+
+    const timer = setInterval(updateTime, 1000);
 
     return () => {
       clearInterval(timer);
     };
   }, [timezone]);
 
-  return time;
+  return <p>{time ?? "Loading time..."}</p>;
 }
