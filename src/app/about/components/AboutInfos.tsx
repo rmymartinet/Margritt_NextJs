@@ -14,7 +14,7 @@ const AboutInfos = () => {
   const leftContentRef = useRef(null);
   const leftImgRef = useRef(null);
   const rightImgRef = useRef(null);
-  const width = useWindowWidth();
+  const { width } = useWindowWidth();
   const isDesktop = width < LARGE_SCREEN_SIZE;
 
   useGSAP(() => {
