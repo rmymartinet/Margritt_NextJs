@@ -26,6 +26,10 @@ const CartSideBar = () => {
   const formattedTotalWithDelivery = totalWithDelivery.toFixed(2);
 
   useGSAP(() => {
+    gsap.set(shoppingContainerRef.current, {
+      x: "200%",
+      pointerEvents: "none",
+    });
     gsap.to(shoppingContainerRef.current, {
       x: isShoppingOpen ? "0%" : "200%",
       duration: 0.5,
