@@ -65,19 +65,29 @@ export async function POST(request: NextRequest) {
           product: prod.id,
         });
 
-        console.log(`Produit créé : ${prod.name}`);
-
         checkoutStripeProducts.push({
-          price: prod.default_price, // You might need to store the price ID here
-          quantity: product.tempQuantity,
+          price: Number(prod.default_price), // You might need to store the price ID here
+          quantity: Number(product.tempQuantity),
         });
       }
     }
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
+    const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] =
+      checkoutStripeProducts.map((product) => ({
+        price_data: {
+          currency: "eur",
+          product_data: {
+            name: "Product",
+          },
+          unit_amount: product.price * 100,
+        },
+        quantity: product.quantity,
+      }));
+
     const session = await stripe.checkout.sessions.create({
-      line_items: checkoutStripeProducts,
+      line_items: lineItems,
       mode: "payment",
       success_url: `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${baseUrl}/cancel`,
@@ -86,9 +96,9 @@ export async function POST(request: NextRequest) {
         allowed_countries: ["FR"],
       },
       metadata: {
-        product_id: JSON.stringify(products.map((p) => p.id)),
+        product_id: JSON.stringify(products.map((p: Item) => p.id)),
         user_id: userId,
-        quantity: JSON.stringify(products.map((p) => p.tempQuantity)),
+        quantity: JSON.stringify(products.map((p: Item) => p.tempQuantity)),
       },
     });
 
@@ -98,9 +108,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error("Erreur lors de la création de la session :", error);
-    return NextResponse.json(
-      { error: error.message || "Erreur lors de la création de la session" },
-      { status: 500 },
-    );
+    return NextResponse.json({ status: 500 });
   }
 }
