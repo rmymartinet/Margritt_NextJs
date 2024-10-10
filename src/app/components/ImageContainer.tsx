@@ -6,7 +6,6 @@ import { useCart } from "../context/CardContext";
 import { useAddToCart } from "../hooks/useAddToCart";
 import { Item } from "../types/dataTypes";
 import AddToCartButton from "./AddToCartButton";
-import { SkeletonCard } from "./Skeleton/SkeletonComponents";
 interface ImagesContainerProps {
   item: Item[];
   isCursorPointer?: boolean;
@@ -26,10 +25,6 @@ const ImagesContainer = ({
   const { isShoppingOpen, setIsShoppingOpen } = useCart();
   const addToCart = useAddToCart();
 
-  if (!item) {
-    return <SkeletonCard />;
-  }
-
   return (
     <section
       className={`flex min-h-screen justify-center ${isShoppingOpen ? "opacity-60" : "opacity-100"}`}
@@ -41,11 +36,13 @@ const ImagesContainer = ({
             <Link href={`${path}/${imgData.id}`}>
               <Image
                 className={`${isCursorPointer && "cursor-pointer"}`}
-                width={1000}
-                height={1000}
+                style={{ width: "100%", height: "100%" }}
                 objectFit="contain"
                 src={imgData.imageUrls[0]}
                 alt="Image"
+                width={1000}
+                height={1000}
+                layout="responsive"
               />
             </Link>
             <div
