@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { useCart } from "../context/CardContext";
 import { useFilteredData } from "../hooks/useFilteredData";
 import { useRemoveFromCart } from "../hooks/useRemoveFromCart";
+import { Item } from "../types/dataTypes";
 
 export default function Checkout() {
   const { cart } = useCart();

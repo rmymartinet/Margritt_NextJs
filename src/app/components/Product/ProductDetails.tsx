@@ -6,9 +6,9 @@ import gsap from "gsap";
 import { useRouter } from "next/navigation";
 import { useCallback, useRef, useState } from "react";
 import { IoIosArrowRoundForward } from "react-icons/io";
+import AddToCartButton from "../AddToCartButton";
 import InfosItem from "../InfosItem";
 import QuantitySelector from "../QuantitySelector";
-import AddToCartButton from "../addToCartButton";
 
 const ProductDetails = ({
   product,
