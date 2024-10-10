@@ -19,11 +19,11 @@ export default function Home() {
 
   return (
     <section>
-      <div className="min-h-screen">
+      <div className="mt-60 min-h-screen lg:mt-0">
         <div className="mb-[40vh] flex flex-col items-center">
           <div className="overflow-hidden font-semibold uppercase">
             <TitleTransition yposition={500}>
-              <h1 className="text-center text-4xl md:text-5xl lg:text-[17rem]">
+              <h1 className="text-center text-6xl md:text-9xl lg:text-[17rem]">
                 Margritt
               </h1>
             </TitleTransition>

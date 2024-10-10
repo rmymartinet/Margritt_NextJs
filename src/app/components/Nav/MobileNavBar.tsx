@@ -8,13 +8,19 @@ import { FaShoppingCart } from "react-icons/fa";
 import { IoCloseOutline } from "react-icons/io5";
 
 export default function MobileNav() {
+  const [showOriginals, setShowOriginals] = useState(false);
+  const [showPrints, setShowPrints] = useState(false);
   const [isCLicked, setIsClicked] = useState(false);
   const menuRef = useRef(null);
-  const handleClickMenu = () => {
-    setIsClicked(true);
+  const originalsMenuRef = useRef(null);
+  const printsMenuRef = useRef(null);
+
+  const toggleOriginals = () => {
+    setShowOriginals((prev) => !prev);
   };
-  const handleClickCloseMenu = () => {
-    setIsClicked(false);
+
+  const togglePrints = () => {
+    setShowPrints((prev) => !prev);
   };
 
   useEffect(() => {
@@ -38,6 +44,15 @@ export default function MobileNav() {
       });
     }
   }, [isCLicked]);
+
+  const handleClickMenu = () => {
+    setIsClicked(true);
+  };
+
+  const handleClickCloseMenu = () => {
+    setIsClicked(false);
+  };
+
   return (
     <>
       <div className="flex w-full justify-end p-10">
@@ -51,7 +66,7 @@ export default function MobileNav() {
 
       <nav
         ref={menuRef}
-        className="fixed left-0 top-0 z-50 flex h-[105vh] w-full items-center justify-center overflow-hidden bg-black text-white"
+        className="fixed left-0 top-0 z-50 flex h-[105vh] w-full flex-col items-center justify-center overflow-hidden bg-black text-white"
       >
         <div
           onClick={() => handleClickCloseMenu()}
@@ -59,13 +74,86 @@ export default function MobileNav() {
         >
           <IoCloseOutline size={25} />
         </div>
-        <div className="grid grid-rows-4 place-items-start gap-10 rounded-2xl bg-black text-4xl font-semibold text-white shadow-xl">
-          <Link href="/">Accueil</Link>
-          <Link href="/shop">Shop</Link>
-          <Link href="/about">About</Link>
-          <Link href="/contact">Contact</Link>
+
+        <div className="flex flex-col items-center gap-5">
+          <Link
+            onClick={() => handleClickCloseMenu()}
+            href="/"
+            className="mb-2 text-4xl font-semibold"
+          >
+            Accueil
+          </Link>
+          <Link
+            onClick={() => handleClickCloseMenu()}
+            href="/about"
+            className="mb-2 text-4xl font-semibold"
+          >
+            About
+          </Link>
+          <Link
+            onClick={() => handleClickCloseMenu()}
+            href="/contact"
+            className="mb-2 text-4xl font-semibold"
+          >
+            Contact
+          </Link>
+          <div className="relative mb-2">
+            <button
+              onClick={toggleOriginals}
+              className="text-4xl font-semibold"
+            >
+              Originals
+            </button>
+            {showOriginals && (
+              <div ref={originalsMenuRef} className="mt-2 p-2 text-xl">
+                <Link
+                  onClick={() => handleClickCloseMenu()}
+                  href="/originals/large"
+                  className="block p-2 hover:opacity-80"
+                >
+                  Large Format
+                </Link>
+                <Link
+                  onClick={() => handleClickCloseMenu()}
+                  href="/originals/medium"
+                  className="block p-2 hover:opacity-80"
+                >
+                  Medium Format
+                </Link>
+              </div>
+            )}
+          </div>
+
+          <div className="relative">
+            <button onClick={togglePrints} className="text-4xl font-semibold">
+              Prints
+            </button>
+            {showPrints && (
+              <div ref={printsMenuRef} className="mt-2 p-2 text-xl">
+                <Link
+                  onClick={() => handleClickCloseMenu()}
+                  href="/prints/large"
+                  className="block p-2 hover:opacity-80"
+                >
+                  Large Format
+                </Link>
+                <Link
+                  onClick={() => handleClickCloseMenu()}
+                  href="/prints/medium"
+                  className="block p-2 hover:opacity-80"
+                >
+                  Medium Format
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
-        <Link href={"/checkout"} className="absolute right-10 top-40 p-5">
+
+        <Link
+          onClick={() => handleClickCloseMenu()}
+          href={"/checkout"}
+          className="absolute right-10 top-40 p-5"
+        >
           <FaShoppingCart size={20} />
         </Link>
       </nav>
