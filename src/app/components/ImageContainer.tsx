@@ -5,7 +5,8 @@ import { IoIosArrowForward } from "react-icons/io";
 import { useCart } from "../context/CardContext";
 import { useAddToCart } from "../hooks/useAddToCart";
 import { Item } from "../types/dataTypes";
-import AddToCartButton from "./addToCartButton";
+import AddToCartButton from "./AddToCartButton";
+import { SkeletonCard } from "./Skeleton/SkeletonComponents";
 interface ImagesContainerProps {
   item: Item[];
   isCursorPointer?: boolean;
@@ -25,6 +26,10 @@ const ImagesContainer = ({
   const { isShoppingOpen, setIsShoppingOpen } = useCart();
   const addToCart = useAddToCart();
 
+  if (!item) {
+    return <SkeletonCard />;
+  }
+
   return (
     <section
       className={`flex justify-center ${isShoppingOpen ? "opacity-60" : "opacity-100"}`}
@@ -36,9 +41,8 @@ const ImagesContainer = ({
             <Link href={`${path}/${imgData.id}`}>
               <Image
                 className={`${isCursorPointer && "cursor-pointer"}`}
-                width={500}
-                height={500}
-                layout="responsive"
+                width={1000}
+                height={1000}
                 objectFit="contain"
                 src={imgData.imageUrls[0]}
                 alt="Image"
