@@ -44,14 +44,14 @@ export default function Nav() {
         y: 10,
         opacity: 0,
         onComplete: () => {
-          originalsMenuRef.current.style.display = "none"; // Masque l'élément après l'animation
+          gsap.to(originalsMenuRef.current, { display: "none" });
         },
       });
     }
 
     // Afficher le menu après la première animation
     if (showOriginals) {
-      originalsMenuRef.current.style.display = "block";
+      gsap.to(originalsMenuRef.current, { display: "block" });
     }
 
     return () => {
