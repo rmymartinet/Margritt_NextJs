@@ -1,7 +1,8 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FaRegCircleCheck } from "react-icons/fa6";
+import { CiCircleCheck } from "react-icons/ci";
 import { useCart } from "../context/CardContext";
 
 const PaymentSuccess = () => {
@@ -9,6 +10,7 @@ const PaymentSuccess = () => {
   const [paymentVerified, setPaymentVerified] = useState(false);
   const [error, setError] = useState(null); // Added state for error messages
   const { setCart } = useCart();
+  const router = useRouter(); // Utilisez useRouter
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -39,9 +41,17 @@ const PaymentSuccess = () => {
     }
   }, [sessionId, setCart]);
 
+  useEffect(() => {
+    if (paymentVerified) {
+      setTimeout(() => {
+        router.push("/"); // Redirige vers la page d'accueil
+      }, 5000); // Attend 5 secondes avant de rediriger
+    }
+  }, [paymentVerified, router]);
+
   return (
-    <main className="payment-success-container">
-      <div className="payment-success-content">
+    <main className="-mt-20 grid h-max place-content-center">
+      <div className="flex flex-col items-center gap-8 text-center">
         {paymentVerified === null && (
           <div>
             <h1>Payment Verification in Progress...</h1>
@@ -51,16 +61,18 @@ const PaymentSuccess = () => {
         {paymentVerified === true && (
           <>
             <div>
-              <FaRegCircleCheck size={40} />
+              <CiCircleCheck size={40} />
             </div>
-            <div className="payment-success-text">
-              <h1 className="payment-success-title">Payment Successful!</h1>
-              <span className="payment-success-subtitle">
+            <div className="flex flex-col gap-4">
+              <h1 className="text-2xl font-bold">Payment Successful!</h1>
+              <span className="text-xl opacity-70">
                 Your payment has been completed. You will be redirected shortly.
               </span>
             </div>
-            <div className="redirection-link">
-              <p>You will be redirected to the homepage in a few seconds.</p>
+            <div className="w-max rounded-lg bg-gradient-to-tr from-blue-500 to-purple-400 px-12 py-2">
+              <p className="text-white">
+                You will be redirected to the homepage in a few seconds.
+              </p>
             </div>
           </>
         )}
@@ -68,8 +80,7 @@ const PaymentSuccess = () => {
           <div>
             <h1>Payment Verification Failed</h1>
             <p>There was an issue verifying your payment. Please try again.</p>
-            {error && <p className="error-message">{error}</p>}{" "}
-            {/* Display the error */}
+            {error && <p className="text-red-600">{error}</p>}
           </div>
         )}
       </div>
