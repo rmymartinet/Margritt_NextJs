@@ -15,6 +15,7 @@ export default function MobileNav() {
   const menuRef = useRef(null);
   const originalsMenuRef = useRef(null);
   const printsMenuRef = useRef(null);
+  const linkContainerRef = useRef<HTMLDivElement>(null);
 
   const toggleOriginals = () => {
     setShowOriginals((prev) => !prev);
@@ -43,6 +44,38 @@ export default function MobileNav() {
         duration: 0.5,
         ease: "power4.out",
       });
+    }
+  }, [isCLicked]);
+
+  useGSAP(() => {
+    if (showOriginals) {
+      gsap.to(originalsMenuRef.current, {
+        height: "auto",
+        duration: 0.5,
+        ease: "power4.out",
+        autoAlpha: 1,
+      });
+    } else {
+      gsap.to(originalsMenuRef.current, {
+        height: 0,
+        duration: 0.5,
+        ease: "power4.out",
+        autoAlpha: 0,
+      });
+    }
+  }, [showOriginals]);
+
+  useGSAP(() => {
+    if (isCLicked) {
+      const children = linkContainerRef.current?.children;
+
+      if (children) {
+        gsap.fromTo(
+          children,
+          { x: -100 },
+          { x: 0, stagger: 0.06, duration: 0.7, ease: "power4.out" },
+        );
+      }
     }
   }, [isCLicked]);
 
@@ -76,7 +109,10 @@ export default function MobileNav() {
           <IoCloseOutline size={25} />
         </div>
 
-        <div className="flex flex-col items-center gap-5">
+        <div
+          ref={linkContainerRef}
+          className="ml-4 flex flex-col items-start gap-5"
+        >
           <Link
             onClick={() => handleClickCloseMenu()}
             href="/"
@@ -159,7 +195,7 @@ export default function MobileNav() {
 
         <Link
           href={"/checkout"}
-          className="absolute top-40 flex w-full justify-between p-5"
+          className="absolute top-40 flex w-full justify-between px-10"
         >
           <SignedOut>
             <SignInButton />
