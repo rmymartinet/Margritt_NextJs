@@ -32,7 +32,7 @@ const ImagesContainer = ({
 
   return (
     <section
-      className={`flex justify-center ${isShoppingOpen ? "opacity-60" : "opacity-100"}`}
+      className={`flex min-h-screen justify-center ${isShoppingOpen ? "opacity-60" : "opacity-100"}`}
     >
       {/*AJOUT DE HEROSUBCONTENT*/}
       <div className="flex flex-col gap-40">
