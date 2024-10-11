@@ -5,7 +5,15 @@ import ImageCarousel from "../ImagesCarousel";
 import SkeletonCard from "../Skeleton/SkeletonCard";
 import ProductDetails from "./ProductDetails";
 
-const ProductPage = ({ id, path }: { id: string; path: string }) => {
+const ProductPage = ({
+  isPrints,
+  id,
+  path,
+}: {
+  isPrints: boolean;
+  id: string;
+  path: string;
+}) => {
   const product = useFilteredDataById(id);
   const { isShoppingOpen } = useCart();
   if (!product) {
@@ -34,7 +42,7 @@ const ProductPage = ({ id, path }: { id: string; path: string }) => {
               />
             )}
           </div>
-          <ProductDetails path={path} product={product} />
+          <ProductDetails isPrints={isPrints} path={path} product={product} />
         </div>
       </section>
     </>

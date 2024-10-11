@@ -15,7 +15,7 @@ export default function OriginalItem({ params }: OriginalItemProps) {
 
   return (
     <div>
-      <ProductPage path={path} id={id} />
+      <ProductPage isPrints={false} path={path} id={id} />
     </div>
   );
 }
