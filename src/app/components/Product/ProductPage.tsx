@@ -2,7 +2,6 @@ import { useCart } from "@/app/context/CardContext";
 import Image from "next/image";
 import useFilteredDataById from "../../hooks/useFilteredDataById";
 import ImageCarousel from "../ImagesCarousel";
-import SkeletonCard from "../Skeleton/SkeletonCard";
 import ProductDetails from "./ProductDetails";
 
 const ProductPage = ({
@@ -17,7 +16,8 @@ const ProductPage = ({
   const product = useFilteredDataById(id);
   const { isShoppingOpen } = useCart();
   if (!product) {
-    return <SkeletonCard />;
+    // return <SkeletonCard />;
+    return null;
   }
 
   return (
