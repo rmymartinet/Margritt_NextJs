@@ -67,7 +67,7 @@ const config: Config = {
   },
 
   variants: {
-    extends: {
+    extend: {
       height: ["responsive", "hover", "focus"],
     },
   },

@@ -1,4 +1,4 @@
-import { Skeleton } from "../ui/skeleton";
+import Skeleton from "./Skeleton";
 
 export function SkeletonVideo() {
   return (
