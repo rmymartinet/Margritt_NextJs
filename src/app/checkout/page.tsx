@@ -109,10 +109,10 @@ export default function Checkout() {
                     {item.title}
                   </h3>
                   <p className="text-center text-base font-normal">
-                    {item.price} €
+                    Price: {item.price} €
                   </p>
                   <p className="text-center text-base font-normal">
-                    {item.tempQuantity} €
+                    Quantity: {item.tempQuantity}
                   </p>
                 </div>
                 <button
