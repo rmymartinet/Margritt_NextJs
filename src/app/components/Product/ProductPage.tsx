@@ -2,7 +2,7 @@ import { useCart } from "@/app/context/CardContext";
 import Image from "next/image";
 import useFilteredDataById from "../../hooks/useFilteredDataById";
 import ImageCarousel from "../ImagesCarousel";
-import { SkeletonCard } from "../Skeleton/SkeletonComponents";
+import SkeletonCard from "../Skeleton/SkeletonCard";
 import ProductDetails from "./ProductDetails";
 
 const ProductPage = ({ id, path }: { id: string; path: string }) => {

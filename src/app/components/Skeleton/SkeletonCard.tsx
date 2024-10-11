@@ -1,14 +1,5 @@
 import Skeleton from "./Skeleton";
-
-export function SkeletonVideo() {
-  return (
-    <div className="flex items-center justify-center space-y-3">
-      <Skeleton className="h-[50vh] w-screen rounded-xl" />
-    </div>
-  );
-}
-
-export function SkeletonCard() {
+const SkeletonCard = () => {
   return (
     <div className="grid w-full grid-rows-2 gap-5 md:gap-20 lg:grid lg:h-[500px] lg:grid-cols-2 lg:grid-rows-none">
       {/* Image Skeleton */}
@@ -70,4 +61,6 @@ export function SkeletonCard() {
       </div>
     </div>
   );
-}
+};
+
+export default SkeletonCard;
