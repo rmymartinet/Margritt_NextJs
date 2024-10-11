@@ -1,5 +1,6 @@
 // AddToCartButton.tsx
 import React from "react";
+import Swal from "sweetalert2";
 import { ProductItem } from "../types/dataTypes";
 
 interface AddToCartButtonProps {
@@ -22,7 +23,11 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   const handleClick = () => {
     setIsShoppingOpen(true);
     if (product?.stock === 0) {
-      alert("This item is out of stock.");
+      Swal.fire({
+        icon: "error",
+        title: "Out of Stock",
+        text: "This product is out of stock",
+      });
     } else if (
       product?.id &&
       product?.title &&

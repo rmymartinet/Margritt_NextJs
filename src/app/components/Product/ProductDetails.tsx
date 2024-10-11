@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useRef, useState } from "react";
 import { IoIosArrowRoundForward } from "react-icons/io";
+import Swal from "sweetalert2";
 import AddToCartButton from "../AddToCartButton";
 import InfosItem from "../InfosItem";
 import QuantitySelector from "../QuantitySelector";
@@ -59,7 +60,11 @@ const ProductDetails = ({
     if (tempQuantity < remainingStock) {
       setTempQuantity((prevQuantity) => prevQuantity + 1);
     } else {
-      alert("Maximum quantity available in stock reached.");
+      Swal.fire({
+        icon: "error",
+        title: "Out of Stock",
+        text: "This product is out of stock",
+      });
     }
   }, [tempQuantity, remainingStock]);
 
