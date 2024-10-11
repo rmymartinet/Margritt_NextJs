@@ -49,7 +49,7 @@ const CartSideBar = () => {
   return (
     <div
       ref={shoppingContainerRef}
-      className="pointer-events-auto fixed right-0 top-0 z-50 flex h-[102vh] w-[102vw] flex-col overflow-y-auto border-2 bg-white shadow-lg md:h-screen md:w-[400px]"
+      className="pointer-events-auto fixed right-0 top-0 z-50 flex h-screen w-[102vw] flex-col overflow-y-auto border-2 bg-white shadow-lg md:h-screen md:w-[400px]"
     >
       <div className="cursor-pointer p-5">
         <IoClose onClick={handleCloseClick} size={20} />
@@ -89,7 +89,7 @@ const CartSideBar = () => {
           </div>
         )}
       </div>
-      <div className="sticky bottom-0 z-10 w-full border-t border-gray-200 bg-white p-5">
+      <div className="fixed bottom-0 z-10 w-full border-t border-gray-200 bg-white p-5">
         <div className="mb-2 flex justify-between">
           <p>ORDER VALUE</p>
           <p>{formattedTotalWithoutDelivery} €</p>
