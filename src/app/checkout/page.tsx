@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "@clerk/nextjs";
+import { useAuth, useClerk } from "@clerk/nextjs";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
@@ -16,6 +16,7 @@ export default function Checkout() {
   const deliveryCost = 20;
   const { userId } = useAuth();
   const [loading, setLoading] = useState(false);
+  const { openSignIn } = useClerk();
 
   useEffect(() => {
     const total = cart
@@ -39,7 +40,7 @@ export default function Checkout() {
     setLoading(true);
 
     if (!userId) {
-      alert("Vous devez vous connecter pour continuer");
+      openSignIn();
       setLoading(false);
       return;
     }
@@ -50,7 +51,7 @@ export default function Checkout() {
 
       // Vérifiez si l'utilisateur existe dans votre base de données
       if (!userData || userData.message === "Utilisateur non trouvé") {
-        alert("Utilisateur non trouvé dans la base de données");
+        openSignIn();
         setLoading(false);
         return;
       }
