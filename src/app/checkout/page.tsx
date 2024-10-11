@@ -110,6 +110,9 @@ export default function Checkout() {
                   <p className="text-center text-base font-normal">
                     {item.price} €
                   </p>
+                  <p className="text-center text-base font-normal">
+                    {item.tempQuantity} €
+                  </p>
                 </div>
                 <button
                   className="cursor-pointer text-sm text-red-500"
