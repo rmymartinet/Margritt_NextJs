@@ -11,10 +11,11 @@ interface OriginalItemProps {
 export default function OriginalItem({ params }: OriginalItemProps) {
   const { id } = params;
   const path = "large";
+  const isPrints = true;
 
   return (
     <div>
-      <ProductPage isPrints={true} path={path} id={id} />
+      <ProductPage isPrints={isPrints} path={path} id={id} />
     </div>
   );
 }
