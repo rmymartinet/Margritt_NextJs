@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-const Iphone = ({ videoUrl }: { videoUrl: string }) => {
+const Iphone = ({ poster, videoUrl }: { poster: string; videoUrl: string }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -33,8 +33,11 @@ const Iphone = ({ videoUrl }: { videoUrl: string }) => {
               muted
               loop
               playsInline
+              preload="auto"
+              controls
               src={videoUrl}
               className="h-full w-full"
+              poster={poster}
             ></video>
           </div>
 
