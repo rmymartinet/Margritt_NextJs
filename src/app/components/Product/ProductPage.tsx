@@ -2,13 +2,14 @@ import { useCart } from "@/app/context/CardContext";
 import Image from "next/image";
 import useFilteredDataById from "../../hooks/useFilteredDataById";
 import ImageCarousel from "../ImagesCarousel";
+import { SkeletonCard } from "../Skeleton/SkeletonComponents";
 import ProductDetails from "./ProductDetails";
 
 const ProductPage = ({ id, path }: { id: string; path: string }) => {
   const product = useFilteredDataById(id);
   const { isShoppingOpen } = useCart();
   if (!product) {
-    return <div>Produit non trouvé</div>;
+    return <SkeletonCard />;
   }
 
   return (

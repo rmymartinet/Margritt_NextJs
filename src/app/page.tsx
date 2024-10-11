@@ -39,7 +39,11 @@ export default function Home() {
             autoPlay
             muted
             loop
+            preload="auto"
+            playsInline
+            controls
             src="/assets/videos/bicVideo.mp4"
+            poster="/assets/bic_poster.png"
           ></video>
         </div>
         <SocialMedia />
