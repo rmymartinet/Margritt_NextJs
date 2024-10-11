@@ -105,7 +105,7 @@ export async function POST(request: NextRequest) {
       line_items: checkoutStripeProducts,
       mode: "payment",
       success_url: `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${baseUrl}/cancel`,
+      cancel_url: `${baseUrl}/cancel?session_id={CHECKOUT_SESSION_ID}`,
       billing_address_collection: "required",
       shipping_address_collection: {
         allowed_countries: ["FR"],
