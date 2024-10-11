@@ -10,7 +10,7 @@ const ProductPage = ({
   id,
   path,
 }: {
-  isPrints: boolean;
+  isPrints?: boolean;
   id: string;
   path: string;
 }) => {

@@ -16,7 +16,7 @@ const ProductDetails = ({
   path,
   isPrints,
 }: {
-  isPrints: boolean;
+  isPrints?: boolean;
   product: ProductItem;
   path: string;
 }) => {
