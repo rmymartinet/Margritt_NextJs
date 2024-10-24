@@ -1,7 +1,7 @@
 // AddToCartButton.tsx
 import React from "react";
 import Swal from "sweetalert2";
-import { ProductItem } from "../types/dataTypes";
+import { ProductItem } from "../../types/dataTypes";
 
 interface AddToCartButtonProps {
   product: ProductItem;
