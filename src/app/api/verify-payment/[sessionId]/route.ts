@@ -1,15 +1,19 @@
 import prisma from "@/lib/prisma";
+import { upsertUser } from "@/lib/users";
+import { CustomerAddress } from "@/types/dataTypes";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 interface Params {
-  sessionId: string; // Type pour sessionId
+  sessionId: string;
 }
 
 export async function GET(request: Request, { params }: { params: Params }) {
-  const { sessionId } = params; // Récupération de l'ID de session
+  const { sessionId } = params;
+
+  console.log("Session ID:", sessionId);
 
   if (!sessionId) {
     return NextResponse.json(
@@ -19,56 +23,104 @@ export async function GET(request: Request, { params }: { params: Params }) {
   }
 
   try {
-    // Récupérer la session de paiement de Stripe
     const session = await stripe.checkout.sessions.retrieve(sessionId);
-
-    // Vérifier si le paiement est réussi
     const paymentStatus = session.payment_status;
 
-    if (paymentStatus === "paid") {
-      // Mettre à jour la base de données pour marquer la commande comme payée
-
-      const userId = session.metadata?.user_id; // Add null check using '?'
-      const productIds = JSON.parse(session.metadata?.product_id ?? "[]"); // Add null check using '?' and provide a default value
-      const quantities = JSON.parse(session.metadata?.quantity ?? "[]"); // Add null check using '?' and provide a default value
-
-      console.log("Product IDs:", productIds);
-      console.log("User ID:", userId);
-      console.log("Quantités:", quantities);
-
-      // Add null check for userId
-      if (userId !== undefined) {
-        // Appel de la fonction pour mettre à jour le stock et enregistrer l'achat
-        await updateStockAndRecordPurchase(userId, productIds, quantities);
-        console.log("Stock mis à jour et achat enregistré");
-      }
+    if (paymentStatus !== "paid") {
+      return NextResponse.json({
+        success: false,
+        message: "Payment not completed",
+      });
     }
 
-    return NextResponse.json({ success: true, paymentStatus });
+    // Récupérer les détails du client et de l'adresse
+    const customerEmail = session.customer_details?.email;
+    const customerAddress: CustomerAddress =
+      session.customer_details?.address || {};
+
+    if (!customerEmail) {
+      return NextResponse.json(
+        { error: "Customer email is required" },
+        { status: 400 },
+      );
+    }
+
+    // Vérifier et parser les métadonnées des produits
+    const productIds = session.metadata?.product_id
+      ? JSON.parse(session.metadata.product_id)
+      : [];
+    const quantities = session.metadata?.quantity
+      ? JSON.parse(session.metadata.quantity)
+      : [];
+
+    console.log("Product IDs:", productIds);
+    console.log("Quantities:", quantities);
+
+    await updateStockAndRecordPurchase(
+      productIds,
+      quantities,
+      customerEmail,
+      customerAddress,
+    );
+
+    const user = await prisma.user.findUnique({
+      where: { email: customerEmail },
+    });
+
+    // Si l'utilisateur existe déjà, ne le mettez pas à jour
+    if (user) {
+      const updatedUser = await upsertUser({
+        email: customerEmail,
+        addressLine1: customerAddress.line1 ?? "",
+        addressLine2: customerAddress.line2 ?? "",
+        addressCity: customerAddress.city ?? "",
+        addressState: customerAddress.state ?? "",
+        addressPostalCode: customerAddress.postal_code ?? "",
+        addressCountry: customerAddress.country ?? "",
+      });
+
+      return NextResponse.json({
+        success: true,
+        message: "Utilisateur trouvé",
+        user: {
+          email: updatedUser.email,
+          addressLine1: updatedUser.addressLine1,
+          addressLine2: updatedUser.addressLine2,
+          addressCity: updatedUser.addressCity,
+          addressState: updatedUser.addressState,
+          addressPostalCode: updatedUser.addressPostalCode,
+          addressCountry: updatedUser.addressCountry,
+        },
+      });
+    }
+
+    // Si l'utilisateur n'est pas trouvé, retourner une réponse sans erreur
+    return NextResponse.json({
+      success: true,
+      message: "Utilisateur non trouvé, mode invité",
+    });
   } catch (error) {
-    console.error("Error retrieving session:", error);
+    console.error("Error processing the request:", error);
     return NextResponse.json(
-      { error: "Error retrieving session" },
+      { error: "Error processing the request" },
       { status: 500 },
     );
   }
 }
 
 async function updateStockAndRecordPurchase(
-  userId: string,
   productIds: string[],
   quantities: number[],
+  userEmail: string,
+  customerAddress: CustomerAddress,
 ) {
+  // Mise à jour du stock et enregistrement de l'achat
   for (let i = 0; i < productIds.length; i++) {
     const productId = productIds[i];
     const quantity = quantities[i];
 
-    // Vérifiez que quantity est un nombre valide
     if (typeof quantity !== "number" || quantity <= 0) {
-      console.error(
-        `Quantité invalide pour le produit ${productId}: ${quantity}`,
-      );
-      continue; // Ignorez cet itération si la quantité est invalide
+      continue; // Ignore les quantités invalides
     }
 
     // Mettre à jour le stock
@@ -76,7 +128,7 @@ async function updateStockAndRecordPurchase(
       where: { id: productId },
       data: {
         stock: {
-          decrement: quantity, // Décrémentez le stock
+          decrement: quantity,
         },
       },
     });
@@ -86,27 +138,22 @@ async function updateStockAndRecordPurchase(
       where: { id: productId },
     });
 
-    try {
-      if (product) {
-        // Vérification de l'existence du prix
-        if (product.price === undefined) {
-          throw new Error("Le prix du produit n'est pas défini.");
-        }
-
-        // Enregistrer l'achat de l'utilisateur (historique)
-        await prisma.purchase.create({
-          data: {
-            clerkId: userId,
-            originalId: productId,
-            quantity: quantity,
-            totalPrice: product.price * quantity,
-          },
-        });
-      } else {
-        console.error(`Produit non trouvé pour l'ID: ${productId}`);
-      }
-    } catch (error) {
-      console.error("Erreur lors de l'enregistrement de l'achat:", error);
+    if (product && product.price !== undefined) {
+      // Enregistrer l'achat dans l'historique
+      await prisma.purchase.create({
+        data: {
+          originalId: productId,
+          quantity: quantity,
+          totalPrice: product.price * quantity,
+          email: userEmail,
+          addressLine1: customerAddress.line1 ?? "",
+          addressLine2: customerAddress.line2 ?? "",
+          addressCity: customerAddress.city ?? "",
+          addressState: customerAddress.state ?? "",
+          addressPostalCode: customerAddress.postal_code ?? "",
+          addressCountry: customerAddress.country ?? "",
+        },
+      });
     }
   }
 }
