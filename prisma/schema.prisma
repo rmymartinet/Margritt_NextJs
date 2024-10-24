@@ -8,15 +8,20 @@ generator client {
 }
 
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  clerkId   String   @unique
-  email     String   @unique
-  name      String?
-  image     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  purchases Purchase[]
+  id                String     @id @default(auto()) @map("_id") @db.ObjectId
+  email             String     @unique
+  firstName         String?
+  lastName          String?
+  image             String?
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  addressLine1      String?
+  addressLine2      String?
+  addressCity       String?
+  addressState      String?
+  addressPostalCode String?
+  addressCountry    String?
+  purchases         Purchase[]
 }
 
 model Gallery {
@@ -28,6 +33,7 @@ model Gallery {
   date      String
   format    String
   imageUrls String[] @map("imageUrls")
+  videoUrl  String?  @map("videoUrl")
 }
 
 model Originals {
@@ -46,12 +52,20 @@ model Originals {
 }
 
 model Purchase {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  clerkId    String
-  originalId String   @db.ObjectId
-  quantity   Int
-  totalPrice Int
-  createdAt  DateTime @default(now())
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  firstName         String?
+  lastName          String?
+  originalId        String   @db.ObjectId
+  quantity          Int
+  totalPrice        Int
+  email             String
+  addressLine1      String?
+  addressLine2      String?
+  addressCity       String?
+  addressState      String?
+  addressPostalCode String?
+  addressCountry    String?
+  createdAt         DateTime @default(now())
 
-  user User @relation(fields: [clerkId], references: [clerkId], onDelete: Cascade) // Relation vers User
+  user User @relation(fields: [email], references: [email], onDelete: Cascade) // Relation vers User
 }
