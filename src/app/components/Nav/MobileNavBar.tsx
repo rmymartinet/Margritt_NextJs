@@ -120,13 +120,13 @@ export default function MobileNav() {
           >
             Home
           </Link>
-          {/* <Link
+          <Link
             onClick={() => handleClickCloseMenu()}
             href="/gallery"
             className="mb-2 text-4xl font-semibold"
           >
             Gallery
-          </Link> */}
+          </Link>
           <Link
             onClick={() => handleClickCloseMenu()}
             href="/about"
