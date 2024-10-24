@@ -54,7 +54,7 @@ export default function GalleryItem({ params }: { params: Params }) {
 
   return (
     <section>
-      <div className="fixed -top-20 left-0 z-50 flex w-full justify-between px-2 md:px-10">
+      <div className="fixed -top-20 left-0 z-50 flex w-full items-center justify-between">
         <div
           onClick={() => handleBackToPreviousPage()}
           className="grid h-5 w-5 cursor-pointer place-content-center rounded-full bg-black text-white"
@@ -65,21 +65,30 @@ export default function GalleryItem({ params }: { params: Params }) {
           onClick={() => handleNextProject()}
           className="grid cursor-pointer place-content-center rounded-xl bg-black px-2 py-1 text-sm text-white"
         >
-          next project
+          Next project
         </div>
       </div>
       <div className="relative mt-28">
         <div ref={containerRef} className="flex flex-col gap-4">
-          <div className="flex flex-col md:grid md:grid-cols-2">
+          <div className="flex flex-col gap-10 md:grid md:grid-cols-2">
             <Image
-              width={600}
-              height={600}
-              className="object-cover"
+              width={500}
+              height={500}
+              className="h-full w-full object-cover"
               src={datas?.imageUrls[0]}
               alt=""
             />
-            <div className="flex flex-col items-center justify-between gap-8 p-4">
+            <div className="flex flex-col items-center justify-between gap-8 px-4">
               <p className="text-pretty">{datas?.text}</p>
+              <div className="h-[500px]">
+                <video
+                  className="h-full w-full object-cover"
+                  loop
+                  muted
+                  autoPlay
+                  src={datas?.videoUrl}
+                />
+              </div>
               <div className="flex w-full justify-between">
                 <h1 className="text-lg font-semibold">{datas?.title}</h1>
                 <span className="text-md font-semibold">{datas?.format}</span>
@@ -96,7 +105,7 @@ export default function GalleryItem({ params }: { params: Params }) {
             {datas?.imageUrls.length > 1 && (
               <>
                 <section
-                  className="flex justify-between overflow-x-auto"
+                  className="flex justify-between gap-2 overflow-x-auto lg:grid lg:grid-cols-3"
                   onTouchStart={() => setIsMouseEnter(true)}
                   onTouchEnd={() => setIsMouseEnter(false)}
                 >
