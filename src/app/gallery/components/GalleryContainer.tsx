@@ -1,4 +1,4 @@
-import { Item } from "@/app/types/dataTypes";
+import { Item } from "@/types/dataTypes";
 import Image from "next/image";
 import Link from "next/link";
 

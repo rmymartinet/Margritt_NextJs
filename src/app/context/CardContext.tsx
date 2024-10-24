@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { Item } from "../types/dataTypes";
+import { Item } from "../../types/dataTypes";
 
 // Fonction pour obtenir l'ID de session unique ou l'utilisateur connecté
 const getUserId = () => {

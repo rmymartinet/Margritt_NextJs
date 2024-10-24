@@ -2,9 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
+import { Item } from "../../types/dataTypes";
 import { useCart } from "../context/CardContext";
 import { useAddToCart } from "../hooks/useAddToCart";
-import { Item } from "../types/dataTypes";
 import AddToCartButton from "./AddToCartButton";
 interface ImagesContainerProps {
   item: Item[];

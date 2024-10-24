@@ -1,7 +1,7 @@
 import { useCart } from "@/app/context/CardContext";
 import { useAddToCart } from "@/app/hooks/useAddToCart";
 import { useFilteredData } from "@/app/hooks/useFilteredData";
-import { ProductItem } from "@/app/types/dataTypes";
+import { ProductItem } from "@/types/dataTypes";
 import gsap from "gsap";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

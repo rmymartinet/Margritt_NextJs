@@ -1,5 +1,5 @@
+import { Item } from "../../types/dataTypes";
 import { useCart } from "../context/CardContext";
-import { Item } from "../types/dataTypes";
 
 export const useAddToCart = () => {
   const { cart, setCart } = useCart();

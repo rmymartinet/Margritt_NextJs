@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Item } from "../types/dataTypes";
+import { Item } from "../../types/dataTypes";
 
 export function useFilteredData(filter?: string) {
   const [data, setData] = useState<Item[]>([]);
