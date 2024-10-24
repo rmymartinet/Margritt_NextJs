@@ -6,9 +6,9 @@ import { CiCircleCheck } from "react-icons/ci";
 import { useCart } from "../context/CardContext";
 
 const PaymentSuccess = () => {
-  const [sessionId, setSessionId] = useState<string | null>(null); // Préciser le type ici
+  const [sessionId, setSessionId] = useState<string | null>(null);
   const [paymentVerified, setPaymentVerified] = useState(false);
-  const [error, setError] = useState<string | null>(null); // Définir l'état d'erreur comme string | null
+  const [error, setError] = useState<string | null>(null);
   const { setCart } = useCart();
   const router = useRouter();
 
@@ -28,27 +28,35 @@ const PaymentSuccess = () => {
             setCart([]);
           } else {
             setPaymentVerified(false);
-            setError(data.error || "Payment verification failed."); // Set error message
+            setError(data.error || "Payment verification failed.");
           }
         })
         .catch((error) => {
           console.error(error);
           setPaymentVerified(false);
-          setError("An error occurred during payment verification."); // Optional: set error on catch
+          setError("An error occurred during payment verification.");
         });
     }
   }, [sessionId, setCart]);
 
   useEffect(() => {
     if (paymentVerified) {
-      setTimeout(() => {
-        router.push("/"); // Redirige vers la page d'accueil
-      }, 5000); // Attend 5 secondes avant de rediriger
+      const timeoutId = setTimeout(() => {
+        router.push("/");
+      }, 5000);
+
+      return () => clearTimeout(timeoutId);
     }
   }, [paymentVerified, router]);
 
+  useEffect(() => {
+    if (!sessionId) {
+      router.push("/");
+    }
+  }, [sessionId, router]);
+
   return (
-    <main className="-mt-20 grid h-max place-content-center">
+    <main className="-mt-20 grid h-screen place-content-center">
       <div className="flex flex-col items-center gap-8 text-center">
         {paymentVerified === null && (
           <div>
