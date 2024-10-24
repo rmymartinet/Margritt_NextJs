@@ -10,11 +10,11 @@ export default function Gallery() {
   const { data } = useFilteredData(active);
 
   return (
-    <section className="h-max md:h-screen">
+    <section className="">
       <div className="mb-10">
         <Filter active={active} setActive={setActive} />
       </div>
-      <GalleryContainer item={data} />
+      <GalleryContainer filter={active} item={data} />
     </section>
   );
 }

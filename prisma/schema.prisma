@@ -23,6 +23,7 @@ model Gallery {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   category  String
   title     String
+  text      String?
   dimension String
   date      String
   format    String

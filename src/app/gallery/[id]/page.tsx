@@ -6,8 +6,10 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import Draggable from "gsap/Draggable";
 import Image from "next/image";
-import { useRouter } from "next/navigation"; // Usage: App router
-import { useCallback, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { useRef, useState } from "react";
+import { FaArrowRightLong } from "react-icons/fa6";
+import { IoClose } from "react-icons/io5";
 
 gsap.registerPlugin(Draggable, useGSAP);
 
@@ -18,19 +20,20 @@ interface Params {
 export default function GalleryItem({ params }: { params: Params }) {
   const { id } = params;
   const { data } = useFilteredData();
-  const timelineRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const scrollerRef = useRef<HTMLDivElement>(null);
-  const markersRef = useRef<HTMLElement[]>([]);
-  const { width } = useWindowWidth();
   const router = useRouter();
+  const [isMouseEnter, setIsMouseEnter] = useState(false);
+  const { width } = useWindowWidth();
 
   const handleBackToPreviousPage = () => {
-    router.back();
+    router.push("/gallery");
   };
 
   // Filtrer les données basées sur l'ID du produit
   const filteredDataById = data.filter((item) => item.id === id);
+  const datas = filteredDataById[0];
+
+  console.log(datas);
 
   const category = filteredDataById[0]?.category;
   const existingItemsSameCategory = data.filter(
@@ -49,171 +52,72 @@ export default function GalleryItem({ params }: { params: Params }) {
     router.push(`/gallery/${nextProjectId}`);
   };
 
-  const datas = filteredDataById[0];
-
-  const setMarkerRef = useCallback((el: HTMLElement | null, i: number) => {
-    if (el) markersRef.current[i] = el;
-  }, []);
-
-  useGSAP(() => {
-    if (
-      width >= 1024 &&
-      filteredDataById &&
-      filteredDataById.length > 0 &&
-      timelineRef.current &&
-      scrollerRef.current &&
-      containerRef.current
-    ) {
-      const timelineWidth = timelineRef.current?.offsetWidth || 0;
-      const scrollerWidth = scrollerRef.current?.offsetWidth || 0;
-      const containerWidth = containerRef.current?.offsetWidth || 0;
-      const gap = parseInt(getComputedStyle(document.body).fontSize);
-      const maxDragX = timelineWidth - scrollerWidth - 2 * gap;
-
-      Draggable.create(scrollerRef.current, {
-        type: "x",
-        bounds: { minX: gap, maxX: maxDragX },
-        onDrag: function () {
-          const progress = (this.x - gap) / maxDragX;
-          const margin = 100; // Vous pouvez ajuster cette valeur en fonction de vos besoins
-          const containerX =
-            -progress * (containerWidth + margin - timelineWidth);
-          // Utilisation de gsap.set pour des petites modifications de position
-          gsap.set(containerRef.current, { x: containerX });
-
-          // Position avant du scroller
-          const scrollerPosLeft =
-            scrollerRef.current?.getBoundingClientRect().left;
-          const markerPositions = markersRef.current?.map(
-            (marker) => marker.getBoundingClientRect().left,
-          );
-
-          markerPositions.forEach((markerPosX, i) => {
-            if (
-              (scrollerPosLeft ?? 0) >= markerPosX - 30 &&
-              (scrollerPosLeft ?? 0) <= markerPosX + 30
-            ) {
-              gsap.to(markersRef.current[i], {
-                y: -10, // Lève légèrement le tiret
-                duration: 0.3,
-                ease: "power1.out",
-              });
-            } else {
-              gsap.to(markersRef.current[i], {
-                y: 0, // Remet à sa position initiale
-                duration: 0.3,
-                ease: "power1.out",
-              });
-            }
-          });
-        },
-      });
-    }
-  }, [
-    width,
-    filteredDataById,
-    timelineRef,
-    scrollerRef,
-    containerRef,
-    markersRef,
-  ]);
-
   return (
-    <div className="relative h-screen lg:w-screen">
-      {width < 1024 && (
-        <div className="fixed bottom-4 left-0 z-50 flex w-full justify-between px-2 md:px-10">
-          <div
-            onClick={() => handleBackToPreviousPage()}
-            className="grid h-10 w-10 place-content-center rounded-full bg-white text-black"
-          >
-            x
-          </div>
-          <div
-            onClick={() => handleNextProject()}
-            className="grid place-content-center rounded-xl bg-white px-4 text-black"
-          >
-            Next project
-          </div>
-        </div>
-      )}
-      <div
-        ref={containerRef}
-        className="flex flex-col lg:absolute lg:left-0 lg:top-0 lg:h-[90vh] lg:w-max lg:flex-row"
-      >
-        <section className="flex gap-4 p-8">
-          <Image
-            width={2000}
-            height={2000}
-            layout="responsive"
-            key={id}
-            className="h-full w-full object-contain"
-            src={datas?.imageUrls[0]}
-            alt=""
-          />
-        </section>
-        <section className="flex flex-col justify-between gap-8 p-8 lg:w-[50vw] lg:flex-row">
-          <h1 className="text-pretty uppercase md:text-4xl lg:w-1/2">
-            Beyond the Veil, Threads Woven from the Shadows of Tomorrow is
-            launching soon
-          </h1>
-          <p className="text-base lg:w-2/5">
-            In a world frayed at the edges, our garments emerge as relics...
-          </p>
-        </section>
-        {datas?.imageUrls.length > 1 && (
-          <>
-            <section className="flex flex-col justify-between gap-8 p-8 lg:flex-row">
-              <Image
-                width={1000}
-                height={1000}
-                layout="responsive"
-                key={id}
-                className="h-full w-full object-cover"
-                src={datas?.imageUrls[1]}
-                alt=""
-              />
-              <Image
-                width={1000}
-                height={1000}
-                layout="responsive"
-                key={id}
-                className="h-full w-full object-cover"
-                src={datas?.imageUrls[2]}
-                alt=""
-              />
-            </section>
-            <section className="flex flex-col justify-between gap-8 p-8 lg:w-[50vw] lg:flex-row">
-              <h1 className="text-pretty uppercase md:text-4xl lg:w-1/2">
-                Beyond the Veil, Threads Woven from the Shadows of Tomorrow is
-                launching soon
-              </h1>
-              <p className="text-base lg:w-2/5">
-                In a world frayed at the edges, our garments emerge as relics...
-              </p>
-            </section>
-          </>
-        )}
-      </div>
-      {width >= 1024 && (
+    <section>
+      <div className="fixed -top-20 left-0 z-50 flex w-full justify-between px-2 md:px-10">
         <div
-          ref={timelineRef}
-          className="fixed bottom-0 left-0 flex h-[10vh] w-screen items-center justify-around p-8"
+          onClick={() => handleBackToPreviousPage()}
+          className="grid h-5 w-5 cursor-pointer place-content-center rounded-full bg-black text-white"
         >
-          <div
-            ref={scrollerRef}
-            className="glassmorphism relative cursor-grab px-8 py-2 text-xs"
-          >
-            <span>[Drag]</span>
-          </div>
-          {Array.from({ length: 50 }).map((_, i) => (
-            <div
-              key={i}
-              ref={(el) => setMarkerRef(el, i)}
-              className="marker mx-1 h-6 w-[1px] bg-black"
-            ></div>
-          ))}
+          <IoClose size={14} />
         </div>
-      )}
-    </div>
+        <div
+          onClick={() => handleNextProject()}
+          className="grid cursor-pointer place-content-center rounded-xl bg-black px-2 py-1 text-sm text-white"
+        >
+          next project
+        </div>
+      </div>
+      <div className="relative mt-28">
+        <div ref={containerRef} className="flex flex-col gap-4">
+          <div className="flex flex-col md:grid md:grid-cols-2">
+            <Image
+              width={600}
+              height={600}
+              className="object-cover"
+              src={datas?.imageUrls[0]}
+              alt=""
+            />
+            <div className="flex flex-col items-center justify-between gap-8 p-4">
+              <p className="text-pretty">{datas?.text}</p>
+              <div className="flex w-full justify-between">
+                <h1 className="text-lg font-semibold">{datas?.title}</h1>
+                <span className="text-md font-semibold">{datas?.format}</span>
+              </div>
+            </div>
+          </div>
+          <div className="relative w-full overflow-hidden">
+            {!isMouseEnter && width <= 768 && (
+              <div className="glassmorphism absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-between px-4 text-white">
+                <span className="mr-4">Swipe</span>
+                <FaArrowRightLong />
+              </div>
+            )}
+            {datas?.imageUrls.length > 1 && (
+              <>
+                <section
+                  className="flex justify-between overflow-x-auto"
+                  onTouchStart={() => setIsMouseEnter(true)}
+                  onTouchEnd={() => setIsMouseEnter(false)}
+                >
+                  {datas?.imageUrls.slice(1).map((url, index) => {
+                    return (
+                      <Image
+                        key={index}
+                        width={500}
+                        height={500}
+                        className="object-cover"
+                        src={url}
+                        alt=""
+                      />
+                    );
+                  })}
+                </section>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
