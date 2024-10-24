@@ -25,7 +25,6 @@ export default function RootLayout({
   }, []);
 
   const pathname = usePathname();
-
   const isGallery = /^\/gallery\/[^\/]+$/.test(pathname);
 
   return (
@@ -35,14 +34,25 @@ export default function RootLayout({
           <body className={`relative p-2 antialiased md:px-[4vw]`}>
             <motion.div>
               {isMounted &&
-                (!isGallery ? width <= 1024 ? <MobileNav /> : <Nav /> : null)}
+                (!isGallery &&
+                pathname !== "/success" &&
+                pathname !== "/cancel" ? (
+                  width <= 1024 ? (
+                    <MobileNav />
+                  ) : (
+                    <Nav />
+                  )
+                ) : null)}
               <CartProvider>
                 <Transition>{children}</Transition>
                 {isMounted && <CartSideBar />}
               </CartProvider>
-              {pathname !== "/checkout" && pathname !== "/contact" && (
-                <Footer />
-              )}
+              {pathname !== "/contact" &&
+                pathname !== "/checkout" &&
+                pathname !== "/success" &&
+                pathname !== "/cancel" &&
+                pathname !== "/admin" &&
+                pathname !== "/404" && <Footer />}
             </motion.div>
           </body>
         </html>
