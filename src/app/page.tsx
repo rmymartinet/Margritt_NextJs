@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import { TitleTransition } from "./components/Animations/TitleTransition";
-import Footer from "./components/Footer/Footer";
 import SocialMedia from "./components/SocialMedia";
 
 export default function Home() {
@@ -48,7 +47,6 @@ export default function Home() {
         </div>
         <SocialMedia />
       </div>
-      <Footer />
     </section>
   );
 }

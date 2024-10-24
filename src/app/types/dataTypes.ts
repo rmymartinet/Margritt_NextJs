@@ -12,6 +12,7 @@ export interface Item {
   id: string;
   category?: string;
   title: string;
+  text?: string;
   serie?: string;
   piece?: string;
   dimension?: string;

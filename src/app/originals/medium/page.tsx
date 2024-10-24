@@ -1,6 +1,5 @@
 "use client";
 
-import Footer from "@/app/components/Footer/Footer";
 import HeroSubContent from "@/app/components/HeroSubContent";
 import { IoIosResize } from "react-icons/io";
 import ImagesContainer from "../../components/ImageContainer";
@@ -18,7 +17,7 @@ export default function Originals() {
   return (
     <div>
       <HeroSubContent>
-        <div className="md:grid-cols-gridHeroSubContent flex flex-col gap-10 text-center md:grid md:text-start lg:gap-20 lg:px-40">
+        <div className="flex flex-col gap-10 text-center md:grid md:grid-cols-gridHeroSubContent md:text-start lg:gap-20 lg:px-40">
           <div>
             <p>
               Interested in an original artwork? They are not available for
@@ -53,7 +52,6 @@ export default function Originals() {
         isOriginal={true}
         path={path}
       />
-      <Footer />
     </div>
   );
 }

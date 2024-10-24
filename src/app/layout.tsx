@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import "../app/globals.css";
 import Transition from "./components/Animations/pagetransition/PageTransition";
 import CartSideBar from "./components/CartSidebar";
+import Footer from "./components/Footer/Footer";
 import MobileNav from "./components/Nav/MobileNavBar";
 import Nav from "./components/Nav/NavBar";
 import { CartProvider } from "./context/CardContext";
@@ -30,21 +31,18 @@ export default function RootLayout({
   return (
     <>
       <ClerkProvider>
-        <html lang="fr">
+        <html lang="en">
           <body className={`relative p-2 antialiased md:px-[4vw]`}>
             <motion.div>
               {isMounted &&
-                (!isGallery ? (
-                  width <= 1024 ? (
-                    <MobileNav />
-                  ) : (
-                    <Nav />
-                  )
-                ) : null)}{" "}
+                (!isGallery ? width <= 1024 ? <MobileNav /> : <Nav /> : null)}
               <CartProvider>
                 <Transition>{children}</Transition>
                 {isMounted && <CartSideBar />}
               </CartProvider>
+              {pathname !== "/checkout" && pathname !== "/contact" && (
+                <Footer />
+              )}
             </motion.div>
           </body>
         </html>
