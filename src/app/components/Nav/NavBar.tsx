@@ -1,12 +1,20 @@
 "use client";
 
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs"; // Ajoute useUser ici
+import {
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+  useUser,
+} from "@clerk/nextjs"; // Ajoute useUser ici
 import gsap from "gsap";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 
 export default function Nav() {
+  const { user, isLoaded } = useUser();
+
   const [showOriginals, setShowOriginals] = useState(false);
   const [showPrints, setShowPrints] = useState(false);
 
@@ -28,6 +36,7 @@ export default function Nav() {
   const toggleLeavePrints = () => {
     setShowPrints(false);
   };
+
 
   // Animation pour Originals
   useEffect(() => {
@@ -155,6 +164,10 @@ export default function Nav() {
         <Link href="/about">About</Link>
         <Link href="/exhibitions">Exhibitions</Link>
         <Link href="/contact">Contact</Link>
+
+        {isLoaded && user?.publicMetadata.role === "admin" && (
+          <Link href="/admin">Admin</Link>
+        )}
       </div>
       <div className="absolute right-10 flex items-center gap-20 p-5">
         <SignedOut>

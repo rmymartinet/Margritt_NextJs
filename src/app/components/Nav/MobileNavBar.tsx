@@ -1,6 +1,12 @@
 "use client";
 
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import {
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+  useUser,
+} from "@clerk/nextjs";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Link from "next/link";
@@ -9,6 +15,8 @@ import { FaShoppingCart } from "react-icons/fa";
 import { IoCloseOutline } from "react-icons/io5";
 
 export default function MobileNav() {
+  const { user, isLoaded } = useUser();
+
   const [showOriginals, setShowOriginals] = useState(false);
   const [showPrints, setShowPrints] = useState(false);
   const [isCLicked, setIsClicked] = useState(false);
@@ -141,6 +149,9 @@ export default function MobileNav() {
           >
             Contact
           </Link>
+          {isLoaded && user?.publicMetadata.role === "admin" && (
+            <Link href="/admin">Admin</Link>
+          )}
           <div className="relative mb-2">
             <button
               onClick={toggleOriginals}
