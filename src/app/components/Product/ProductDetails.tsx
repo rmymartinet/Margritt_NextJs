@@ -105,13 +105,13 @@ const ProductDetails = ({
           className="flex justify-between"
         />
         <InfosItem
-          label="Format"
-          value={product?.format || ""}
+          label="Dimension"
+          value={product?.dimension || ""}
           className="flex justify-between"
         />
         <InfosItem
           label="Paper"
-          value={product?.papier || ""}
+          value={product?.paper || ""}
           className="flex justify-between"
         />
       </div>

@@ -49,7 +49,7 @@ const ImagesContainer = ({
                 <div className="md:text-md flex flex-wrap gap-3 lg:text-lg">
                   <p>{imgData.title}</p>
                   <span>|</span>
-                  <p>{imgData.format}</p>
+                  <p>{imgData.dimension}</p>
                   <span>|</span>
                   <p>{imgData.date}</p>
                 </div>
