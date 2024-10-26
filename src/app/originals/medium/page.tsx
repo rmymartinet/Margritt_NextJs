@@ -11,7 +11,7 @@ export default function Originals() {
   const path = "medium";
 
   const filteredDatByDimension = data.filter(
-    (item) => item.dimension === "medium-formats",
+    (item) => item.format === "medium-formats",
   );
 
   return (

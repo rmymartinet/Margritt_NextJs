@@ -11,7 +11,7 @@ export default function Originals() {
   const path = "large";
 
   const filteredDatByDimension = data.filter(
-    (item) => item.dimension === "large-formats",
+    (item) => item.format === "large-formats",
   );
 
   return (
