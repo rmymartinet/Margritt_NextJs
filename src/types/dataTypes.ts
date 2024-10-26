@@ -1,3 +1,5 @@
+import { FILTERS } from "@/utils/constant";
+
 export interface Gallery {
   id: string;
   category: string;
@@ -19,7 +21,7 @@ export interface Item {
   date: string;
   format: string;
   price?: number;
-  papier?: string;
+  paper?: string;
   imageUrls: string[];
   videoUrl?: string;
   stock?: number;
@@ -58,3 +60,5 @@ export interface ImageContainer extends Item {
   isOriginal?: boolean;
   isTirage?: boolean;
 }
+
+export type FilterType = (typeof FILTERS)[keyof typeof FILTERS];
