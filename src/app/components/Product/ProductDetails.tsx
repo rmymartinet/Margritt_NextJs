@@ -62,8 +62,8 @@ const ProductDetails = ({
     } else {
       Swal.fire({
         icon: "error",
-        title: "Out of Stock",
-        text: "This product is out of stock",
+        title: "Insufficient Stock",
+        text: "You have requested more than what is available in stock.",
       });
     }
   }, [tempQuantity, remainingStock]);
