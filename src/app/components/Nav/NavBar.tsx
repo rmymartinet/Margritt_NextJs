@@ -13,7 +13,7 @@ import { useEffect, useRef, useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 
 export default function Nav() {
-  const { user, isLoaded } = useUser();
+  const { user, isLoaded, isSignedIn } = useUser();
 
   const [showOriginals, setShowOriginals] = useState(false);
   const [showPrints, setShowPrints] = useState(false);
@@ -36,7 +36,6 @@ export default function Nav() {
   const toggleLeavePrints = () => {
     setShowPrints(false);
   };
-
 
   // Animation pour Originals
   useEffect(() => {
@@ -99,6 +98,51 @@ export default function Nav() {
       tl.kill(); // Nettoyer l'animation
     };
   }, [showPrints]);
+
+  useEffect(() => {
+    if (isSignedIn && user) {
+      const registerUser = async () => {
+        try {
+          const response = await fetch("/api/users/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: user.primaryEmailAddress?.emailAddress,
+            }),
+          });
+          if (!response.ok) {
+            const addUser = await fetch(
+              `/api/users/${user.primaryEmailAddress?.emailAddress}`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  email: user.primaryEmailAddress?.emailAddress,
+                }),
+              },
+            );
+
+            if (addUser.ok) {
+              console.log("Utilisateur enregistré avec succès");
+            } else {
+              console.error("Erreur lors de l'enregistrement de l'utilisateur");
+            }
+          }
+        } catch (error) {
+          console.error(
+            "Erreur lors de l'enregistrement de l'utilisateur :",
+            error,
+          );
+        }
+      };
+
+      registerUser();
+    }
+  }, [isSignedIn, user]);
 
   return (
     <nav className="z-50 mb-72 flex items-center justify-center p-2 pt-10">
