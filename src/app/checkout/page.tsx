@@ -209,7 +209,7 @@ export default function Checkout() {
         </div>
         <div className="sticky bottom-0 flex w-full items-center justify-end gap-8 border border-black bg-white px-2">
           <div className="flex flex-col gap-4">
-            <p>Frais de livraison: {deliveryCost},00 €</p>
+            <p>Delivery Cost: {deliveryCost},00 €</p>
             <span>Total: {totalAmount + deliveryCost},00 €</span>
           </div>
           <button
