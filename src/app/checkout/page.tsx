@@ -223,7 +223,6 @@ export default function Checkout() {
           </button>
         </div>
       </div>
-
       {/* Modal pour les options de connexion/invité */}
       {showAuthOptions && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
