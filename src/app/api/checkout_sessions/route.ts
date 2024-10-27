@@ -79,7 +79,7 @@ export async function POST(request: NextRequest) {
       price_data: {
         currency: "eur",
         product_data: {
-          name: "Livraison",
+          name: "Delivery",
         },
         unit_amount: deliveryPrice,
       },
