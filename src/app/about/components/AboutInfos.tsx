@@ -103,8 +103,8 @@ const AboutInfos = () => {
             className="h-72 w-72 md:h-[80vh] md:w-full md:overflow-hidden lg:h-[50vh] lg:w-[30vw]"
           >
             <Image
-              width={200}
-              height={200}
+              width={1000}
+              height={1000}
               layout="responsive"
               objectFit="cover"
               ref={leftImgRef}
@@ -116,12 +116,12 @@ const AboutInfos = () => {
         {!isDesktop && (
           <div ref={rightContentRef} className="right-img overflow-hidden">
             <Image
-              width={700}
-              height={700}
+              width={5000}
+              height={5000}
               layout="responsive"
               objectFit="cover"
               ref={rightImgRef}
-              src="/assets/about1.webp"
+              src="/assets/about1.jpeg"
               alt=""
             />
           </div>
