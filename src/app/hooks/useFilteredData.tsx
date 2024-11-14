@@ -11,11 +11,10 @@ export function useFilteredData(filter?: string) {
       try {
         const response = await axios.get<Item[]>("/api/products");
 
-        console.log(response);
         let filteredData = response.data;
         if (filter) {
           filteredData = response.data.filter(
-            (item) => item.category === filter,
+            (item) => item.category === filter || item.id === filter,
           );
         }
         setData(filteredData);
