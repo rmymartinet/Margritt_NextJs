@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { useState } from "react";
 
 const AddComponent = () => {
-  const [category, setCategory] = useState("gallery");
+  const [category, setCategory] = useState("artworks");
   const [title, setTitle] = useState("");
   const [serie, setSerie] = useState("");
   const [piece, setPiece] = useState("");
@@ -28,7 +28,7 @@ const AddComponent = () => {
       imageUrls: imageUrls.filter((url) => url !== ""),
     };
 
-    if (category === "original") {
+    if (category === "prints") {
       Object.assign(newItem, {
         serie,
         piece,
@@ -90,9 +90,9 @@ const AddComponent = () => {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
-            <option value="gallery">Gallery</option>
+            <option value="artworks">Artworks</option>
             <option value="project">Project</option>
-            <option value="original">Original</option>
+            <option value="prints">Prints</option>
           </select>
         </label>
         <label className="flex items-center gap-2">
@@ -106,7 +106,7 @@ const AddComponent = () => {
             className="rounded-lg border border-slate-200 px-4"
           />
         </label>
-        {category === "original" && (
+        {category === "prints" && (
           <>
             <label className="flex items-center gap-2">
               Série:
@@ -143,7 +143,6 @@ const AddComponent = () => {
             </label>
           </>
         )}
-
         <label className="flex items-center gap-2">
           Date:
           <input
@@ -177,7 +176,7 @@ const AddComponent = () => {
             className="w-full rounded-lg border border-slate-200 px-4"
           />
         </label>
-        {category === "gallery" && (
+        {category === "artworks" && (
           <label className="flex flex-col gap-2">
             URLs des images disposition dans l&apos;ordre d&apos;affichage
             <input
@@ -191,7 +190,7 @@ const AddComponent = () => {
             />
           </label>
         )}
-        {(category === "original" || category === "project") && (
+        {(category === "prints" || category === "project") && (
           <label className="flex flex-col gap-2">
             URLs des images disposition dans l&apos;ordre d&apos;affichage
             {imageUrls.map((url, index) => (
@@ -246,7 +245,7 @@ const AddComponent = () => {
             placeholder="Ex: 250 ou 600 €"
           />
         </label>
-        {category === "original" && (
+        {category === "prints" && (
           <label className="flex items-center gap-2">
             Quantité:
             <input

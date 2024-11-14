@@ -26,7 +26,6 @@ const DeleteComponent = () => {
         console.error("Erreur:", err);
       }
     };
-
     fetchItems();
   }, []);
 
@@ -44,7 +43,6 @@ const DeleteComponent = () => {
       if (!response.ok) {
         throw new Error("Erreur lors de la suppression de l'article");
       }
-
       // Supprimer l'article de l'état local après suppression
       setItems(items.filter((item) => item.id !== id));
       console.log("Article supprimé avec succès");

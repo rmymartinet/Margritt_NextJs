@@ -54,14 +54,14 @@ const UpdateComponent = () => {
       date: date || item.date,
       format: format || item.format,
       imageUrls:
-        item.category === "gallery"
+        item.category === "artworks"
           ? imageUrls[0]
             ? [imageUrls[0]]
             : item.imageUrls
           : imageUrls.filter((url) => url !== "") || item.imageUrls,
     };
 
-    if (item.category === "original") {
+    if (item.category === "prints") {
       Object.assign(newItem, {
         serie: serie || item.serie,
         piece: piece || item.piece,
@@ -140,7 +140,7 @@ const UpdateComponent = () => {
                       className="rounded-lg border border-slate-200 px-4"
                     />
                   </label>
-                  {item.category === "original" && (
+                  {item.category === "prints" && (
                     <>
                       <label className="flex items-center gap-2">
                         Série:
@@ -203,7 +203,7 @@ const UpdateComponent = () => {
                       className="rounded-lg border border-slate-200 px-4"
                     />
                   </label>
-                  {item.category === "gallery" && (
+                  {item.category === "artworks" && (
                     <label className="flex flex-col gap-2">
                       URLs des images disposition dans l&apos;ordre
                       d&apos;affichage
@@ -218,7 +218,7 @@ const UpdateComponent = () => {
                       />
                     </label>
                   )}
-                  {(item.category === "original" ||
+                  {(item.category === "prints" ||
                     item.category === "project") && (
                     <label className="flex flex-col gap-2">
                       URLs des images disposition dans l&apos;ordre
@@ -271,7 +271,7 @@ const UpdateComponent = () => {
                       placeholder="Ex: 250 ou 600 €"
                     />
                   </label>
-                  {item.category === "original" && (
+                  {item.category === "prints" && (
                     <label className="flex items-center gap-2">
                       Quantité:
                       <input
