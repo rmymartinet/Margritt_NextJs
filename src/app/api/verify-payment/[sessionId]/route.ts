@@ -53,9 +53,6 @@ export async function GET(request: Request, { params }: { params: Params }) {
       ? JSON.parse(session.metadata.quantity)
       : [];
 
-    console.log("Product IDs:", productIds);
-    console.log("Quantities:", quantities);
-
     await updateStockAndRecordPurchase(
       productIds,
       quantities,
@@ -124,7 +121,7 @@ async function updateStockAndRecordPurchase(
     }
 
     // Mettre à jour le stock
-    await prisma.originals.update({
+    await prisma.prints.update({
       where: { id: productId },
       data: {
         stock: {
@@ -134,7 +131,7 @@ async function updateStockAndRecordPurchase(
     });
 
     // Obtenir le prix du produit
-    const product = await prisma.originals.findUnique({
+    const product = await prisma.prints.findUnique({
       where: { id: productId },
     });
 
@@ -142,7 +139,7 @@ async function updateStockAndRecordPurchase(
       // Enregistrer l'achat dans l'historique
       await prisma.purchase.create({
         data: {
-          originalId: productId,
+          printsId: productId,
           quantity: quantity,
           totalPrice: product.price * quantity,
           email: userEmail,
