@@ -62,6 +62,7 @@ const config: Config = {
       },
       gridTemplateColumns: {
         gridHeroSubContent: "1fr max-content 1fr",
+        gridProductPage: "max-content 1fr",
       },
     },
   },
