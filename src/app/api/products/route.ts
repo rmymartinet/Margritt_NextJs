@@ -30,12 +30,13 @@ function getErrorMessage(error: unknown) {
 export const GET = async () => {
   try {
     await prisma.$connect();
-    const [originalsData, printsData, galleryData] = await Promise.all([
+    const [originalsData, printsData, artworksData] = await Promise.all([
       prisma.originals.findMany(),
       prisma.prints.findMany(),
-      prisma.gallery.findMany(),
+      prisma.artworks.findMany(),
     ]);
-    const data = [...originalsData, ...printsData, ...galleryData];
+    const data = [...originalsData, ...printsData, ...artworksData];
+
     return new NextResponse(JSON.stringify(data), { status: 200 });
   } catch (error) {
     console.error("Error fetching pants:", error);
@@ -65,16 +66,16 @@ export const POST = async (req: Request) => {
 
     let data;
 
-    if (item.category === "original") {
-      data = await prisma.originals.create({
+    if (item.category === "prints") {
+      data = await prisma.prints.create({
         data: item,
       });
-    } else if (item.category === "gallery") {
-      data = await prisma.gallery.create({
+    } else if (item.category === "artworks") {
+      data = await prisma.artworks.create({
         data: item,
       });
     } else if (item.category === "project") {
-      data = await prisma.gallery.create({
+      data = await prisma.artworks.create({
         data: item,
       });
     }
@@ -97,14 +98,14 @@ export const DELETE = async (req: Request) => {
 
     let data;
 
-    if ((id && category === "gallery") || category === "project") {
-      data = await prisma.gallery.delete({
+    if ((id && category === "artworks") || category === "project") {
+      data = await prisma.artworks.delete({
         where: {
           id,
         },
       });
-    } else if (id && category === "original") {
-      data = await prisma.originals.delete({
+    } else if (id && category === "prints") {
+      data = await prisma.prints.delete({
         where: {
           id,
         },
@@ -130,15 +131,15 @@ export const PUT = async (req: Request) => {
     const { id, category, ...item } = await req.json();
 
     let data;
-    if (id && category === "gallery") {
-      data = await prisma.gallery.update({
+    if (id && category === "artworks") {
+      data = await prisma.artworks.update({
         where: {
           id,
         },
         data: item,
       });
-    } else if (id && category === "original") {
-      data = await prisma.originals.update({
+    } else if (id && category === "prints") {
+      data = await prisma.prints.update({
         where: {
           id,
         },
