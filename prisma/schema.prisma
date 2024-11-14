@@ -51,6 +51,21 @@ model Originals {
   stock     Int
 }
 
+model Prints {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  category  String
+  title     String
+  serie     String?
+  piece     String?
+  dimension String
+  date      String
+  format    String
+  price     Int
+  paper     String?
+  imageUrls String[] @map("imageUrls")
+  stock     Int
+}
+
 model Purchase {
   id                String   @id @default(auto()) @map("_id") @db.ObjectId
   firstName         String?
