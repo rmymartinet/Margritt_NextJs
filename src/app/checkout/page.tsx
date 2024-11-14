@@ -25,16 +25,17 @@ export default function Checkout() {
   const compare = data.filter((item) => allProducts.includes(item.id));
   const outOfStockProduct = compare.find((item) => item.quantity === 0);
 
-  const deliveryCost = 20;
   const currentUser = useUser();
   const currentUserEmail =
     currentUser?.user?.primaryEmailAddress?.emailAddress || email;
 
   // Calculer le montant total basé sur le panier sans ajouter les frais de livraison ici
   useEffect(() => {
-    const total = cart
-      .flat()
-      .reduce((acc, item) => acc + Number(item.price), 0);
+    const total = cart.reduce((total, item) => {
+      const itemPrice = item?.finalPrice || 0;
+      // const itemQuantity = Number(item.quantity) || 0;
+      return total + itemPrice;
+    }, 0);
 
     setTotalAmount(Number(total.toFixed(2)));
   }, [cart]);
@@ -145,7 +146,6 @@ export default function Checkout() {
         },
         body: JSON.stringify({
           products,
-          deliveryCost,
           currentUserEmail,
         }),
       });
@@ -191,6 +191,7 @@ export default function Checkout() {
                     <p className="text-center text-base font-normal">
                       {item.price} €
                     </p>
+                    <p>Quantity: {item.tempQuantity}</p>
                   </div>
                   <button
                     onClick={() => removeItemFromCart(item.id)}
@@ -209,8 +210,8 @@ export default function Checkout() {
         </div>
         <div className="sticky bottom-0 flex w-full items-center justify-end gap-8 border border-black bg-white px-2">
           <div className="flex flex-col gap-4">
-            <p>Delivery Cost: {deliveryCost},00 €</p>
-            <span>Total: {totalAmount + deliveryCost},00 €</span>
+            <p>Delivery: Free</p>
+            <span>Total: {totalAmount},00 €</span>
           </div>
           <button
             onClick={checkout}
@@ -219,7 +220,7 @@ export default function Checkout() {
             }`}
             disabled={loading || cart.length === 0}
           >
-            {loading ? "Chargement..." : "Payer"}
+            {loading ? "Loading..." : "Pay"}
           </button>
         </div>
       </div>

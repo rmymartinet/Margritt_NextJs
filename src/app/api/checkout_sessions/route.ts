@@ -19,7 +19,7 @@ async function getActiveProducts() {
 
 export async function POST(request: NextRequest) {
   try {
-    const { products, currentUserEmail, deliveryCost } = await request.json();
+    const { products, currentUserEmail } = await request.json();
     const checkoutProducts: Item[] = products;
     const activeProducts = await getActiveProducts();
     const checkoutStripeProducts: Stripe.Checkout.SessionCreateParams.LineItem[] =
@@ -73,18 +73,6 @@ export async function POST(request: NextRequest) {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     const productIds = products.map((product: Item) => product.id);
     const quantity = products.map((product: Item) => product.quantity);
-    const deliveryPrice = Math.round(deliveryCost * 100);
-
-    checkoutStripeProducts.push({
-      price_data: {
-        currency: "eur",
-        product_data: {
-          name: "Delivery",
-        },
-        unit_amount: deliveryPrice,
-      },
-      quantity: 1,
-    });
 
     const session = await stripe.checkout.sessions.create({
       line_items: checkoutStripeProducts,

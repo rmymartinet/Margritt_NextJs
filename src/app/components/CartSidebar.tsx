@@ -15,15 +15,15 @@ const CartSideBar = () => {
 
   const shoppingContainerRef = useRef<HTMLDivElement>(null);
 
-  const deliveryCost = 20;
   const totalWithoutDelivery = cart.reduce((total, item) => {
     const itemPrice = item?.finalPrice || 0;
     // const itemQuantity = Number(item.quantity) || 0;
     return total + itemPrice;
   }, 0);
-  const totalWithDelivery = totalWithoutDelivery + deliveryCost;
-  const formattedTotalWithoutDelivery = totalWithoutDelivery.toFixed(2);
+  const totalWithDelivery = totalWithoutDelivery;
   const formattedTotalWithDelivery = totalWithDelivery.toFixed(2);
+
+  console.log(cart);
 
   useGSAP(() => {
     gsap.set(shoppingContainerRef.current, {
@@ -49,7 +49,7 @@ const CartSideBar = () => {
   return (
     <div
       ref={shoppingContainerRef}
-      className="pointer-events-auto fixed right-0 top-0 z-50 flex h-[100dvh] w-[102vw] flex-col overflow-y-auto border-2 bg-white shadow-lg md:h-screen md:w-[400px]"
+      className="pointer-events-auto fixed right-0 top-0 z-50 flex h-[102dvh] w-[102vw] flex-col overflow-y-auto border-2 bg-white shadow-lg md:h-screen md:w-[400px]"
     >
       <div className="cursor-pointer p-5">
         <IoClose onClick={handleCloseClick} size={20} />
@@ -92,24 +92,25 @@ const CartSideBar = () => {
       <div className="fixed bottom-0 z-10 w-full border-t border-gray-200 bg-white p-5">
         <div className="mb-2 flex justify-between">
           <p>ORDER VALUE</p>
-          <p>{formattedTotalWithoutDelivery} €</p>
         </div>
         <div className="mb-2 flex justify-between">
           <p>DELIVERY</p>
-          <p>{deliveryCost.toFixed(2)} €</p>
+          <p>Free</p>
         </div>
         <div className="mb-4 flex justify-between font-bold">
           <p>Total order:</p>
           <p>{formattedTotalWithDelivery} €</p>
         </div>
-        <Link href="/checkout">
-          <button
-            onClick={() => setIsShoppingOpen(false)}
-            className="w-full border border-black bg-white py-2 text-sm uppercase transition hover:bg-black hover:text-white"
-          >
-            Basket
-          </button>
-        </Link>
+        <div className="flex flex-col gap-2">
+          <Link href="/checkout">
+            <button
+              onClick={() => setIsShoppingOpen(false)}
+              className="w-full border border-black bg-white py-2 text-sm uppercase transition hover:bg-black hover:text-white"
+            >
+              Checkout
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );
