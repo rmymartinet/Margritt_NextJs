@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { useFilteredData } from "../hooks/useFilteredData";
+import ArtworksContainer from "./components/ArtworksContainer";
 import Filter from "./components/Filter";
-import GalleryContainer from "./components/GalleryContainer";
 
-export default function Gallery() {
-  const [active, setActive] = useState("gallery");
+export default function Artworks() {
+  const [active, setActive] = useState("artworks");
   const { data } = useFilteredData(active);
 
   return (
@@ -14,7 +14,7 @@ export default function Gallery() {
       <div className="mb-10">
         <Filter active={active} setActive={setActive} />
       </div>
-      <GalleryContainer filter={active} item={data} />
+      <ArtworksContainer filter={active} item={data} />
     </section>
   );
 }

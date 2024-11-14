@@ -10,7 +10,7 @@ interface ImagesContainerProps {
   isOriginal?: boolean;
 }
 
-const GalleryContainer = ({
+const ArtworksContainer = ({
   filter,
   item,
   isCursorPointer,
@@ -21,7 +21,7 @@ const GalleryContainer = ({
       <div className="md:max-h-screen-sm flex flex-col gap-40 md:max-w-screen-sm">
         {item.map((imgData: Item, id: number) => (
           <div className="flex flex-col gap-10" key={id}>
-            {filter === "gallery" ? (
+            {filter === "artworks" ? (
               <Image
                 width={800}
                 height={800}
@@ -32,7 +32,7 @@ const GalleryContainer = ({
               />
             ) : (
               <div className="flex flex-col gap-6">
-                <Link href={`/gallery/${imgData.id}`}>
+                <Link href={`/artworks/${imgData.id}`}>
                   <Image
                     className={`${isCursorPointer && "cursor-pointer"}`}
                     width={800}
@@ -55,7 +55,7 @@ const GalleryContainer = ({
                   <p>{imgData.date}</p>
                 </div>
                 {filter === "project" && (
-                  <Link href={`/gallery/${imgData.id}`} className="self-end">
+                  <Link href={`/artworks/${imgData.id}`} className="self-end">
                     <div className="group flex items-center gap-2 text-blue-500">
                       <p className="cursor-pointer">Learn more</p>
                       <div className="icon transition-all duration-200 ease-in-out group-hover:translate-x-1">
@@ -73,4 +73,4 @@ const GalleryContainer = ({
   );
 };
 
-export default GalleryContainer;
+export default ArtworksContainer;

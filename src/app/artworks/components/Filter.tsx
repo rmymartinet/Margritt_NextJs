@@ -8,8 +8,8 @@ const Filter = ({ active, setActive }: FilterProps) => {
     setActive("project");
   };
 
-  const handleClickGallery = () => {
-    setActive("gallery");
+  const handleClickArtworks = () => {
+    setActive("artworks");
   };
 
   return (
@@ -17,10 +17,10 @@ const Filter = ({ active, setActive }: FilterProps) => {
       <div className="mt-12 flex pb-4 text-base font-medium">
         <div
           className={`border-b-[1px] px-10 pb-[5px] md:px-16 ${
-            active === "gallery" ? "border-black" : "border-gray-300"
+            active === "artworks" ? "border-black" : "border-gray-300"
           } cursor-pointer transition-all duration-500 ease-in-out`}
         >
-          <span onClick={handleClickGallery}>Gallery</span>
+          <span onClick={handleClickArtworks}>Artworks</span>
         </div>
         <div
           className={`cursor-pointer border-b-[1px] px-10 pb-[5px] md:px-16 ${
