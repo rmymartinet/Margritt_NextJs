@@ -1,8 +1,8 @@
 "use client";
 
 import Hero from "../components/Hero";
-import AboutInfos from "./components/AboutInfos";
-import Quote from "./components/Quote";
+import AboutInfos from "./_components/AboutInfos";
+import Quote from "./_components/Quote";
 
 export default function About() {
   return (
