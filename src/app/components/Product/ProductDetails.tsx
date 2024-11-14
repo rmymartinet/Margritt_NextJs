@@ -14,12 +14,10 @@ import QuantitySelector from "../QuantitySelector";
 
 const ProductDetails = ({
   product,
-  path,
-  isPrints,
+  category,
 }: {
-  isPrints?: boolean;
+  category: string;
   product: ProductItem;
-  path: string;
 }) => {
   const arrowRef = useRef(null);
   const [tempQuantity, setTempQuantity] = useState(1);
@@ -75,8 +73,8 @@ const ProductDetails = ({
   }, [tempQuantity]);
 
   const handleNavigateNextItem = useCallback(() => {
-    router.push(`/originals/${path}/${nextItem.id}`);
-  }, [router, nextItem, path]);
+    router.push(`/originals/${nextItem.id}`);
+  }, [router, nextItem]);
 
   return (
     <div className="flex flex-col items-center justify-between gap-4 px-2 md:px-0">
@@ -115,7 +113,7 @@ const ProductDetails = ({
           className="flex justify-between"
         />
       </div>
-      {isPrints ? (
+      {category === "prints" ? (
         <>
           <div className="flex items-center gap-5 self-end">
             {product?.stock === 0 ? (

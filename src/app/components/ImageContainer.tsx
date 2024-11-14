@@ -11,16 +11,9 @@ interface ImagesContainerProps {
   isCursorPointer?: boolean;
   isOriginal?: boolean;
   isTirage?: boolean;
-  path?: string;
 }
 
-const ImagesContainer = ({
-  item,
-  isCursorPointer,
-  isOriginal,
-  isTirage,
-  path,
-}: ImagesContainerProps) => {
+const ImagesContainer = ({ item, isCursorPointer }: ImagesContainerProps) => {
   const [tempQuantity, setTempQuantity] = useState(1);
   const { isShoppingOpen, setIsShoppingOpen } = useCart();
   const addToCart = useAddToCart();
@@ -32,7 +25,7 @@ const ImagesContainer = ({
       <div className="flex flex-col gap-40">
         {item.map((imgData: Item, id: number) => (
           <div className="flex flex-col gap-10" key={id}>
-            <Link href={`${path}/${imgData.id}`}>
+            <Link href={`shop/${imgData.id}`}>
               <Image
                 className={`${isCursorPointer && "cursor-pointer"}`}
                 objectFit="contain"
@@ -43,7 +36,11 @@ const ImagesContainer = ({
               />
             </Link>
             <div
-              className={`flex flex-col items-center md:flex-row md:px-10 ${isTirage ? "md:items-start" : "md:items-center"} md:justify-between md:gap-0`}
+              className={`flex flex-col items-center md:flex-row md:px-10 ${
+                item[0].category === "prints"
+                  ? "md:items-start"
+                  : "md:items-center"
+              } md:justify-between md:gap-0`}
             >
               <div className="flex flex-col gap-6">
                 <div className="md:text-md flex flex-wrap gap-3 lg:text-lg">
@@ -53,7 +50,7 @@ const ImagesContainer = ({
                   <span>|</span>
                   <p>{imgData.date}</p>
                 </div>
-                {isTirage && (
+                {item && item[0].category === "prints" && (
                   <div className="md:text-md flex justify-center gap-10 md:justify-start lg:text-lg">
                     <p>Price: {imgData.price} €</p>
                     {imgData.stock === 0 ? (
@@ -64,8 +61,8 @@ const ImagesContainer = ({
                   </div>
                 )}
               </div>
-              {isOriginal && (
-                <Link href={`${path}/${imgData.id}`}>
+              {item[0].category === "originals" && (
+                <Link href={`shop/${imgData.id}`}>
                   <div className="group flex items-center gap-2 text-blue-500">
                     <p className="cursor-pointer">Learn more</p>
                     <div className="icon transition-all duration-200 ease-in-out group-hover:translate-x-1">
@@ -74,7 +71,7 @@ const ImagesContainer = ({
                   </div>
                 </Link>
               )}
-              {isTirage && (
+              {item[0].category === "prints" && (
                 <div className="mt-5 flex items-center gap-6 text-blue-500 md:mt-0 md:flex-col md:items-start">
                   <AddToCartButton
                     product={imgData}
@@ -84,7 +81,7 @@ const ImagesContainer = ({
                     addToCart={addToCart}
                     setTempQuantity={setTempQuantity}
                   />
-                  <Link href={`${path}/${imgData.id}`}>
+                  <Link href={`${imgData.id}`}>
                     <div className="group flex items-center gap-2">
                       <p className="cursor-pointer">Learn more</p>
                       <div className="icon transition-all duration-200 ease-in-out group-hover:translate-x-1">

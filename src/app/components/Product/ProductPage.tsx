@@ -4,15 +4,7 @@ import useFilteredDataById from "../../hooks/useFilteredDataById";
 import ImageCarousel from "../ImagesCarousel";
 import ProductDetails from "./ProductDetails";
 
-const ProductPage = ({
-  isPrints,
-  id,
-  path,
-}: {
-  isPrints?: boolean;
-  id: string;
-  path: string;
-}) => {
+const ProductPage = ({ category, id }: { category: string; id: string }) => {
   const product = useFilteredDataById(id);
   const { isShoppingOpen } = useCart();
   if (!product) {
@@ -42,7 +34,7 @@ const ProductPage = ({
               />
             )}
           </div>
-          <ProductDetails isPrints={isPrints} path={path} product={product} />
+          <ProductDetails category={category} product={product} />
         </div>
       </section>
     </>
