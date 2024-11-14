@@ -70,7 +70,7 @@ export default function GalleryItem({ params }: { params: Params }) {
       </div>
       <div className="relative mt-28">
         <div ref={containerRef} className="flex flex-col gap-4">
-          <div className="flex flex-col gap-10 border-2 border-red-300 md:grid md:grid-cols-2">
+          <div className="flex flex-col gap-10 md:grid md:grid-cols-2">
             <Image
               width={5000}
               height={5000}
