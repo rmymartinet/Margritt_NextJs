@@ -26,7 +26,7 @@ export default function GalleryItem({ params }: { params: Params }) {
   const { width } = useWindowWidth();
 
   const handleBackToPreviousPage = () => {
-    router.push("/gallery");
+    router.push("/artworks");
   };
 
   // Filtrer les données basées sur l'ID du produit
@@ -70,10 +70,10 @@ export default function GalleryItem({ params }: { params: Params }) {
       </div>
       <div className="relative mt-28">
         <div ref={containerRef} className="flex flex-col gap-4">
-          <div className="flex flex-col gap-10 md:grid md:grid-cols-2">
+          <div className="flex flex-col gap-10 border-2 border-red-300 md:grid md:grid-cols-2">
             <Image
-              width={500}
-              height={500}
+              width={5000}
+              height={5000}
               className="h-full w-full object-cover"
               src={datas?.imageUrls[0]}
               alt=""
@@ -113,8 +113,8 @@ export default function GalleryItem({ params }: { params: Params }) {
                     return (
                       <Image
                         key={index}
-                        width={500}
-                        height={500}
+                        width={5000}
+                        height={5000}
                         className="object-cover"
                         src={url}
                         alt=""

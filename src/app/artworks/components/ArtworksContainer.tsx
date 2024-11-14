@@ -23,8 +23,8 @@ const ArtworksContainer = ({
           <div className="flex flex-col gap-10" key={id}>
             {filter === "artworks" ? (
               <Image
-                width={800}
-                height={800}
+                width={5000}
+                height={5000}
                 layout="responsive"
                 objectFit="contain"
                 src={imgData.imageUrls[0]}
@@ -35,8 +35,8 @@ const ArtworksContainer = ({
                 <Link href={`/artworks/${imgData.id}`}>
                   <Image
                     className={`${isCursorPointer && "cursor-pointer"}`}
-                    width={800}
-                    height={800}
+                    width={5000}
+                    height={5000}
                     layout="responsive"
                     objectFit="contain"
                     src={imgData.imageUrls[0]}
