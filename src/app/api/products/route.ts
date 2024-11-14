@@ -30,11 +30,12 @@ function getErrorMessage(error: unknown) {
 export const GET = async () => {
   try {
     await prisma.$connect();
-    const [originalsData, galleryData] = await Promise.all([
+    const [originalsData, printsData, galleryData] = await Promise.all([
       prisma.originals.findMany(),
+      prisma.prints.findMany(),
       prisma.gallery.findMany(),
     ]);
-    const data = [...originalsData, ...galleryData];
+    const data = [...originalsData, ...printsData, ...galleryData];
     return new NextResponse(JSON.stringify(data), { status: 200 });
   } catch (error) {
     console.error("Error fetching pants:", error);
