@@ -16,22 +16,9 @@ import { IoCloseOutline } from "react-icons/io5";
 
 export default function MobileNav() {
   const { user, isLoaded, isSignedIn } = useUser();
-
-  const [showOriginals, setShowOriginals] = useState(false);
-  const [showPrints, setShowPrints] = useState(false);
   const [isCLicked, setIsClicked] = useState(false);
   const menuRef = useRef(null);
-  const originalsMenuRef = useRef(null);
-  const printsMenuRef = useRef(null);
   const linkContainerRef = useRef<HTMLDivElement>(null);
-
-  const toggleOriginals = () => {
-    setShowOriginals((prev) => !prev);
-  };
-
-  const togglePrints = () => {
-    setShowPrints((prev) => !prev);
-  };
 
   useEffect(() => {
     gsap.set(menuRef.current, { x: "-100%" });
@@ -54,24 +41,6 @@ export default function MobileNav() {
       });
     }
   }, [isCLicked]);
-
-  useGSAP(() => {
-    if (showOriginals) {
-      gsap.to(originalsMenuRef.current, {
-        height: "auto",
-        duration: 0.5,
-        ease: "power4.out",
-        autoAlpha: 1,
-      });
-    } else {
-      gsap.to(originalsMenuRef.current, {
-        height: 0,
-        duration: 0.5,
-        ease: "power4.out",
-        autoAlpha: 0,
-      });
-    }
-  }, [showOriginals]);
 
   useGSAP(() => {
     if (isCLicked) {
@@ -175,17 +144,24 @@ export default function MobileNav() {
           </Link>
           <Link
             onClick={() => handleClickCloseMenu()}
-            href="/gallery"
-            className="mb-2 text-4xl font-semibold"
-          >
-            Gallery
-          </Link>
-          <Link
-            onClick={() => handleClickCloseMenu()}
             href="/about"
             className="mb-2 text-4xl font-semibold"
           >
             About
+          </Link>
+          <Link
+            onClick={() => handleClickCloseMenu()}
+            href="/artworks"
+            className="mb-2 text-4xl font-semibold"
+          >
+            Artworks
+          </Link>
+          <Link
+            onClick={() => handleClickCloseMenu()}
+            href="/shop"
+            className="mb-2 text-4xl font-semibold"
+          >
+            Shop
           </Link>
           <Link
             onClick={() => handleClickCloseMenu()}
@@ -197,58 +173,7 @@ export default function MobileNav() {
           {isLoaded && user?.publicMetadata.role === "admin" && (
             <Link href="/admin">Admin</Link>
           )}
-          <div className="relative mb-2">
-            <button
-              onClick={toggleOriginals}
-              className="text-4xl font-semibold"
-            >
-              Originals
-            </button>
-            {showOriginals && (
-              <div ref={originalsMenuRef} className="mt-2 p-2 text-xl">
-                <Link
-                  onClick={() => handleClickCloseMenu()}
-                  href="/originals/large"
-                  className="block p-2 hover:opacity-80"
-                >
-                  Large Format
-                </Link>
-                <Link
-                  onClick={() => handleClickCloseMenu()}
-                  href="/originals/medium"
-                  className="block p-2 hover:opacity-80"
-                >
-                  Medium Format
-                </Link>
-              </div>
-            )}
-          </div>
-
-          <div className="relative">
-            <button onClick={togglePrints} className="text-4xl font-semibold">
-              Prints
-            </button>
-            {showPrints && (
-              <div ref={printsMenuRef} className="mt-2 p-2 text-xl">
-                <Link
-                  onClick={() => handleClickCloseMenu()}
-                  href="/prints/large"
-                  className="block p-2 hover:opacity-80"
-                >
-                  Large Format
-                </Link>
-                <Link
-                  onClick={() => handleClickCloseMenu()}
-                  href="/prints/medium"
-                  className="block p-2 hover:opacity-80"
-                >
-                  Medium Format
-                </Link>
-              </div>
-            )}
-          </div>
         </div>
-
         <Link
           href={"/checkout"}
           className="absolute top-40 flex w-full justify-between px-10"
