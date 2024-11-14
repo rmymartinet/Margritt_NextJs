@@ -24,7 +24,7 @@ model User {
   purchases         Purchase[]
 }
 
-model Gallery {
+model Artworks {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   category  String
   title     String
@@ -70,7 +70,7 @@ model Purchase {
   id                String   @id @default(auto()) @map("_id") @db.ObjectId
   firstName         String?
   lastName          String?
-  originalId        String   @db.ObjectId
+  printsId          String   @db.ObjectId
   quantity          Int
   totalPrice        Int
   email             String
