@@ -26,7 +26,7 @@ const ImagesContainer = ({ item, isCursorPointer }: ImagesContainerProps) => {
         {item.map((imgData: Item, id: number) => (
           <div className="flex flex-col gap-10" key={id}>
             <Link href={`shop/${imgData.id}`}>
-              <div className="h-max w-full md:px-10 lg:px-0">
+              <div className="h-max w-full md:px-10 lg:w-[90vh] lg:px-0">
                 <Image
                   className={`${isCursorPointer && "cursor-pointer"}`}
                   objectFit="contain"
