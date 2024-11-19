@@ -77,9 +77,9 @@ const ProductDetails = ({
   }, [router, nextItem]);
 
   return (
-    <div className="flex flex-col items-center justify-between gap-4 px-2 md:px-0">
+    <div className="flex flex-col items-center justify-between gap-4 px-2 md:px-0 lg:w-1/2">
       <div className="flex flex-col items-center gap-1">
-        <h1>
+        <h1 className="text-xl">
           Series {product?.serie} - {product?.title}
         </h1>
         <p className="text-center opacity-40">
