@@ -30,12 +30,11 @@ function getErrorMessage(error: unknown) {
 export const GET = async () => {
   try {
     await prisma.$connect();
-    const [originalsData, printsData, artworksData] = await Promise.all([
-      prisma.originals.findMany(),
+    const [printsData, artworksData] = await Promise.all([
       prisma.prints.findMany(),
       prisma.artworks.findMany(),
     ]);
-    const data = [...originalsData, ...printsData, ...artworksData];
+    const data = [...printsData, ...artworksData];
 
     return new NextResponse(JSON.stringify(data), { status: 200 });
   } catch (error) {
