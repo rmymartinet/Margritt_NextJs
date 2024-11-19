@@ -20,6 +20,7 @@ const DeleteComponent = () => {
         }
 
         const data = await response.json();
+
         setItems(data);
         setLoading(false);
       } catch (err) {
@@ -45,13 +46,14 @@ const DeleteComponent = () => {
       }
       // Supprimer l'article de l'état local après suppression
       setItems(items.filter((item) => item.id !== id));
-      console.log("Article supprimé avec succès");
     } catch (err) {
       return new NextResponse(JSON.stringify({ error: err }), {
         status: 500,
       });
     }
   };
+
+  console.log("Items:", items);
 
   if (loading) return <div>Chargement des articles...</div>;
 
@@ -66,24 +68,24 @@ const DeleteComponent = () => {
         <ul className="flex w-full flex-col gap-4">
           {items.map((item) => (
             <li
-              key={item.id}
+              key={item?.id}
               className="flex items-center justify-between border-b pb-2"
             >
               <div className="flex items-center gap-20">
                 <Image
-                  src={item.imageUrls[0]}
+                  src={item?.imageUrls[0]}
                   width={100}
                   height={100}
                   alt=""
                 />
                 <div className="grid grid-cols-2 items-center gap-4">
-                  <strong>{item.title}</strong> - {item.price}€ -{" "}
-                  {item.quantity} pièces
+                  <strong>{item?.title}</strong> - {item?.price}€ -{" "}
+                  {item?.quantity} pièces
                 </div>
               </div>
               <button
                 onClick={() =>
-                  item.category && handleDelete(item.id, item.category)
+                  item.category && handleDelete(item?.id, item?.category)
                 }
                 className="rounded bg-red-500 p-2 text-white"
               >
