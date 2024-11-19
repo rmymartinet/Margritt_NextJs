@@ -17,8 +17,8 @@ const ProductPage = ({ category, id }: { category: string; id: string }) => {
       <section
         className={`flex items-start justify-center ${isShoppingOpen ? "opacity-60" : "opacity-100"}`}
       >
-        <div className="lg:grid-cols-gridProductPage grid w-screen grid-rows-2 gap-5 md:gap-20 lg:grid lg:grid-rows-none">
-          <div className="relative flex w-[90vh] items-center justify-center">
+        <div className="flex flex-col items-center gap-5 md:gap-20">
+          <div className="relative flex w-screen items-center justify-center">
             {product && product.imageUrls.length > 2 ? (
               <div className="w-full">
                 <ImageCarousel imageUrls={product.imageUrls} />
