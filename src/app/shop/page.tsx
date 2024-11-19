@@ -45,9 +45,11 @@ export default function Shop() {
           Prints are{" "}
           <span className="border-b-8 border-green-400">Available</span>
         </h1>
-        <p className="text-slate-400">
-          The original is the authentic artwork. The print is a more accessible
-          reproduction
+        <p className="text-pretty text-center text-slate-400 md:w-[70%]">
+          Prints are high-quality reproductions of my original works, perfect
+          for appreciating every detail and nuance of my creations. If you’d
+          like to know more about one of my original pieces, feel free to
+          contact me by email
         </p>
       </div>
       <Filter
