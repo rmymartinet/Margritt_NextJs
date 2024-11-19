@@ -42,8 +42,7 @@ export default function Shop() {
     <div className="flex flex-col items-center">
       <div className="mb-40 flex flex-col items-center justify-center gap-10 lg:gap-20">
         <h1 className="text-center text-4xl lg:text-8xl">
-          Originals and Prints{" "}
-          <span className="border-b-8 border-green-400">Availables</span>
+          Prints <span className="border-b-8 border-green-400">Availables</span>
         </h1>
         <p className="text-slate-400">
           The original is the authentic artwork. The print is a more accessible
