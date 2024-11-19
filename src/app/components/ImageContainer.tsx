@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
@@ -13,7 +12,7 @@ interface ImagesContainerProps {
   isTirage?: boolean;
 }
 
-const ImagesContainer = ({ item, isCursorPointer }: ImagesContainerProps) => {
+const ImagesContainer = ({ item }: ImagesContainerProps) => {
   const [tempQuantity, setTempQuantity] = useState(1);
   const { isShoppingOpen, setIsShoppingOpen } = useCart();
   const addToCart = useAddToCart();
@@ -22,20 +21,16 @@ const ImagesContainer = ({ item, isCursorPointer }: ImagesContainerProps) => {
     <section
       className={`flex min-h-screen justify-center ${isShoppingOpen ? "opacity-60" : "opacity-100"}`}
     >
-      <div className="flex flex-col gap-40">
+      <div className="flex flex-col items-center gap-40">
         {item.map((imgData: Item, id: number) => (
-          <div className="flex flex-col gap-10" key={id}>
+          <div className="flex w-full flex-col gap-10 lg:w-[80%]" key={id}>
             <Link href={`shop/${imgData.id}`}>
-              <div className="h-max w-full md:px-10 lg:w-[90vh] lg:px-0">
-                <Image
-                  className={`${isCursorPointer && "cursor-pointer"}`}
-                  objectFit="contain"
-                  src={imgData.imageUrls[0]}
-                  alt="Image"
-                  width={10000}
-                  height={10000}
-                />
-              </div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={imgData.imageUrls[0]}
+                alt="Image"
+                className="h-full w-full cursor-pointer object-contain"
+              />
             </Link>
             <div
               className={`flex flex-col items-center md:flex-row md:px-10 ${
@@ -83,7 +78,7 @@ const ImagesContainer = ({ item, isCursorPointer }: ImagesContainerProps) => {
                     addToCart={addToCart}
                     setTempQuantity={setTempQuantity}
                   />
-                  <Link href={`${imgData.id}`}>
+                  <Link href={`shop/${imgData.id}`}>
                     <div className="group flex items-center gap-2">
                       <p className="cursor-pointer">Learn more</p>
                       <div className="icon transition-all duration-200 ease-in-out group-hover:translate-x-1">
