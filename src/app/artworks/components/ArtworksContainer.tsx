@@ -13,14 +13,16 @@ const ArtworksContainer = ({ item }: ImagesContainerProps) => {
   return (
     <section className="flex justify-center">
       {/*AJOUT DE HEROSUBCONTENT*/}
-      <div className="md:max-h-screen-md flex flex-col gap-40 md:max-w-screen-sm">
+      <div className="flex flex-col gap-20 lg:gap-72">
         {item.map((imgData: Item, id: number) => (
-          <div className="flex flex-col gap-10" key={id}>
+          <div
+            className="flex max-h-[80vh] max-w-[80vw] flex-col gap-10"
+            key={id}
+          >
             <Image
+              className="h-full w-full object-contain"
               width={5000}
               height={5000}
-              layout="responsive"
-              objectFit="contain"
               src={imgData.imageUrls[0]}
               alt="Image"
             />
