@@ -5,6 +5,7 @@ import { Item } from "../../types/dataTypes";
 import { useCart } from "../context/CardContext";
 import { useAddToCart } from "../hooks/useAddToCart";
 import AddToCartButton from "./AddToCartButton";
+import Image from "next/image";
 interface ImagesContainerProps {
   item: Item[];
   isCursorPointer?: boolean;
@@ -23,13 +24,15 @@ const ImagesContainer = ({ item }: ImagesContainerProps) => {
     >
       <div className="flex flex-col items-center gap-40">
         {item.map((imgData: Item, id: number) => (
-          <div className="flex w-full flex-col gap-10 lg:w-[80%]" key={id}>
+          <div className="flex w-full flex-col gap-10 lg:w-[85%]" key={id}>
             <Link href={`shop/${imgData.id}`}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={imgData.imageUrls[0]}
                 alt="Image"
                 className="h-full w-full cursor-pointer object-contain"
+                width={5000}
+                height={5000}
               />
             </Link>
             <div
