@@ -9,7 +9,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { IoClose } from "react-icons/io5";
 
 gsap.registerPlugin(Draggable, useGSAP);
 
@@ -33,8 +32,6 @@ export default function GalleryItem({ params }: { params: Params }) {
   const filteredDataById = data.filter((item) => item.id === id);
   const datas = filteredDataById[0];
 
-  console.log(datas);
-
   const category = filteredDataById[0]?.category;
   const existingItemsSameCategory = data.filter(
     (item) => item.category === category,
@@ -57,13 +54,13 @@ export default function GalleryItem({ params }: { params: Params }) {
       <div className="fixed -top-20 left-0 z-50 flex w-full items-center justify-between">
         <div
           onClick={() => handleBackToPreviousPage()}
-          className="grid h-5 w-5 cursor-pointer place-content-center rounded-full bg-black text-white"
+          className="grid cursor-pointer place-content-center rounded-lg bg-black px-2 py-1 text-white"
         >
-          <IoClose size={14} />
+          Back
         </div>
         <div
           onClick={() => handleNextProject()}
-          className="grid cursor-pointer place-content-center rounded-xl bg-black px-2 py-1 text-sm text-white"
+          className="grid cursor-pointer place-content-center rounded-lg bg-black px-2 py-1 text-white"
         >
           Next project
         </div>
@@ -78,11 +75,14 @@ export default function GalleryItem({ params }: { params: Params }) {
               src={datas?.imageUrls[0]}
               alt=""
             />
-            <div className="flex flex-col items-center justify-between gap-8 px-4">
+            <div
+              className="grid gap-8 overflow-hidden px-4"
+              style={{ gridTemplateRows: "max-content 1fr max-content" }}
+            >
               <p className="text-pretty">{datas?.text}</p>
-              <div className="h-[500px]">
+              <div className="h-[70vh]">
                 <video
-                  className="h-full w-full object-cover"
+                  className="h-full w-full rounded-xl object-cover"
                   loop
                   muted
                   autoPlay
