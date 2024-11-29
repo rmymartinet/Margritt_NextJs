@@ -7,40 +7,39 @@ import ImagesContainer from "../components/ImageContainer";
 import { useFilteredData } from "../hooks/useFilteredData";
 
 export default function Shop() {
-  const [filters, setFilters] = useState({
-    category: "prints",
-    format: "",
-  });
-  const { data } = useFilteredData(filters.category);
+  const [category, setCategory] = useState("prints");
+  const [format, setFormat] = useState("all");
+  const { data } = useFilteredData(category);
   const [items, setItems] = useState<Item[]>([]);
 
-  useEffect(() => {
-    const filteredItems = data.filter((item: Item) => {
-      const matchCategory = filters.category
-        ? item.category === filters.category
-        : true;
+  const filterDataByFormat = (data: Item[]) => {
+    let dataFiltered = data;
+    switch (format) {
+      case "all":
+        dataFiltered = data;
+        break;
+      case "large-formats":
+        dataFiltered = data.filter((item) => item.format === "large-formats");
+        break;
+      case "medium-formats":
+        dataFiltered = data.filter((item) => item.format === "medium-formats");
+        break;
+      default:
+        dataFiltered = data;
+    }
 
-      const matchFormat =
-        filters.format === "" || filters.format === "all"
-          ? true
-          : item.format === filters.format;
-
-      return matchCategory && matchFormat;
-    });
-
-    setItems(filteredItems);
-  }, [data, filters]);
-
-  const updateFilters = (type: "category" | "format", value: string) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [type]: value,
-    }));
+    setItems(dataFiltered);
   };
 
+  useEffect(() => {
+    if (data) {
+      filterDataByFormat(data);
+    }
+  }, [data, format]);
+
   return (
-    <div className="flex flex-col items-center">
-      <div className="mb-40 flex flex-col items-center justify-center gap-10 lg:gap-20">
+    <div className="flex min-h-screen flex-col items-center">
+      <div className="mb-20 flex flex-col items-center justify-center gap-10 lg:gap-20">
         <h1 className="text-center text-4xl lg:text-8xl">
           Prints are{" "}
           <span className="border-b-8 border-green-400">Available</span>
@@ -53,9 +52,12 @@ export default function Shop() {
         </p>
       </div>
       <Filter
-        setFilters={updateFilters}
-        selectedCategory={filters.category}
-        selectedFormat={filters.format}
+        categories={["prints"]}
+        setCategory={setCategory}
+        categoryState={category}
+        formats={["all", "large-formats", "medium-formats"]}
+        setFormat={setFormat}
+        formatsState={format}
       />
       <ImagesContainer item={items} />
     </div>
