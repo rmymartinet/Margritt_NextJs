@@ -1,5 +1,4 @@
 const FilterItems = ({
-  isOriginalsCategory,
   isActive,
   filterName,
 }: {
@@ -9,9 +8,9 @@ const FilterItems = ({
 }) => {
   return (
     <span
-      className={`cursor-pointer rounded-full border p-2 shadow-inner ${isActive && !isOriginalsCategory ? "border-blue-400 bg-blue-400 text-white" : ""}`}
+      className={`cursor-pointer rounded-full border p-2 shadow-inner ${isActive ? "border-blue-400 bg-blue-400 text-white" : ""}`}
     >
-      {filterName}
+      {filterName.charAt(0).toUpperCase() + filterName.slice(1)}
     </span>
   );
 };

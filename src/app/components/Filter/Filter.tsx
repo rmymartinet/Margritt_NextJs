@@ -1,22 +1,30 @@
 import FilterItems from "./FilterItems";
 
 interface FilterProps {
-  setFilters: (type: "category" | "format", value: string) => void;
-  selectedCategory: string;
-  selectedFormat: string;
+  setCategory: (value: string) => void;
+  categories: string[];
+  categoryState: string;
+  setFormat?: (value: string) => void;
+  formats?: string[];
+  formatsState?: string;
 }
 
 const Filter = ({
-  setFilters,
-  selectedCategory,
-  selectedFormat,
+  categories,
+  setCategory,
+  categoryState,
+  formats,
+  setFormat,
+  formatsState,
 }: FilterProps) => {
-  const handleFilter = (type: "category" | "format", value: string) => {
-    // Si "originals" est sélectionné pour la catégorie, réinitialise le format
-    if (type === "category" && value === "originals") {
-      setFilters("format", ""); // Réinitialise le format
+  const handleFilterCategory = (value: string) => {
+    setCategory(value);
+  };
+
+  const handleFilterFormat = (value: string) => {
+    if (setFormat) {
+      setFormat(value);
     }
-    setFilters(type, value);
   };
 
   return (
@@ -26,33 +34,33 @@ const Filter = ({
         <div className="flex flex-col gap-10 md:flex-row md:gap-20">
           <div className="flex items-center gap-4 md:gap-2">
             <p>Category </p>
-
-            <div onClick={() => handleFilter("category", "prints")}>
-              <FilterItems
-                filterName="Prints"
-                isActive={selectedCategory === "prints"}
-              />
-            </div>
-          </div>
-          <div className="flex items-center gap-4 md:gap-2">
-            <p>Formats </p>
-            <div onClick={() => handleFilter("format", "")}>
-              <FilterItems filterName="All" isActive={selectedFormat === ""} />
-            </div>
-            <div onClick={() => handleFilter("format", "large-formats")}>
-              <FilterItems
-                filterName="Large"
-                isActive={selectedFormat === "large-formats"}
-              />
-            </div>
-            <div onClick={() => handleFilter("format", "medium-formats")}>
-              <FilterItems
-                filterName="Medium"
-                isActive={selectedFormat === "medium-formats"}
-              />
-            </div>
+            {Array.isArray(categories) &&
+              categories.length > 0 &&
+              categories.map((item, index) => (
+                <div key={index} onClick={() => handleFilterCategory(item)}>
+                  <FilterItems
+                    key={index}
+                    filterName={item}
+                    isActive={categoryState === item}
+                  />
+                </div>
+              ))}
           </div>
         </div>
+        {formats && formats?.length > 0 && (
+          <div className="flex items-center gap-4 md:gap-2">
+            <p>Formats </p>
+            {formats.map((item, index) => (
+              <div key={index} onClick={() => handleFilterFormat(item)}>
+                <FilterItems
+                  key={index}
+                  filterName={item}
+                  isActive={formatsState === item}
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
