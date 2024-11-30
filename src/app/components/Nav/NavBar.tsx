@@ -60,7 +60,7 @@ export default function Nav() {
   }, [isSignedIn, user]);
 
   return (
-    <nav className="z-50 mb-48 flex items-center justify-center p-2 pt-10">
+    <nav className="z-50 mb-48 flex items-center justify-center p-2 pt-4">
       <div className="text-md flex gap-20 p-4 font-semibold">
         <Link href="/">Home</Link>
         <Link href="/about">About</Link>
