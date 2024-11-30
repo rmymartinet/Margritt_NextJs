@@ -9,13 +9,14 @@ import Filter from "../components/Filter/Filter";
 import { Item } from "@/types/dataTypes";
 
 export default function Artworks() {
-  const { data } = useFilteredData("");
   const [category, setCategory] = useState("maxi");
+  const { data } = useFilteredData(category);
+  const [series, setSeries] = useState("all");
   const maxSizeRef = useRef(null);
   const { width } = useWindowWidth();
   const [items, setItems] = useState<Item[]>([]);
 
-  const filterDataByFormat = (data: Item[]) => {
+  const filterData = (data: Item[]) => {
     let dataFiltered = data;
     switch (category) {
       case "maxi":
@@ -28,14 +29,28 @@ export default function Artworks() {
         dataFiltered = data;
     }
 
+    switch (series) {
+      case "Bibulle":
+        dataFiltered = dataFiltered.filter((item) => item.serie === "Bibulle");
+        break;
+      case "Futurama":
+        dataFiltered = dataFiltered.filter((item) => item.serie === "Futurama");
+        break;
+      default:
+        break;
+    }
+
     setItems(dataFiltered);
   };
 
+  console.log(data);
+
   useEffect(() => {
     if (data) {
-      filterDataByFormat(data);
+      filterData(data);
+      console.log(data);
     }
-  }, [data, category]);
+  }, [data, category, series]);
 
   useEffect(() => {
     if (width > 768 && category === "maxi") {
@@ -72,6 +87,9 @@ export default function Artworks() {
           categories={["maxi", "mini"]}
           setCategory={setCategory}
           categoryState={category}
+          series={["all", "Bibulle", "Futurama"]}
+          setSeries={setSeries}
+          seriesState={series}
         />
       </div>
       <ArtworksContainer item={items} />

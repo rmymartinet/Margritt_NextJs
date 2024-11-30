@@ -9,23 +9,35 @@ import { useFilteredData } from "../hooks/useFilteredData";
 export default function Shop() {
   const [category, setCategory] = useState("prints");
   const [format, setFormat] = useState("all");
+  const [series, setSeries] = useState("all");
   const { data } = useFilteredData(category);
   const [items, setItems] = useState<Item[]>([]);
 
-  const filterDataByFormat = (data: Item[]) => {
+  const filterData = (data: Item[]) => {
     let dataFiltered = data;
+
+    // Filtrage par format
     switch (format) {
-      case "all":
-        dataFiltered = data;
-        break;
       case "large":
-        dataFiltered = data.filter((item) => item.format === "large");
+        dataFiltered = dataFiltered.filter((item) => item.format === "large");
         break;
       case "medium":
-        dataFiltered = data.filter((item) => item.format === "medium");
+        dataFiltered = dataFiltered.filter((item) => item.format === "medium");
         break;
       default:
-        dataFiltered = data;
+        break;
+    }
+
+    // Filtrage par série
+    switch (series) {
+      case "Bibulle":
+        dataFiltered = dataFiltered.filter((item) => item.serie === "Bibulle");
+        break;
+      case "Futurama":
+        dataFiltered = dataFiltered.filter((item) => item.serie === "Futurama");
+        break;
+      default:
+        break;
     }
 
     setItems(dataFiltered);
@@ -33,9 +45,9 @@ export default function Shop() {
 
   useEffect(() => {
     if (data) {
-      filterDataByFormat(data);
+      filterData(data);
     }
-  }, [data, format]);
+  }, [data, format, series]);
 
   return (
     <div className="flex min-h-screen flex-col items-center">
@@ -58,6 +70,9 @@ export default function Shop() {
         formats={["all", "large", "medium"]}
         setFormat={setFormat}
         formatsState={format}
+        series={["all", "Bibulle", "Futurama"]}
+        setSeries={setSeries}
+        seriesState={series}
       />
       <ImagesContainer item={items} />
     </div>
