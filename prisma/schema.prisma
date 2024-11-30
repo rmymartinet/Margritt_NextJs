@@ -28,6 +28,7 @@ model Artworks {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   category  String
   title     String
+  serie     String
   text      String?
   dimension String
   date      String
