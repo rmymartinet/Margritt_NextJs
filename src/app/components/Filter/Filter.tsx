@@ -7,6 +7,10 @@ interface FilterProps {
   setFormat?: (value: string) => void;
   formats?: string[];
   formatsState?: string;
+
+  setSeries?: (value: string) => void;
+  series?: string[];
+  seriesState?: string;
 }
 
 const Filter = ({
@@ -16,14 +20,22 @@ const Filter = ({
   formats,
   setFormat,
   formatsState,
+  setSeries,
+  series,
+  seriesState,
 }: FilterProps) => {
   const handleFilterCategory = (value: string) => {
     setCategory(value);
   };
-
   const handleFilterFormat = (value: string) => {
     if (setFormat) {
       setFormat(value);
+    }
+  };
+
+  const handleFilterSeries = (value: string) => {
+    if (setSeries) {
+      setSeries(value);
     }
   };
 
@@ -56,6 +68,21 @@ const Filter = ({
                   key={index}
                   filterName={item}
                   isActive={formatsState === item}
+                />
+              </div>
+            ))}
+          </div>
+        )}
+
+        {series && series?.length > 0 && (
+          <div className="flex items-center gap-4 md:gap-2">
+            <p>Series </p>
+            {series.map((item, index) => (
+              <div key={index} onClick={() => handleFilterSeries(item)}>
+                <FilterItems
+                  key={index}
+                  filterName={item}
+                  isActive={seriesState === item}
                 />
               </div>
             ))}
