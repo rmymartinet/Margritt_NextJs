@@ -18,11 +18,11 @@ export default function Shop() {
       case "all":
         dataFiltered = data;
         break;
-      case "large-formats":
-        dataFiltered = data.filter((item) => item.format === "large-formats");
+      case "large":
+        dataFiltered = data.filter((item) => item.format === "large");
         break;
-      case "medium-formats":
-        dataFiltered = data.filter((item) => item.format === "medium-formats");
+      case "medium":
+        dataFiltered = data.filter((item) => item.format === "medium");
         break;
       default:
         dataFiltered = data;
@@ -55,7 +55,7 @@ export default function Shop() {
         categories={["prints"]}
         setCategory={setCategory}
         categoryState={category}
-        formats={["all", "large-formats", "medium-formats"]}
+        formats={["all", "large", "medium"]}
         setFormat={setFormat}
         formatsState={format}
       />
