@@ -1,5 +1,6 @@
 "use client";
 
+import { useZoom } from "@/app/context/ZoomProvider";
 import {
   SignInButton,
   SignedIn,
@@ -13,6 +14,7 @@ import { FaShoppingCart } from "react-icons/fa";
 
 export default function Nav() {
   const { user, isLoaded, isSignedIn } = useUser();
+  const { isZoom } = useZoom();
 
   useEffect(() => {
     if (isSignedIn && user) {
@@ -60,20 +62,34 @@ export default function Nav() {
   }, [isSignedIn, user]);
 
   return (
-    <nav className="z-50 mb-48 flex items-center justify-center p-2 pt-4">
-      <div className="text-md flex gap-20 p-4 font-semibold">
-        <Link href="/">Home</Link>
-        <Link href="/about">About</Link>
-        <Link href="/artworks">Artworks</Link>
-        <Link href="/shop">Shop</Link>
-        <Link href="/exhibitions">Exhibitions</Link>
-        <Link href="/contact">Contact</Link>
+    <nav
+      className={`relative left-0 top-0 z-50 mb-[20vh] flex w-full items-center justify-center ${isZoom && "blur-lg"} p-2 pt-4`}
+    >
+      <div className="flex gap-20 p-4 text-lg font-semibold">
+        <Link href="/" className="p-2">
+          Home
+        </Link>
+        <Link href="/about" className="p-2">
+          About
+        </Link>
+        <Link href="/artworks" className="p-2">
+          Artworks
+        </Link>
+        <Link href="/shop" className="rounded-full bg-blue-400 p-2 text-white">
+          Shop
+        </Link>
+        <Link href="/exhibitions" className="p-2">
+          Exhibitions
+        </Link>
+        <Link href="/contact" className="p-2">
+          Contact
+        </Link>
 
         {isLoaded && user?.publicMetadata.role === "admin" && (
           <Link href="/admin">Admin</Link>
         )}
       </div>
-      <div className="absolute right-10 flex items-center gap-20 p-5">
+      <div className="absolute right-4 flex items-center gap-10 rounded-xl bg-black px-4 py-2 text-white">
         <SignedOut>
           <SignInButton />
         </SignedOut>
