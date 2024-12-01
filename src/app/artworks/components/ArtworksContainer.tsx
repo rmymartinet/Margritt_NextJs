@@ -37,7 +37,7 @@ const ArtworksContainer = ({ item }: ImagesContainerProps) => {
               }`}
               width={5000}
               height={5000}
-              src={imgData.thumbnailUrl}
+              src={imgData.thumbnailUrl || ""}
               alt="Image"
               onLoadingComplete={() => handleImageLoad(imgData.id)}
             />
