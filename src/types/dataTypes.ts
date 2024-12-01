@@ -29,6 +29,7 @@ export interface Item {
   tempQuantity?: number;
   finalPrice?: number;
   materials?: string;
+  thumbnailUrl?: string;
 }
 
 export interface CustomerAddress {
