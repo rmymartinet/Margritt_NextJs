@@ -25,7 +25,7 @@ const QuantitySelector = ({
           ? "cursor-not-allowed text-gray-400"
           : "cursor-pointer active:scale-110"
       }`}
-      size={25}
+      size={20}
       onClick={!isDisabled ? onClick : undefined}
       aria-label={ariaLabel}
       style={{ userSelect: "none" }}
@@ -33,7 +33,7 @@ const QuantitySelector = ({
   );
 
   return (
-    <div className="flex place-items-center gap-4">
+    <div className="flex items-center gap-4">
       {renderIcon(
         IoIosRemoveCircle,
         onRemove,
@@ -46,7 +46,7 @@ const QuantitySelector = ({
         value={isQuantityGreaterThanStock ? 0 : quantity}
         min="1"
         readOnly
-        className="w-20 rounded-full border-2 border-black bg-inherit pl-3 text-center text-lg"
+        className="w-14 rounded-full border border-black bg-inherit pl-3 text-center text-lg"
         aria-label="Selected quantity"
       />
 
