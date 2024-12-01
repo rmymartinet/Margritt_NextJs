@@ -82,7 +82,7 @@ const ProductDetails = ({
   }, [router, nextItem]);
 
   useEffect(() => {
-    const verticalPostion = (ref) => {
+    const verticalPostion = (ref: React.RefObject<HTMLDivElement>) => {
       gsap.fromTo(
         ref.current,
         {
@@ -93,7 +93,7 @@ const ProductDetails = ({
           opacity: 1,
           y: 0,
           duration: 1,
-          ease: "power2.Out",
+          ease: "power2.out",
         },
       );
     };
@@ -127,7 +127,7 @@ const ProductDetails = ({
           opacity: 1,
           y: 0,
           duration: 1,
-          ease: "power2.Out",
+          ease: "power2.out",
         },
       );
     }

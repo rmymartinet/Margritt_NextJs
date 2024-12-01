@@ -31,7 +31,7 @@ const ImageCarousel = ({
           opacity: 1,
           x: 0,
           duration: 1.5,
-          ease: "power2.Out",
+          ease: "power2.out",
         },
       );
     });

@@ -45,7 +45,7 @@ export default function OriginalItem({ params }: OriginalItemProps) {
         opacity: 0,
         x: 1000,
         duration: 1.5,
-        ease: "power2.Out",
+        ease: "power2.out",
       });
       setHasAnimated(true);
     }
