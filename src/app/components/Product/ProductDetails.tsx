@@ -1,23 +1,27 @@
+"use client";
+
 import { useCart } from "@/app/context/CardContext";
 import { useAddToCart } from "@/app/hooks/useAddToCart";
 import { useFilteredData } from "@/app/hooks/useFilteredData";
 import { ProductItem } from "@/types/dataTypes";
 import gsap from "gsap";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import Swal from "sweetalert2";
 import AddToCartButton from "../AddToCartButton";
 import InfosItem from "../InfosItem";
 import QuantitySelector from "../QuantitySelector";
+import Divider from "../Divider";
 
 const ProductDetails = ({
   product,
   category,
+  hasAnimated,
 }: {
   category: string;
   product: ProductItem;
+  hasAnimated: boolean;
 }) => {
   const arrowRef = useRef(null);
   const [tempQuantity, setTempQuantity] = useState(1);
@@ -26,6 +30,11 @@ const ProductDetails = ({
   const { cart, setIsShoppingOpen } = useCart();
   const addToCart = useAddToCart();
   const finalPrice = tempQuantity * (product?.price || 0);
+  const priceRef = useRef(null);
+  const stockRef = useRef(null);
+  const itemsRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const titleRef = useRef(null);
+  const containerRef = useRef(null);
 
   const isQuantityGreaterThanStock =
     (cart?.find((item) => item?.id === product?.id)?.tempQuantity || 0) >=
@@ -34,15 +43,11 @@ const ProductDetails = ({
   const isQuantityGreaterThanItemQuantity =
     cart?.find((item) => item?.id === product?.id)?.tempQuantity || 0;
 
-  const allItems = data.filter(
-    (item) =>
-      item.category === product.category &&
-      item.dimension === product.dimension,
-  );
-
-  const currentIndex = allItems.findIndex((item) => item.id === product.id);
-  const nextIndex = (currentIndex + 1) % allItems.length;
-  const nextItem = allItems[nextIndex];
+  const categories = data.filter((item) => item.category === "prints");
+  const currentIndex = categories.findIndex((item) => item.id === product.id);
+  const nextIndex = (currentIndex + 1) % categories.length;
+  const nextItem =
+    currentIndex > data.length ? categories[0] : categories[nextIndex];
 
   const remainingStock =
     (product.stock ?? 0) - isQuantityGreaterThanItemQuantity;
@@ -73,74 +78,127 @@ const ProductDetails = ({
   }, [tempQuantity]);
 
   const handleNavigateNextItem = useCallback(() => {
-    router.push(`/originals/${nextItem.id}`);
+    router.push(`/shop/${nextItem.id}`);
   }, [router, nextItem]);
 
+  useEffect(() => {
+    const verticalPostion = (ref) => {
+      gsap.fromTo(
+        ref.current,
+        {
+          opacity: 0,
+          y: 100,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power2.Out",
+        },
+      );
+    };
+    if (product && product.imageUrls.length > 0 && !hasAnimated) {
+      verticalPostion(priceRef);
+      verticalPostion(stockRef);
+      itemsRefs.current.forEach((el, index) => {
+        gsap.fromTo(
+          el,
+          {
+            opacity: 0,
+            y: 100,
+          },
+          {
+            delay: index * 0.02, // Ajoutez une virgule ici
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: "power2.Out",
+          },
+        );
+      });
+      verticalPostion(titleRef);
+      gsap.fromTo(
+        containerRef.current,
+        {
+          opacity: 0,
+          y: 100,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power2.Out",
+        },
+      );
+    }
+  }, [product, hasAnimated]);
+
+  const infosItem = [
+    { label: "Series", value: product?.serie || "" },
+    { label: "Year", value: product?.date || "" },
+    { label: "Piece", value: product?.piece || "" },
+    { label: "Dimension", value: product?.dimension || "" },
+    { label: "Paper", value: product?.paper || "" },
+  ];
+
   return (
-    <div className="flex flex-col items-center justify-between gap-4 px-2 md:px-0 lg:w-1/2">
-      <div className="flex flex-col items-center gap-1">
-        <h1 className="text-xl">
-          Series {product?.serie} - {product?.title}
-        </h1>
-        <p className="text-center opacity-40">
-          Not available for sale via the website. Contact me to discuss.
-        </p>
-      </div>
-      <div className="flex w-full flex-col gap-2">
-        <InfosItem
-          label="Series"
-          value={product?.serie || ""}
-          className="flex justify-between"
-        />
-        <InfosItem
-          label="Year"
-          value={product?.date || ""}
-          className="flex justify-between"
-        />
-        <InfosItem
-          label="Piece"
-          value={product?.piece || ""}
-          className="flex justify-between"
-        />
-        <InfosItem
-          label="Dimension"
-          value={product?.dimension || ""}
-          className="flex justify-between"
-        />
-        <InfosItem
-          label="Paper"
-          value={product?.paper || ""}
-          className="flex justify-between"
-        />
-      </div>
-      {category === "prints" ? (
-        <>
-          <div className="flex items-center gap-5 self-end">
-            {product?.stock === 0 ? (
-              <p>Out of stock</p>
-            ) : (
-              <>
-                <p>Stock available :</p>
-                <span>
-                  {product?.stock || 0}{" "}
-                  {product?.stock && product?.stock > 1 ? "pieces" : "piece"}
-                </span>
-              </>
-            )}
-          </div>
-          <div className="flex w-full justify-between">
-            <div className="price">
-              <span className="text-lg font-bold">
-                {finalPrice.toFixed(2)} €
-              </span>
+    <div
+      ref={containerRef}
+      className="flex h-max w-full flex-col gap-20 self-start rounded-3xl border border-slate-200 p-8"
+    >
+      <div className="relative flex flex-col gap-5">
+        <div className="overflow-hidden">
+          <h1 ref={titleRef} className="text-4xl">
+            {product?.title}
+          </h1>
+        </div>
+        {category === "prints" && (
+          <>
+            <div className="flex w-full justify-between">
+              <div className="price overflow-hidden">
+                <div className="text-xl font-semibold" ref={priceRef}>
+                  <p>{finalPrice.toFixed(2)} €</p>{" "}
+                </div>
+              </div>
+              <QuantitySelector
+                quantity={tempQuantity}
+                onAdd={handleAddQuantity}
+                onRemove={handleRemoveQuantity}
+                isQuantityGreaterThanStock={isQuantityGreaterThanStock}
+              />
             </div>
-            <QuantitySelector
-              quantity={tempQuantity}
-              onAdd={handleAddQuantity}
-              onRemove={handleRemoveQuantity}
-              isQuantityGreaterThanStock={isQuantityGreaterThanStock}
-            />
+            <div className="flex items-center gap-3 overflow-hidden text-sm text-slate-400">
+              {product?.stock === 0 ? (
+                <p ref={stockRef}>Out of stock</p>
+              ) : (
+                <div ref={stockRef} className="flex gap-3">
+                  <p>Stock available :</p>
+                  <span>
+                    {product?.stock || 0}{" "}
+                    {product?.stock && product?.stock > 1 ? "pieces" : "piece"}
+                  </span>
+                </div>
+              )}
+            </div>
+          </>
+        )}
+        <Divider bgColor="black" className="origin-left" />
+      </div>
+      <div className="flex w-full flex-col gap-2 overflow-hidden">
+        {infosItem.map((item, index) => (
+          <div key={index} className="h-max overflow-hidden">
+            <div
+              ref={(el) => {
+                itemsRefs.current[index] = el;
+              }}
+            >
+              <InfosItem label={item.label} value={item.value} />
+            </div>
           </div>
+        ))}
+      </div>
+      {category === "prints" && (
+        <>
           <div className="flex w-full justify-between">
             <div className="flex w-full items-center justify-between">
               <AddToCartButton
@@ -154,9 +212,9 @@ const ProductDetails = ({
             </div>
             <div
               className="user-select-none flex scale-100 cursor-pointer items-center justify-center gap-3"
-              onMouseEnter={() => handleEnterHovered()}
-              onMouseLeave={() => handleEnterHovered()}
-              onClick={() => handleNavigateNextItem()}
+              onMouseEnter={handleEnterHovered}
+              onMouseLeave={handleEnterHovered}
+              onClick={handleNavigateNextItem}
             >
               <span>Next</span>
               <div className="grid place-items-center overflow-hidden rounded-full border border-black p-[3px] transition-all duration-200 ease-in-out">
@@ -167,30 +225,6 @@ const ProductDetails = ({
             </div>
           </div>
         </>
-      ) : (
-        <div className="flex w-full justify-between">
-          <div className="flex w-full items-center justify-between">
-            <Link
-              href="mailto:margrittmartinet@gmail.com"
-              className="contact cursor-pointer rounded-[20px] border-2 border-blue-500 px-2.5 py-1 transition-colors duration-200 ease-in-out hover:bg-blue-500 hover:text-white"
-            >
-              Contact-me
-            </Link>
-          </div>
-          <div
-            className="user-select-none flex scale-100 cursor-pointer items-center justify-center gap-3"
-            onMouseEnter={() => handleEnterHovered()}
-            onMouseLeave={() => handleEnterHovered()}
-            onClick={() => handleNavigateNextItem()}
-          >
-            <span>Next</span>
-            <div className="grid place-items-center overflow-hidden rounded-full border border-black p-[3px] transition-all duration-200 ease-in-out">
-              <div className="grid place-items-center" ref={arrowRef}>
-                <IoIosArrowRoundForward />
-              </div>
-            </div>
-          </div>
-        </div>
       )}
     </div>
   );
