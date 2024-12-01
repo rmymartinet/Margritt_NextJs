@@ -6,7 +6,7 @@ interface CarouselProps {
   handlePrevSlide: () => void;
 }
 
-const useCarousel = (items: string[]): CarouselProps => {
+const useCarousel = (items?: string[]): CarouselProps => {
   const [carouselIndex, setCarouselIndex] = useState(0);
 
   const handleNextSlide = useCallback(() => {
