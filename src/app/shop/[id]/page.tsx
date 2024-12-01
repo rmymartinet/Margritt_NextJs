@@ -89,7 +89,6 @@ export default function OriginalItem({ params }: OriginalItemProps) {
                 setCarouselIndex={setCarouselIndex}
                 isHovering={isHovering}
                 setIsHovering={setIsHovering}
-                setIsZoom={setIsZoom}
               />
             ) : (
               <div
