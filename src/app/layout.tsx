@@ -13,6 +13,7 @@ import MobileNav from "./components/Nav/MobileNavBar";
 import Nav from "./components/Nav/NavBar";
 import { CartProvider } from "./context/CardContext";
 import useWindowWidth from "./hooks/useWindowWidth";
+import { ZoomProvider } from "./context/ZoomProvider";
 
 export default function RootLayout({
   children,
@@ -26,30 +27,32 @@ export default function RootLayout({
   }, []);
 
   const pathname = usePathname();
-  const isGallery = /^\/gallery\/[^\/]+$/.test(pathname);
+  const isShopPageId = /^\/shop\/[^\/]+$/.test(pathname);
 
   return (
     <>
       <ClerkProvider>
-        <html lang="en">
-          <head>
-            <Script
-              async
-              src="https://www.googletagmanager.com/gtag/js?id=G-49TRCET0NT"
-            ></Script>
-            <Script id="google-analytic">
-              {`
+        <ZoomProvider>
+          <html lang="en">
+            <head>
+              <Script
+                async
+                src="https://www.googletagmanager.com/gtag/js?id=G-49TRCET0NT"
+              ></Script>
+              <Script id="google-analytic">
+                {`
  window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-49TRCET0NT');
     `}
-            </Script>
-          </head>
-          <body className={`relative p-2 antialiased md:px-[4vw]`}>
-            <motion.div>
-              {isMounted &&
-                (!isGallery &&
+              </Script>
+            </head>
+            <body
+              className={`relative antialiased ${!isShopPageId ? "px-2 md:px-4" : ""}`}
+            >
+              <motion.div>
+                {isMounted &&
                 pathname !== "/success" &&
                 pathname !== "/cancel" ? (
                   width <= 1024 ? (
@@ -57,33 +60,22 @@ export default function RootLayout({
                   ) : (
                     <Nav />
                   )
-                ) : null)}
-              <CartProvider>
-                <Transition>{children}</Transition>
-                {isMounted && <CartSideBar />}
-              </CartProvider>
-              {pathname !== "/contact" &&
-                pathname !== "/checkout" &&
-                pathname !== "/success" &&
-                pathname !== "/cancel" &&
-                pathname !== "/admin" &&
-                pathname !== "/404" && <Footer />}
-            </motion.div>
-          </body>
-        </html>
-        {/* Google Analytics Tag */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-49TRCET0NT"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-49TRCET0NT');
-          `}
-        </Script>
+                ) : null}
+                <CartProvider>
+                  <Transition>{children}</Transition>
+                  {isMounted && <CartSideBar />}
+                </CartProvider>
+                {!isShopPageId &&
+                  pathname !== "/contact" &&
+                  pathname !== "/checkout" &&
+                  pathname !== "/success" &&
+                  pathname !== "/cancel" &&
+                  pathname !== "/admin" &&
+                  pathname !== "/404" && <Footer />}
+              </motion.div>
+            </body>
+          </html>
+        </ZoomProvider>
       </ClerkProvider>
     </>
   );
