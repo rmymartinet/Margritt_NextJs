@@ -62,3 +62,12 @@ export interface ImageContainer extends Item {
 }
 
 export type FilterType = (typeof FILTERS)[keyof typeof FILTERS];
+
+export interface CustomCursorProps {
+  isHovering: boolean;
+}
+
+export interface ZoomedImageProps {
+  src: string;
+  onClose: () => void;
+}
