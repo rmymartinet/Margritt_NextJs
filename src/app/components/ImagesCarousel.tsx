@@ -3,6 +3,9 @@ import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import CustomCursor from "./CustomCursor";
 import { ImageCarouselProps } from "@/types/dataTypes";
+import { useZoom } from "../context/ZoomProvider";
+import { CiZoomIn } from "react-icons/ci";
+import useWindowWidth from "../hooks/useWindowWidth";
 
 const ImageCarousel = ({
   mainImgRef,
@@ -11,9 +14,9 @@ const ImageCarousel = ({
   setCarouselIndex,
   isHovering,
   setIsHovering,
-  setIsZoom,
 }: ImageCarouselProps) => {
   const carouselRef = useRef<(HTMLImageElement | null)[]>([]);
+  const { setIsZoom } = useZoom();
 
   useEffect(() => {
     carouselRef.current.forEach((el, index) => {
@@ -34,15 +37,26 @@ const ImageCarousel = ({
     });
   }, []);
 
+  const { width } = useWindowWidth();
+
   return (
     <div className="flex flex-col justify-between gap-10">
       <div className="h-[40vh] w-[95vw] overflow-hidden md:h-[70vh] md:w-[90vw] lg:h-[60vh] lg:w-[60vw]">
         <CustomCursor isHovering={isHovering} />
+
         <div
           ref={mainImgRef}
-          className="opacity-1 h-full w-full"
+          className="opacity-1 relative h-full w-full"
           onClick={() => setIsZoom(true)}
         >
+          {width <= 768 && (
+            <div
+              className="absolute right-5 top-20 z-[99999] rounded-full bg-black p-2"
+              onClick={() => setIsZoom(true)}
+            >
+              <CiZoomIn size={25} color="white" />
+            </div>
+          )}
           <Image
             className="h-full w-full object-contain"
             src={imageUrls[carouselIndex] || ""}
