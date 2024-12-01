@@ -2,9 +2,12 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ZoomedImageProps } from "@/types/dataTypes";
+import useWindowWidth from "../hooks/useWindowWidth";
 
 const ZoomedImage = ({ src, onClose }: ZoomedImageProps) => {
   const zoomContainerRef = useRef(null);
+
+  const { width } = useWindowWidth();
 
   useEffect(() => {
     if (zoomContainerRef.current) {
@@ -39,7 +42,7 @@ const ZoomedImage = ({ src, onClose }: ZoomedImageProps) => {
         />
       </div>
       <button
-        className="fixed left-5 top-0 z-50 -mt-[10vh] w-max rounded-full bg-black p-2 text-white"
+        className={`fixed left-5 top-0 z-50 ${width <= 768 ? "mt-0" : "-mt-[10vh]"} w-max rounded-full bg-black p-2 text-white`}
         onClick={onClose}
       >
         Close
