@@ -101,10 +101,17 @@ export default function Nav() {
   useGSAP(() => {
     linksRefs.current.forEach((link, index) => {
       if (link) {
-        if (isClicked === index) {
+        if (isClicked === index && isClicked !== 3) {
           gsap.to(link, {
             duration: 1,
             backgroundColor: "#60a5fa",
+            color: "white",
+            ease: "power2.out",
+          });
+        } else if (isClicked === 3 && index === 3) {
+          gsap.to(link, {
+            duration: 1,
+            backgroundColor: "#4ade80",
             color: "white",
             ease: "power2.out",
           });
@@ -131,6 +138,7 @@ export default function Nav() {
               linksRefs.current[index] = el;
             }}
             onClick={() => handleCLicked(index)}
+            onMouseEnter={() => handleCLicked(index)}
             className="rounded-full p-2"
             key={link.name}
             href={link.href}
