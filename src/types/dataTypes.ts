@@ -28,6 +28,7 @@ export interface Item {
   quantity?: number;
   tempQuantity?: number;
   finalPrice?: number;
+  materials?: string;
 }
 
 export interface CustomerAddress {
