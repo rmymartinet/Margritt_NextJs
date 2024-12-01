@@ -25,16 +25,19 @@ model User {
 }
 
 model Artworks {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  category  String
-  title     String
-  serie     String
-  text      String?
-  dimension String
-  date      String
-  format    String
-  imageUrls String[] @map("imageUrls")
-  videoUrl  String?  @map("videoUrl")
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  category     String
+  title        String
+  serie        String
+  text         String?
+  dimension    String
+  date         String
+  format       String
+  materials    String?
+  paper        String?
+  thumbnailUrl String
+  imageUrls    String[] @map("imageUrls")
+  videoUrl     String?  @map("videoUrl")
 }
 
 model Originals {
