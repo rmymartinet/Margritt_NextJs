@@ -43,8 +43,6 @@ export default function Artworks() {
     setItems(dataFiltered);
   };
 
-  console.log(data);
-
   useEffect(() => {
     if (data) {
       filterData(data);
@@ -57,13 +55,13 @@ export default function Artworks() {
       gsap.to(maxSizeRef.current, {
         fontSize: "8rem",
         duration: 1.5,
-        ease: "elastic.out(0.5, 0.2)",
+        ease: "power3.inOut",
       });
     } else {
       gsap.to(maxSizeRef.current, {
         fontSize: "4rem",
         duration: 1.5,
-        ease: "elastic.out(0.5, 0.2)",
+        ease: "power3.inOut",
       });
     }
   }, [width, category]);
@@ -77,7 +75,7 @@ export default function Artworks() {
             {category.charAt(0).toLocaleUpperCase() + category.slice(1)} size
           </span>
         </div>
-        <p className="text-xl text-slate-400">
+        <p className="text-center text-xl text-slate-400">
           Discover my biggest projects more than{" "}
           {category === "maxi" ? "2 meters" : "120 x 80 cm"}
         </p>
