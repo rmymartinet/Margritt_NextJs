@@ -8,13 +8,19 @@ import {
   UserButton,
   useUser,
 } from "@clerk/nextjs"; // Ajoute useUser ici
+import { useGSAP } from "@gsap/react";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
+import gsap from "gsap";
+
+gsap.registerPlugin(useGSAP);
 
 export default function Nav() {
   const { user, isLoaded, isSignedIn } = useUser();
   const { isZoom } = useZoom();
+  const [isClicked, setIsClicked] = useState(0);
+  const linksRefs = useRef<(HTMLAnchorElement | null)[]>([]);
 
   useEffect(() => {
     if (isSignedIn && user) {
@@ -61,30 +67,77 @@ export default function Nav() {
     }
   }, [isSignedIn, user]);
 
+  const Links = [
+    {
+      href: "/",
+      name: "Home",
+    },
+    {
+      href: "/about",
+      name: "About",
+    },
+    {
+      href: "/artworks",
+      name: "Artworks",
+    },
+    {
+      href: "/shop",
+      name: "Shop",
+    },
+    {
+      href: "/exhibitions",
+      name: "Exhibitions",
+    },
+    {
+      href: "/contact",
+      name: "Contact",
+    },
+  ];
+
+  const handleCLicked = (index: number) => {
+    setIsClicked(index);
+  };
+
+  useGSAP(() => {
+    linksRefs.current.forEach((link, index) => {
+      if (link) {
+        if (isClicked === index) {
+          gsap.to(link, {
+            duration: 1,
+            backgroundColor: "#60a5fa",
+            color: "white",
+            ease: "power2.out",
+          });
+        } else {
+          gsap.to(link, {
+            duration: 1,
+            backgroundColor: "transparent",
+            color: "black",
+            ease: "power2.out",
+          });
+        }
+      }
+    });
+  }, [isClicked]);
+
   return (
     <nav
       className={`relative left-0 top-0 z-50 mb-[20vh] flex w-full items-center justify-center ${isZoom && "blur-lg"} p-2 pt-4`}
     >
       <div className="flex gap-20 p-4 text-lg font-semibold">
-        <Link href="/" className="p-2">
-          Home
-        </Link>
-        <Link href="/about" className="p-2">
-          About
-        </Link>
-        <Link href="/artworks" className="p-2">
-          Artworks
-        </Link>
-        <Link href="/shop" className="rounded-full bg-blue-400 p-2 text-white">
-          Shop
-        </Link>
-        <Link href="/exhibitions" className="p-2">
-          Exhibitions
-        </Link>
-        <Link href="/contact" className="p-2">
-          Contact
-        </Link>
-
+        {Links.map((link, index) => (
+          <Link
+            ref={(el) => {
+              linksRefs.current[index] = el;
+            }}
+            onClick={() => handleCLicked(index)}
+            className="rounded-full p-2"
+            key={link.name}
+            href={link.href}
+          >
+            {link.name}
+          </Link>
+        ))}
         {isLoaded && user?.publicMetadata.role === "admin" && (
           <Link href="/admin">Admin</Link>
         )}
