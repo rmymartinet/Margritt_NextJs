@@ -71,3 +71,11 @@ export interface ZoomedImageProps {
   src: string;
   onClose: () => void;
 }
+export interface ImageCarouselProps {
+  mainImgRef: React.RefObject<HTMLDivElement>;
+  imageUrls: string[];
+  carouselIndex: number;
+  setCarouselIndex: React.Dispatch<React.SetStateAction<number>>;
+  isHovering: boolean;
+  setIsHovering: React.Dispatch<React.SetStateAction<boolean>>;
+}
