@@ -13,8 +13,6 @@ interface Params {
 export async function GET(request: Request, { params }: { params: Params }) {
   const { sessionId } = params;
 
-  console.log("Session ID:", sessionId);
-
   if (!sessionId) {
     return NextResponse.json(
       { error: "Session ID is required" },
@@ -53,6 +51,18 @@ export async function GET(request: Request, { params }: { params: Params }) {
       ? JSON.parse(session.metadata.quantity)
       : [];
 
+    // Validation des métadonnées
+    if (
+      !Array.isArray(productIds) ||
+      !Array.isArray(quantities) ||
+      productIds.length !== quantities.length
+    ) {
+      return NextResponse.json(
+        { error: "Invalid product metadata" },
+        { status: 400 },
+      );
+    }
+
     await updateStockAndRecordPurchase(
       productIds,
       quantities,
@@ -89,13 +99,34 @@ export async function GET(request: Request, { params }: { params: Params }) {
           addressCountry: updatedUser.addressCountry,
         },
       });
-    }
+    } else {
+      // Créer un nouvel utilisateur
+      const newUser = await prisma.user.create({
+        data: {
+          email: customerEmail,
+          addressLine1: customerAddress.line1 ?? "",
+          addressLine2: customerAddress.line2 ?? "",
+          addressCity: customerAddress.city ?? "",
+          addressState: customerAddress.state ?? "",
+          addressPostalCode: customerAddress.postal_code ?? "",
+          addressCountry: customerAddress.country ?? "",
+        },
+      });
 
-    // Si l'utilisateur n'est pas trouvé, retourner une réponse sans erreur
-    return NextResponse.json({
-      success: true,
-      message: "Utilisateur non trouvé, mode invité",
-    });
+      return NextResponse.json({
+        success: true,
+        message: "Utilisateur créé",
+        user: {
+          email: newUser.email,
+          addressLine1: newUser.addressLine1,
+          addressLine2: newUser.addressLine2,
+          addressCity: newUser.addressCity,
+          addressState: newUser.addressState,
+          addressPostalCode: newUser.addressPostalCode,
+          addressCountry: newUser.addressCountry,
+        },
+      });
+    }
   } catch (error) {
     console.error("Error processing the request:", error);
     return NextResponse.json(
@@ -117,40 +148,55 @@ async function updateStockAndRecordPurchase(
     const quantity = quantities[i];
 
     if (typeof quantity !== "number" || quantity <= 0) {
+      console.log(`Invalid quantity for product ${productId}: ${quantity}`);
       continue; // Ignore les quantités invalides
     }
 
-    // Mettre à jour le stock
-    await prisma.prints.update({
-      where: { id: productId },
-      data: {
-        stock: {
-          decrement: quantity,
-        },
-      },
-    });
-
-    // Obtenir le prix du produit
-    const product = await prisma.prints.findUnique({
-      where: { id: productId },
-    });
-
-    if (product && product.price !== undefined) {
-      // Enregistrer l'achat dans l'historique
-      await prisma.purchase.create({
+    try {
+      // Mettre à jour le stock
+      await prisma.prints.update({
+        where: { id: productId },
         data: {
-          printsId: productId,
-          quantity: quantity,
-          totalPrice: product.price * quantity,
-          email: userEmail,
-          addressLine1: customerAddress.line1 ?? "",
-          addressLine2: customerAddress.line2 ?? "",
-          addressCity: customerAddress.city ?? "",
-          addressState: customerAddress.state ?? "",
-          addressPostalCode: customerAddress.postal_code ?? "",
-          addressCountry: customerAddress.country ?? "",
+          stock: {
+            decrement: quantity,
+          },
         },
       });
+
+      // Obtenir le prix du produit
+      const product = await prisma.prints.findUnique({
+        where: { id: productId },
+      });
+
+      if (product && product.price !== undefined) {
+        // Enregistrer l'achat dans l'historique
+        await prisma.purchase.create({
+          data: {
+            printsId: productId,
+            quantity: quantity,
+            totalPrice: product.price * quantity,
+            email: userEmail,
+            addressLine1: customerAddress.line1 ?? "",
+            addressLine2: customerAddress.line2 ?? "",
+            addressCity: customerAddress.city ?? "",
+            addressState: customerAddress.state ?? "",
+            addressPostalCode: customerAddress.postal_code ?? "",
+            addressCountry: customerAddress.country ?? "",
+          },
+        });
+        console.log(
+          `Purchase recorded for product ${productId}, quantity ${quantity}`,
+        );
+      } else {
+        console.log(
+          `Product not found or price undefined for product ${productId}`,
+        );
+      }
+    } catch (error) {
+      console.error(
+        `Error updating stock or recording purchase for product ${productId}:`,
+        error,
+      );
     }
   }
 }
