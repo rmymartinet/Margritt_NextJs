@@ -1,9 +1,7 @@
 "use client";
 
-import { useClerk, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { CgClose } from "react-icons/cg";
 import Swal from "sweetalert2";
 import { useCart } from "../context/CardContext";
 import { useFilteredData } from "../hooks/useFilteredData";
@@ -13,21 +11,11 @@ export default function Checkout() {
   const { cart } = useCart();
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
-  const [isGuest, setIsGuest] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>(""); // Pour stocker l'email entré par l'utilisateur
-  const [guestModal, setGuestModal] = useState<boolean>(false);
-  const [showAuthOptions, setShowAuthOptions] = useState<boolean>(false);
-  const [emailError, setEmailError] = useState<string | null>(null); // Utiliser une chaîne pour les messages d'erreur
   const removeItemFromCart = useRemoveFromCart();
-  const { openSignIn } = useClerk();
   const { data } = useFilteredData();
   const allProducts = cart.flat().map((item) => item.id);
   const compare = data.filter((item) => allProducts.includes(item.id));
   const outOfStockProduct = compare.find((item) => item.quantity === 0);
-
-  const currentUser = useUser();
-  const currentUserEmail =
-    currentUser?.user?.primaryEmailAddress?.emailAddress || email;
 
   // Calculer le montant total basé sur le panier sans ajouter les frais de livraison ici
   useEffect(() => {
@@ -40,81 +28,8 @@ export default function Checkout() {
     setTotalAmount(Number(total.toFixed(2)));
   }, [cart]);
 
-  const handleCloseModal = () => {
-    setShowAuthOptions(false);
-    setIsGuest(false);
-    setEmail("");
-    setEmailError(null);
-    setGuestModal(false);
-  };
-
-  // Afficher les options de connexion ou de continuer en tant qu'invité
-  function handleAuthOptions() {
-    setShowAuthOptions(true);
-  }
-
-  // Fonction pour valider l'email
-  const validateEmail = (email: string): boolean => {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expression régulière pour valider l'email
-    return emailPattern.test(email);
-  };
-
-  async function handleEmailVerification() {
-    if (!email) {
-      setEmailError("Veuillez entrer une adresse email.");
-      return;
-    }
-
-    if (!validateEmail(email)) {
-      setEmailError("Veuillez entrer une adresse email valide.");
-      return;
-    }
-
-    setEmailError(null);
-    try {
-      const response = await fetch("/api/users/check-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Erreur ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      if (data.exists) {
-        setIsGuest(false);
-        setGuestModal(false);
-        Swal.fire({
-          title: "Cette adresse mail existe déjà",
-          text: "Connectez-vous pour continuer",
-          icon: "error",
-          confirmButtonText: "OK",
-        }).then(() => {
-          handleAuthOptions();
-        });
-        return;
-      } else {
-        checkout();
-      }
-    } catch (error) {
-      console.error("Erreur lors de la vérification de l'email :", error);
-    }
-  }
-
   async function checkout() {
     setLoading(true);
-
-    // Si personne n'est connecté et qu'aucun invité n'est défini
-    if (!isGuest && !currentUser.isSignedIn) {
-      handleAuthOptions(); // Affiche la boîte de dialogue
-      setLoading(false);
-      return;
-    }
 
     try {
       // Vérification du stock
@@ -146,7 +61,6 @@ export default function Checkout() {
         },
         body: JSON.stringify({
           products,
-          currentUserEmail,
         }),
       });
 
@@ -224,78 +138,6 @@ export default function Checkout() {
           </button>
         </div>
       </div>
-      {/* Modal pour les options de connexion/invité */}
-      {showAuthOptions && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-          <div className="relative">
-            <div
-              onClick={() => handleCloseModal()}
-              className="absolute right-0 top-0 cursor-pointer p-2"
-            >
-              <CgClose size={12} />
-            </div>
-            <div className="rounded-md bg-white p-6">
-              <h3 className="mb-4 rounded-xl">
-                Se connecter ou continuer en tant qu&apos;invité
-              </h3>
-              <button
-                onClick={() => openSignIn()}
-                className="mr-4 rounded-xl bg-black px-4 py-2 text-white"
-              >
-                Se connecter
-              </button>
-              <button
-                onClick={() => {
-                  setIsGuest(true);
-                  setShowAuthOptions(false);
-                  setGuestModal(true);
-                }}
-                className="rounded-xl bg-gray-500 px-4 py-2 text-white"
-              >
-                Continuer en tant qu&apos;invité
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Modal pour les invités */}
-      {guestModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-          <div className="relative">
-            <div
-              onClick={() => handleCloseModal()}
-              className="absolute right-0 top-0 cursor-pointer p-2"
-            >
-              <CgClose size={12} />
-            </div>
-            <div className="rounded-md bg-white p-6">
-              <h3 className="mb-4">Entrer votre adresse e-mail</h3>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  if (emailError) setEmailError(null);
-                }}
-                placeholder="Entrez votre e-mail"
-                className={`mb-4 w-full rounded-md border p-2 ${
-                  emailError ? "border-red-500" : "border-gray-300"
-                }`}
-              />
-              {emailError && <p className="mb-2 text-red-500">{emailError}</p>}
-              {/* Afficher le message d'erreur */}
-              <button
-                onClick={handleEmailVerification}
-                className="cursor-pointer rounded-xl bg-black px-4 py-2 text-white"
-                disabled={loading || !email}
-              >
-                {loading ? "Vérification..." : "Continuer"}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 }
