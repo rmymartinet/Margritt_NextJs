@@ -31,13 +31,13 @@ const QuantitySelector = ({
       {renderIcon(
         IoIosRemoveCircle,
         onRemove,
-        quantity <= 1,
+        quantity <= 1 || isQuantityGreaterThanStock,
         "Decrease quantity",
       )}
 
       <input
         type="number"
-        value={quantity}
+        value={isQuantityGreaterThanStock ? 0 : quantity}
         min="1"
         readOnly
         className="w-14 rounded-full border border-black bg-inherit pl-3 text-center text-lg"

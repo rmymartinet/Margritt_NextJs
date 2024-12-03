@@ -101,5 +101,5 @@ export interface QuantitySelectorProps {
   quantity: number;
   onAdd: () => void;
   onRemove: () => void;
-  isQuantityGreaterThanStock: boolean; // Correction ici
+  isQuantityGreaterThanStock: boolean;
 }
