@@ -46,7 +46,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
 
   return (
     <span
-      className="contact cursor-pointer rounded-[20px] border-2 border-blue-500 px-2.5 py-1 transition-colors duration-200 ease-in-out hover:bg-blue-500 hover:text-white"
+      className="contact cursor-pointer rounded-[20px] border-2 border-[#7AB2D3] px-2.5 py-1 font-medium text-[#7AB2D3] transition-colors duration-200 ease-in-out hover:bg-[#7AB2D3] hover:text-white"
       onClick={handleClick}
     >
       Add to Cart
