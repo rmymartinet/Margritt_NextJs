@@ -1,6 +1,6 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useCallback, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import SplitType from "split-type";
 
 gsap.registerPlugin(useGSAP);
