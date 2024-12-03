@@ -80,6 +80,8 @@ export interface ImageCarouselProps {
   setCarouselIndex: React.Dispatch<React.SetStateAction<number>>;
   isHovering: boolean;
   setIsHovering: React.Dispatch<React.SetStateAction<boolean>>;
+
+  isNextButton: boolean; // Ajoutez cette ligne
 }
 
 export interface CartContextProps {
