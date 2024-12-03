@@ -23,10 +23,8 @@ export default function Home() {
   const discoverContainerRef = useRef<HTMLDivElement>(null);
   const bicContainerRef = useRef<HTMLDivElement>(null);
   const socialContainerRef = useRef<HTMLDivElement>(null);
-
   const instaPoster = "/assets/insta_poster.png";
   const tiktokPoster = "/assets/tiktok_poster.png";
-
   const videoInsta = "/assets/videos/instagram_scroll.mp4";
   const videoTiktok = "/assets/videos/tiktok_scroll.mp4";
 
@@ -55,7 +53,8 @@ export default function Home() {
         stagger: 0.1,
         scrollTrigger: {
           trigger: discoverContainerRef.current,
-          start: "top 30%",
+          start: "top center",
+          markers: true,
         },
       });
     }
@@ -68,14 +67,13 @@ export default function Home() {
         stagger: 0.1,
         scrollTrigger: {
           trigger: bicContainerRef.current,
-          start: "top 30%",
+          start: "top top",
         },
       });
     }
 
     if (socialChild) {
       gsap.from(socialChild, {
-        delay: 1,
         skewX: 30,
         y: 400,
         duration: 1,
@@ -83,7 +81,7 @@ export default function Home() {
         stagger: 0.1,
         scrollTrigger: {
           trigger: socialContainerRef.current,
-          start: "top 30%",
+          start: "top top",
         },
       });
     }
@@ -100,7 +98,7 @@ export default function Home() {
         <div ref={discoverContainerRef} className="flex flex-col gap-20">
           <div
             ref={discoverTitleRef}
-            className="flex flex-col overflow-hidden md:w-[70%] lg:w-[50%]"
+            className="flex flex-col overflow-hidden md:w-[70%] lg:w-[60%]"
           >
             <h1 className="text-6xl font-medium md:text-7xl lg:text-9xl">
               Discover
@@ -148,7 +146,7 @@ export default function Home() {
         >
           <div
             ref={bicTitleRef}
-            className="flex flex-col overflow-hidden md:w-[70%] lg:w-[50%]"
+            className="flex flex-col overflow-hidden md:w-[70%] lg:w-[60%]"
           >
             <h1 className="text-6xl font-medium md:text-7xl lg:text-9xl">
               Encounter
@@ -184,7 +182,7 @@ export default function Home() {
         >
           <div
             ref={socialTitleRef}
-            className="flex flex-col overflow-hidden md:w-[70%] lg:w-[50%]"
+            className="flex flex-col overflow-hidden md:w-[70%] lg:w-[60%]"
           >
             <h1 className="text-6xl font-medium md:text-7xl lg:text-9xl">
               Follow my artist&apos;s{" "}

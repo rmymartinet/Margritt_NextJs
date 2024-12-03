@@ -126,17 +126,17 @@ const Footer = () => {
       </div>
       <div
         ref={titleContainerRef}
-        className="absolute -bottom-[4.3%] left-0 flex w-full items-end justify-center overflow-hidden"
+        className="absolute -bottom-[3%] left-0 flex w-full items-end justify-center overflow-hidden"
       >
         <h1
           ref={rightTitleRef}
-          className="text-4xl font-medium uppercase leading-none lg:text-[18.4vw]"
+          className="text-4xl font-medium uppercase leading-none lg:text-[18vw]"
         >
           marg
         </h1>
         <h1
           ref={leftTitleRef}
-          className="text-4xl font-medium uppercase leading-none lg:text-[18.4vw]"
+          className="text-4xl font-medium uppercase leading-none lg:text-[18vw]"
         >
           ritt
         </h1>
