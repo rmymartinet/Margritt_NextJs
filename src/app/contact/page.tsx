@@ -3,7 +3,6 @@
 import { CONTACT_INFO } from "@/data/user";
 import { motion } from "framer-motion";
 import Link from "next/link.js";
-
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -81,12 +80,12 @@ const Footer = () => {
         <InfosItem
           label="Local Time"
           value={localTime}
-          textColor="text-white"
+          textColor="text-slate-400"
         />
         <InfosItem
           label="Number"
           value={CONTACT_INFO.number}
-          textColor="text-white"
+          textColor="text-slate-400"
         />
         <InfosItem
           label="Instagram"
@@ -100,7 +99,7 @@ const Footer = () => {
               @maargriitt
             </Link>
           }
-          textColor="text-white"
+          textColor="text-slate-400"
         />
         <InfosItem
           label="TikTok"
@@ -114,7 +113,7 @@ const Footer = () => {
               @margriitt
             </Link>
           }
-          textColor="text-white"
+          textColor="text-slate-400"
         />
       </div>
       <div
