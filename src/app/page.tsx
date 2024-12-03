@@ -22,10 +22,6 @@ export default function Home() {
   const discoverContainerRef = useRef<HTMLDivElement>(null);
   const bicContainerRef = useRef<HTMLDivElement>(null);
   const socialContainerRef = useRef<HTMLDivElement>(null);
-  const instaPoster = "/assets/insta_poster.png";
-  const tiktokPoster = "/assets/tiktok_poster.png";
-  const videoInsta = "/assets/videos/instagram_scroll.mp4";
-  const videoTiktok = "/assets/videos/tiktok_scroll.mp4";
 
   useEffect(() => {
     const timer = setTimeout(() => {
