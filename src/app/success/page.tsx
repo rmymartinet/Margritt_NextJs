@@ -7,7 +7,7 @@ import { useCart } from "../context/CardContext";
 
 const PaymentSuccess = () => {
   const [sessionId, setSessionId] = useState<string | null>(null);
-  const [paymentVerified, setPaymentVerified] = useState(false);
+  const [paymentVerified, setPaymentVerified] = useState<boolean | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { setCart } = useCart();
   const router = useRouter();
@@ -32,7 +32,7 @@ const PaymentSuccess = () => {
           }
         })
         .catch((error) => {
-          console.error(error);
+          console.error("Error during payment verification:", error);
           setPaymentVerified(false);
           setError("An error occurred during payment verification.");
         });
@@ -48,12 +48,6 @@ const PaymentSuccess = () => {
       return () => clearTimeout(timeoutId);
     }
   }, [paymentVerified, router]);
-
-  useEffect(() => {
-    if (!sessionId) {
-      router.push("/");
-    }
-  }, [sessionId, router]);
 
   return (
     <main className="-mt-20 grid h-screen place-content-center">
