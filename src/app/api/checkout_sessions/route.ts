@@ -19,7 +19,8 @@ async function getActiveProducts() {
 
 export async function POST(request: NextRequest) {
   try {
-    const { products, currentUserEmail } = await request.json();
+    const { products } = await request.json();
+
     const checkoutProducts: Item[] = products;
     const activeProducts = await getActiveProducts();
     const checkoutStripeProducts: Stripe.Checkout.SessionCreateParams.LineItem[] =
@@ -72,14 +73,25 @@ export async function POST(request: NextRequest) {
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     const productIds = products.map((product: Item) => product.id);
-    const quantity = products.map((product: Item) => product.quantity);
+    const quantities = products.map((product: Item) => product.tempQuantity);
 
+    // Validation des quantités
+    if (
+      quantities.some(
+        (quantity: number | null | undefined) =>
+          quantity === null || quantity === undefined,
+      )
+    ) {
+      return NextResponse.json(
+        { error: "Quantité invalide détectée dans les métadonnées" },
+        { status: 400 },
+      );
+    }
     const session = await stripe.checkout.sessions.create({
       line_items: checkoutStripeProducts,
       mode: "payment",
       success_url: `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${baseUrl}/cancel?session_id={CHECKOUT_SESSION_ID}`,
-      customer_email: currentUserEmail,
       billing_address_collection: "required",
       customer_creation: "always",
       shipping_address_collection: {
@@ -87,8 +99,7 @@ export async function POST(request: NextRequest) {
       },
       metadata: {
         product_id: JSON.stringify(productIds),
-        quantity: JSON.stringify(quantity),
-        customer_email: currentUserEmail,
+        quantity: JSON.stringify(quantities),
       },
     });
 
@@ -96,7 +107,7 @@ export async function POST(request: NextRequest) {
     if (process.env.NODE_ENV === "development") {
       console.log("Metadata sent:", {
         product_id: JSON.stringify(productIds),
-        quantity: JSON.stringify(quantity),
+        quantity: JSON.stringify(quantities),
       });
     }
 
