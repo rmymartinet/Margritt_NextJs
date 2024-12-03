@@ -80,11 +80,17 @@ export default function Contact() {
       </div>
       {/* Information Section */}
       <div className="mb-[40vh] grid grid-cols-2 grid-rows-2 justify-items-center gap-10 lg:flex lg:justify-around lg:space-y-0 lg:px-20 lg:text-center">
-        <InfoItem className="flex-col" label="Local Time" value={localTime} />
+        <InfoItem
+          className="flex-col"
+          label="Local Time"
+          value={localTime}
+          textColor="text-slate-400"
+        />
         <InfoItem
           className="flex-col"
           label="Number"
           value={CONTACT_INFO.number}
+          textColor="text-slate-400"
         />
         <InfoItem
           className="flex-col"
@@ -99,6 +105,7 @@ export default function Contact() {
               @maargriitt
             </Link>
           }
+          textColor="text-slate-400"
         />
         <InfoItem
           className="flex-col"
@@ -113,6 +120,7 @@ export default function Contact() {
               @margriitt
             </Link>
           }
+          textColor="text-slate-400"
         />
       </div>
       <div

@@ -239,7 +239,11 @@ const ProductDetails = ({
                 itemsRefs.current[index] = el;
               }}
             >
-              <InfosItem label={item.label} value={item.value} />
+              <InfosItem
+                label={item.label}
+                value={item.value}
+                textColor="text-slate-400"
+              />
             </div>
           </div>
         ))}

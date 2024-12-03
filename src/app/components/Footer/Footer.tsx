@@ -81,11 +81,17 @@ const Footer = () => {
       </div>
       {/* Information Section */}
       <div className="mb-[40vh] grid grid-cols-2 grid-rows-2 justify-items-center gap-10 lg:flex lg:justify-around lg:space-y-0 lg:px-20 lg:text-center">
-        <InfosItem className="flex-col" label="Local Time" value={localTime} />
+        <InfosItem
+          className="flex-col"
+          label="Local Time"
+          value={localTime}
+          textColor="text-white"
+        />
         <InfosItem
           className="flex-col"
           label="Number"
           value={CONTACT_INFO.number}
+          textColor="text-white"
         />
         <InfosItem
           className="flex-col"
@@ -100,6 +106,7 @@ const Footer = () => {
               @maargriitt
             </Link>
           }
+          textColor="text-white"
         />
         <InfosItem
           className="flex-col"
@@ -114,6 +121,7 @@ const Footer = () => {
               @margriitt
             </Link>
           }
+          textColor="text-white"
         />
       </div>
       <div
