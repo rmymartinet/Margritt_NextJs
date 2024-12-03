@@ -14,6 +14,7 @@ const ImageCarousel = ({
   setCarouselIndex,
   isHovering,
   setIsHovering,
+  isNextButton,
 }: ImageCarouselProps) => {
   const carouselRef = useRef<(HTMLImageElement | null)[]>([]);
   const { setIsZoom } = useZoom();
@@ -36,6 +37,20 @@ const ImageCarousel = ({
       );
     });
   }, []);
+
+  useEffect(() => {
+    if (isNextButton) {
+      carouselRef.current.forEach((el, index) => {
+        gsap.to(el, {
+          delay: index * 0.02,
+          opacity: 1,
+          y: 200,
+          duration: 1,
+          ease: "power2.out",
+        });
+      });
+    }
+  }, [isNextButton]);
 
   const { width } = useWindowWidth();
 
