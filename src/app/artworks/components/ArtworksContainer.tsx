@@ -40,7 +40,7 @@ const ArtworksContainer = ({ item }: ImagesContainerProps) => {
           </Link>
           {loadedImages[imgData.id] && (
             <div className="flex flex-col items-start md:flex-row md:items-center md:justify-between">
-              <div className="flex w-full justify-between gap-20">
+              <div className="flex w-full flex-col justify-between gap-10 md:flex-row md:gap-20">
                 <div className="md:text-md flex flex-wrap gap-3 font-medium lg:text-lg">
                   <p>{imgData.title}</p>
                   <span>|</span>
@@ -48,7 +48,7 @@ const ArtworksContainer = ({ item }: ImagesContainerProps) => {
                   <span>|</span>
                   <p>{imgData.date}</p>
                 </div>
-                <Link href={`/artworks/${imgData.id}`} className="self-end">
+                <Link href={`/artworks/${imgData.id}`} className="md:self-end">
                   <div className="group flex items-center gap-2 font-medium text-[#7AB2D3]">
                     <p className="cursor-pointer">Learn more</p>
                     <div className="icon transition-all duration-200 ease-in-out group-hover:translate-x-1">
