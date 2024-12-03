@@ -83,7 +83,7 @@ const ImageCarousel = ({
           />
         </div>
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-2 overflow-hidden">
         {imageUrls.map((item, index) => (
           <Image
             ref={(el) => {
