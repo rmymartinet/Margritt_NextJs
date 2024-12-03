@@ -101,7 +101,7 @@ export default function Nav() {
           </Link>
         ))}
       </div>
-      <div className="absolute right-4 flex items-center gap-10 rounded-full bg-black px-4 py-2 text-white">
+      <div className="absolute right-4 flex items-center gap-10 rounded-full bg-[#4A628A] px-4 py-2 text-white">
         <Link href="/checkout">
           <FaShoppingCart size={20} />
         </Link>
