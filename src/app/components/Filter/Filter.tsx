@@ -1,4 +1,9 @@
+import { useGSAP } from "@gsap/react";
 import FilterItems from "./FilterItems";
+import { useRef } from "react";
+import gsap from "gsap";
+
+gsap.registerPlugin(useGSAP);
 
 interface FilterProps {
   setCategory: (value: string) => void;
@@ -39,9 +44,24 @@ const Filter = ({
     }
   };
 
+  const containerRef = useRef(null);
+
+  useGSAP(() => {
+    gsap.from(containerRef.current, {
+      skewX: 30,
+      y: -400,
+      duration: 1,
+      ease: "power2.out",
+      stagger: 0.1,
+    });
+  }, []);
+
   return (
-    <div className="mb-40 flex w-full flex-row justify-center">
-      <div className="flex w-screen flex-col gap-10 rounded-2xl border border-slate-100 p-4 md:flex-row md:items-center md:justify-center md:p-6 lg:w-max lg:p-8">
+    <div className="relative mb-40 flex w-full flex-row justify-center overflow-hidden">
+      <div
+        ref={containerRef}
+        className="flex w-screen flex-col gap-10 rounded-2xl border border-slate-100 p-4 md:flex-row md:items-center md:justify-center md:p-6 lg:w-max lg:p-8"
+      >
         <p className="md:text-lg">Filters : </p>
         <div className="flex flex-col gap-10 md:flex-row md:gap-20">
           <div className="flex items-center gap-4 md:gap-2">
