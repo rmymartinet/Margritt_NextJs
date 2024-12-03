@@ -54,7 +54,6 @@ export default function Home() {
         scrollTrigger: {
           trigger: discoverContainerRef.current,
           start: "top center",
-          markers: true,
         },
       });
     }
