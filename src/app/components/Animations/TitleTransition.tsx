@@ -7,6 +7,8 @@ gsap.registerPlugin(useGSAP);
 
 interface TextTransitionProps {
   textClassName?: string;
+  useScrollTrigger?: boolean;
+
   animationConfig?: {
     opacity: number;
     y: number;
@@ -14,6 +16,7 @@ interface TextTransitionProps {
     delay: number;
     stagger: number;
     ease: string;
+    scrollTrigger?: gsap.plugins.ScrollTriggerInstanceVars;
   };
   children: React.ReactNode;
 }
@@ -33,6 +36,7 @@ export const TextTransition = ({
     stagger: 0.03,
     ease: "power2.out",
   },
+  useScrollTrigger = false,
   children,
 }: TextTransitionProps) => {
   const textRef = useRef<HTMLDivElement>(null);
@@ -46,11 +50,20 @@ export const TextTransition = ({
 
     const split = new SplitType(element);
 
-    gsap.from(split.lines, {
+    const animationOptions = {
       ...animationConfig,
       onComplete: () => setHasAnimated(true),
-    });
-  }, [animationConfig, hasAnimated]);
+    };
+
+    if (useScrollTrigger) {
+      animationOptions.scrollTrigger = {
+        trigger: element,
+        start: "top 80%",
+      };
+    }
+
+    gsap.from(split.lines, animationOptions);
+  }, [animationConfig, hasAnimated, useScrollTrigger]);
 
   return (
     <div ref={textRef} className={textClassName}>
