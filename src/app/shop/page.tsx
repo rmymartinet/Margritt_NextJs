@@ -1,11 +1,15 @@
 "use client";
 
 import { Item } from "@/types/dataTypes";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Filter from "../components/Filter/Filter";
 import ImagesContainer from "../components/ImageContainer";
 import { useFilteredData } from "../hooks/useFilteredData";
 import { TextTransition } from "../components/Animations/TitleTransition";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+
+gsap.registerPlugin(useGSAP);
 
 export default function Shop() {
   const [category, setCategory] = useState("prints");
@@ -57,13 +61,30 @@ export default function Shop() {
     }
   }, [data, format, series, filterData]);
 
+  const titleContainerRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    if (titleContainerRef.current) {
+      const children = titleContainerRef.current?.children;
+      gsap.from(children, {
+        skewX: 30,
+        y: 400,
+        duration: 1,
+        ease: "power2.out",
+        stagger: 0.1,
+      });
+    }
+  }, []);
+
   return (
     <div className="flex min-h-screen flex-col items-center">
       <div className="mb-20 flex flex-col items-center justify-center gap-10 lg:gap-20">
-        <h1 className="text-center text-4xl font-medium lg:text-8xl">
-          Prints are{" "}
-          <span className="border-b-8 border-[#B9E5E8]">Available</span>
-        </h1>
+        <div ref={titleContainerRef}>
+          <h1 className="text-center text-4xl font-medium lg:text-8xl">
+            Prints are{" "}
+            <span className="border-b-8 border-[#B9E5E8]">Available</span>
+          </h1>
+        </div>
         <TextTransition textClassName="text-center">
           <p className="text-pretty text-center text-slate-400 md:w-[70%]">
             Prints are high-quality reproductions of my original works, perfect
