@@ -6,9 +6,11 @@ import Swal from "sweetalert2";
 import { useCart } from "../context/CardContext";
 import { useFilteredData } from "../hooks/useFilteredData";
 import { useRemoveFromCart } from "../hooks/useRemoveFromCart";
+import QuantitySelector from "../components/QuantitySelector";
+import { Item } from "@/types/dataTypes";
 
 export default function Checkout() {
-  const { cart } = useCart();
+  const { cart, updateCartQuantity } = useCart();
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const removeItemFromCart = useRemoveFromCart();
@@ -80,6 +82,27 @@ export default function Checkout() {
     }
   }
 
+  const handleAddQuantity = (item: Item) => {
+    if (item.stock && item.tempQuantity < item.stock) {
+      updateCartQuantity(item.id, item.tempQuantity + 1);
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Insufficient Stock",
+        text: "You have reached the maximum stock limit for this item.",
+      });
+    }
+  };
+
+  const handleRemoveQuantity = (item: Item) => {
+    if (item.tempQuantity > 1) {
+      updateCartQuantity(item.id, item.tempQuantity - 1);
+    }
+  };
+
+  const isQuantityGreaterThanStock = (item: Item) =>
+    (cart?.find((cartItem) => cartItem?.id === item?.id)?.tempQuantity || 0) >=
+    (item?.stock || 0);
   return (
     <section className="fixed left-0 -z-10 flex h-[85vh] w-full lg:top-0 lg:h-[60vh]">
       <div className="flex h-full w-full flex-col items-center justify-end overflow-hidden">
@@ -106,6 +129,14 @@ export default function Checkout() {
                       {item.price} €
                     </p>
                     <p>Quantity: {item.tempQuantity}</p>
+                    <QuantitySelector
+                      isQuantityGreaterThanStock={isQuantityGreaterThanStock(
+                        item,
+                      )}
+                      quantity={item.tempQuantity || 1}
+                      onAdd={() => handleAddQuantity(item)}
+                      onRemove={() => handleRemoveQuantity(item)}
+                    />
                   </div>
                   <button
                     onClick={() => removeItemFromCart(item.id)}

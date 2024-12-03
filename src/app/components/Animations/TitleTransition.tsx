@@ -107,7 +107,11 @@ export const TitleTransition = ({
 //   );
 // };
 
-export const TitleTransitionFromCenter = () => {
+export const TitleTransitionFromCenter = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const rightTitleRef = useRef<HTMLHeadingElement>(null);
   const leftTitleRef = useRef<HTMLHeadingElement>(null);
 
@@ -137,6 +141,9 @@ export const TitleTransitionFromCenter = () => {
       return () => {
         gsap.killTweensOf(rightSplit.chars);
         gsap.killTweensOf(leftSplit.chars);
+        {
+          children;
+        }
       };
     }
   }, []);
