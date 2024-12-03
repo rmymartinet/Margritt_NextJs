@@ -12,6 +12,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from "gsap";
 import { InstagramButton, TiktokButton } from "./components/SocialButton";
 import Iphone from "./components/Iphone";
+import SocialMedia from "./components/SocialMedia";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -175,30 +176,7 @@ export default function Home() {
             poster="/assets/bic_poster.png"
           ></video>
         </div>
-        <div
-          ref={socialContainerRef}
-          className="flex flex-col items-center justify-center gap-20"
-        >
-          <div
-            ref={socialTitleRef}
-            className="flex flex-col overflow-hidden md:w-[70%] lg:w-[60%]"
-          >
-            <h1 className="text-6xl font-medium md:text-7xl lg:text-9xl">
-              Follow my artist&apos;s{" "}
-            </h1>
-            <h1 className="self-end text-6xl font-medium md:text-7xl lg:text-9xl">
-              daily life
-            </h1>
-          </div>
-          <div className="flex gap-10 lg:gap-44">
-            <InstagramButton />
-            <TiktokButton />
-          </div>
-          <div className="flex flex-col gap-10 md:flex-row">
-            <Iphone poster={instaPoster} videoUrl={videoInsta} />
-            <Iphone poster={tiktokPoster} videoUrl={videoTiktok} />
-          </div>
-        </div>{" "}
+        <SocialMedia />
       </div>
     </section>
   );
