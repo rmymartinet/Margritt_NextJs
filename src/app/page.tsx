@@ -94,11 +94,7 @@ export default function Home() {
       <div className="mt-60 min-h-screen lg:mt-0">
         <div className="mb-[40vh] flex flex-col items-center">
           <div className="overflow-hidden pt-20 font-semibold uppercase">
-            <TitleTransitionFromCenter>
-              <h1 className="text-center text-6xl md:text-9xl xl:text-[15rem]">
-                Margritt
-              </h1>
-            </TitleTransitionFromCenter>
+            <TitleTransitionFromCenter />
           </div>
         </div>
         <div ref={discoverContainerRef} className="flex flex-col gap-20">
