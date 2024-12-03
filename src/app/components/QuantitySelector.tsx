@@ -1,11 +1,5 @@
+import { QuantitySelectorProps } from "@/types/dataTypes";
 import { IoIosAddCircle, IoIosRemoveCircle } from "react-icons/io";
-
-interface QuantitySelectorProps {
-  quantity: number;
-  onAdd: () => void;
-  onRemove: () => void;
-  isQuantityGreaterThanStock: boolean; // Correction ici
-}
 
 const QuantitySelector = ({
   quantity,
@@ -37,13 +31,13 @@ const QuantitySelector = ({
       {renderIcon(
         IoIosRemoveCircle,
         onRemove,
-        quantity <= 1 || isQuantityGreaterThanStock,
+        quantity <= 1,
         "Decrease quantity",
       )}
 
       <input
         type="number"
-        value={isQuantityGreaterThanStock ? 0 : quantity}
+        value={quantity}
         min="1"
         readOnly
         className="w-14 rounded-full border border-black bg-inherit pl-3 text-center text-lg"
