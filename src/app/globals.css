@@ -9,7 +9,8 @@
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Clash Display", sans-serif;
+  background-color: #f7fbfc;
 }
 
 @layer utilities {
@@ -173,4 +174,43 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.custom-cursor {
+  position: absolute;
+  top: -300px;
+  left: -120px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition:
+    transform 0.4s ease,
+    opacity 0.4s ease,
+    width 0.4s ease,
+    height 0.4s ease;
+  z-index: 9999;
+}
+
+/* Style pour le curseur lorsqu'il est sur la div ciblée */
+.custom-cursor.active {
+  opacity: 1;
+  width: 60px;
+  height: 60px;
+  font-size: 14px;
+  transition:
+    opacity 0.4s ease,
+    width 0.4s ease,
+    height 0.4s ease,
+    background-color 0.4s ease;
 }
