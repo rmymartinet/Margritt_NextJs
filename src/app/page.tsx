@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import {
-  TitleTransition,
+  TextTransition,
   TitleTransitionFromCenter,
 } from "./components/Animations/TitleTransition";
 import { useFilteredData } from "./hooks/useFilteredData";
@@ -150,13 +150,13 @@ export default function Home() {
             </h1>
           </div>
           <div className="self-end overflow-hidden md:w-[70%] lg:w-[50%]">
-            <TitleTransition>
+            <TextTransition useScrollTrigger>
               <h1 className="text-xl font-medium md:text-2xl lg:text-5xl">
                 Encounter with Bic “I had the honor of being one of the 7
                 artists chosen worldwide to share my story in this exclusive
                 interview.”
               </h1>
-            </TitleTransition>
+            </TextTransition>
           </div>
           <video
             className="self-center rounded-3xl"
