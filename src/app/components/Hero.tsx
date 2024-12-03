@@ -1,6 +1,4 @@
 import { useGSAP } from "@gsap/react";
-import { TitleTransition } from "./Animations/TitleTransition";
-import Divider from "./TitleUnderline";
 import gsap from "gsap";
 import { useRef } from "react";
 
