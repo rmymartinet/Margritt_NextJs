@@ -87,7 +87,7 @@ export default function OriginalItem({ params }: OriginalItemProps) {
       )}
 
       <section
-        className={`-mt-[12vh] flex items-center justify-center overflow-hidden px-10 ${isZoom && "blur-md"} ${isShoppingOpen ? "opacity-60" : "opacity-100"}`}
+        className={`flex items-center justify-center overflow-hidden px-10 lg:-mt-[12vh] ${isZoom && "blur-md"} ${isShoppingOpen ? "opacity-60" : "opacity-100"}`}
       >
         <div className="flex flex-col items-center gap-10 px-2 md:px-0 lg:grid lg:grid-cols-customShopId">
           <div className="relative flex items-center justify-center">
