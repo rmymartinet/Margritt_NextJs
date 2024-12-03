@@ -27,6 +27,7 @@ export default function OriginalItem({ params }: OriginalItemProps) {
   const mainImgRef = useRef(null);
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [hasAnimated, setHasAnimated] = useState(false);
+  const [isNextButton, setIsNextButton] = useState(false);
   const { isHovering, setIsHovering } = useHover();
 
   useEffect(() => {
@@ -59,6 +60,15 @@ export default function OriginalItem({ params }: OriginalItemProps) {
     }
   }, [isHovering]);
 
+  useEffect(() => {
+    gsap.to(mainImgRef.current, {
+      opacity: 0,
+      x: -1500,
+      duration: 1,
+      ease: "power2.out",
+    });
+  }, [isNextButton]);
+
   if (!product) {
     return null;
   }
@@ -79,7 +89,7 @@ export default function OriginalItem({ params }: OriginalItemProps) {
       <section
         className={`-mt-[12vh] flex items-center justify-center overflow-hidden px-10 ${isZoom && "blur-md"} ${isShoppingOpen ? "opacity-60" : "opacity-100"}`}
       >
-        <div className="lg:grid-cols-customShopId flex flex-col items-center gap-10 px-2 md:px-0 lg:grid">
+        <div className="flex flex-col items-center gap-10 px-2 md:px-0 lg:grid lg:grid-cols-customShopId">
           <div className="relative flex items-center justify-center">
             {product.imageUrls.length > 2 ? (
               <ImageCarousel
@@ -89,6 +99,7 @@ export default function OriginalItem({ params }: OriginalItemProps) {
                 setCarouselIndex={setCarouselIndex}
                 isHovering={isHovering}
                 setIsHovering={setIsHovering}
+                isNextButton={isNextButton}
               />
             ) : (
               <div
@@ -114,6 +125,8 @@ export default function OriginalItem({ params }: OriginalItemProps) {
             category={product.category || ""}
             product={product}
             hasAnimated={hasAnimated}
+            setIsNextButton={setIsNextButton}
+            isNextButton={isNextButton}
           />
         </div>
       </section>
