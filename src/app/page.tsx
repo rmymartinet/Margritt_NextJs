@@ -10,8 +10,6 @@ import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from "gsap";
-import { InstagramButton, TiktokButton } from "./components/SocialButton";
-import Iphone from "./components/Iphone";
 import SocialMedia from "./components/SocialMedia";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);

@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import Filter from "../components/Filter/Filter";
 import ImagesContainer from "../components/ImageContainer";
 import { useFilteredData } from "../hooks/useFilteredData";
+import { TextTransition } from "../components/Animations/TitleTransition";
 
 export default function Shop() {
   const [category, setCategory] = useState("prints");
@@ -63,12 +64,14 @@ export default function Shop() {
           Prints are{" "}
           <span className="border-b-8 border-[#B9E5E8]">Available</span>
         </h1>
-        <p className="text-pretty text-center text-slate-400 md:w-[70%]">
-          Prints are high-quality reproductions of my original works, perfect
-          for appreciating every detail and nuance of my creations. If you’d
-          like to know more about one of my original pieces, feel free to
-          contact me by email
-        </p>
+        <TextTransition textClassName="text-center">
+          <p className="text-pretty text-center text-slate-400 md:w-[70%]">
+            Prints are high-quality reproductions of my original works, perfect
+            for appreciating every detail and nuance of my creations. If you’d
+            like to know more about one of my original pieces, feel free to
+            contact me by email
+          </p>
+        </TextTransition>
       </div>
       <Filter
         categories={["prints"]}
