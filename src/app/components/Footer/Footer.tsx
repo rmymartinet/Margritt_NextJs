@@ -57,7 +57,7 @@ const Footer = () => {
 
   return (
     <motion.section className="relative mb-4 mt-40 flex min-h-screen w-full flex-col justify-between overflow-hidden rounded-3xl bg-blue-200 px-5 py-10 lg:p-20">
-      <h1 className="mb-32 text-6xl font-semibold uppercase text-white lg:mb-[20vh] lg:text-9xl">
+      <h1 className="mb-32 text-5xl font-semibold uppercase text-white md:text-6xl lg:mb-[20vh] lg:text-9xl">
         reach me
       </h1>
       <div className="flex flex-col-reverse items-center gap-6 text-center lg:flex-row lg:justify-between">
@@ -80,7 +80,7 @@ const Footer = () => {
         <Divider bgColor="black" />
       </div>
       {/* Information Section */}
-      <div className="mb-[40vh] grid grid-cols-2 grid-rows-2 justify-items-center gap-10 lg:flex lg:justify-around lg:space-y-0 lg:px-20 lg:text-center">
+      <div className="mb-[40vh] flex grid-rows-2 flex-col justify-items-center gap-10 md:grid md:grid-cols-2 lg:flex lg:justify-around lg:space-y-0 lg:px-20 lg:text-center">
         <InfosItem
           className="flex-col"
           label="Local Time"
