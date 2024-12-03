@@ -3,18 +3,20 @@
 import { CONTACT_INFO } from "@/data/user";
 import { motion } from "framer-motion";
 import Link from "next/link.js";
-import Divider from "../components/Divider";
-import InfoItem from "../components/InfosItem";
-import UseLocalTime from "../hooks/useLocalTime";
+
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
+import UseLocalTime from "@/app/hooks/useLocalTime";
+import Divider from "../components/Divider";
+import InfosItem from "../components/InfosItem";
+import Hero from "../components/Hero";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-export default function Contact() {
+const Footer = () => {
   const localTime = UseLocalTime();
   const rightTitleRef = useRef<HTMLHeadingElement>(null);
   const leftTitleRef = useRef<HTMLHeadingElement>(null);
@@ -55,22 +57,18 @@ export default function Contact() {
   }, []);
 
   return (
-    <motion.section className="relative mb-4 mt-40 flex min-h-screen w-full flex-col justify-between overflow-hidden rounded-3xl px-5 py-10 lg:p-20">
-      <h1 className="mb-32 text-6xl font-semibold uppercase lg:mb-[25vh] lg:text-8xl">
-        Contact
-      </h1>
-      <div className="flex flex-col-reverse items-center gap-6 text-center lg:flex-row lg:justify-between">
-        <div>
-          <div className="mt-4 lg:mt-0">
-            <Link
-              href={`mailto:${CONTACT_INFO.email}`}
-              className="mail mail-black text-2xl font-semibold md:font-normal lg:text-6xl"
-            >
-              {CONTACT_INFO.email}
-            </Link>
-          </div>
+    <motion.section className="relative mb-4 flex min-h-screen w-full flex-col justify-between overflow-hidden rounded-3xl px-5">
+      <Hero title1="Contact" />
+      <div className="flex flex-col-reverse items-center justify-between gap-20 text-center md:flex-row">
+        <div className="mt-4 lg:mt-0">
+          <Link
+            href={`mailto:${CONTACT_INFO.email}`}
+            className="mail mail-black text-2xl font-semibold md:font-normal lg:text-4xl"
+          >
+            {CONTACT_INFO.email}
+          </Link>
         </div>
-        <div className="text-2xl lg:w-[30vw] lg:text-4xl">
+        <div className="self-end text-2xl lg:w-[30vw] lg:text-4xl">
           Interested in a piece from my artworks? Let me know!
         </div>
       </div>
@@ -79,21 +77,18 @@ export default function Contact() {
         <Divider bgColor="black" />
       </div>
       {/* Information Section */}
-      <div className="mb-[40vh] grid grid-cols-2 grid-rows-2 justify-items-center gap-10 lg:flex lg:justify-around lg:space-y-0 lg:px-20 lg:text-center">
-        <InfoItem
-          className="flex-col"
+      <div className="mb-[40vh] grid grid-rows-4 place-content-center gap-10 md:grid-cols-2 md:justify-items-center md:gap-0 lg:flex lg:justify-around lg:space-y-0 lg:text-center">
+        <InfosItem
           label="Local Time"
           value={localTime}
-          textColor="text-slate-400"
+          textColor="text-white"
         />
-        <InfoItem
-          className="flex-col"
+        <InfosItem
           label="Number"
           value={CONTACT_INFO.number}
-          textColor="text-slate-400"
+          textColor="text-white"
         />
-        <InfoItem
-          className="flex-col"
+        <InfosItem
           label="Instagram"
           value={
             <Link
@@ -105,10 +100,9 @@ export default function Contact() {
               @maargriitt
             </Link>
           }
-          textColor="text-slate-400"
+          textColor="text-white"
         />
-        <InfoItem
-          className="flex-col"
+        <InfosItem
           label="TikTok"
           value={
             <Link
@@ -120,26 +114,28 @@ export default function Contact() {
               @margriitt
             </Link>
           }
-          textColor="text-slate-400"
+          textColor="text-white"
         />
       </div>
       <div
         ref={titleContainerRef}
-        className="absolute -bottom-[4.3%] left-0 flex w-full items-end justify-center overflow-hidden"
+        className="absolute -bottom-[3%] left-0 flex w-full items-end justify-center overflow-hidden"
       >
         <h1
           ref={rightTitleRef}
-          className="text-[18.4vw] font-medium uppercase leading-none"
+          className="text-4xl font-medium uppercase leading-none lg:text-[18vw]"
         >
           marg
         </h1>
         <h1
           ref={leftTitleRef}
-          className="text-[18.4vw] font-medium uppercase leading-none"
+          className="text-4xl font-medium uppercase leading-none lg:text-[18vw]"
         >
           ritt
         </h1>
       </div>
     </motion.section>
   );
-}
+};
+
+export default Footer;

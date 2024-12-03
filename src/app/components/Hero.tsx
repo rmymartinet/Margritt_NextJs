@@ -29,7 +29,7 @@ const Hero = ({ title1, title2 }: HeroProps) => {
   }, []);
 
   return (
-    <div className="relative my-[10vh] flex w-full items-center justify-center">
+    <div className="relative mb-[20vh] flex w-full items-center justify-center">
       <div
         ref={heroContainerRef}
         className="flex flex-col overflow-hidden md:w-[50%] lg:w-max"
@@ -37,9 +37,6 @@ const Hero = ({ title1, title2 }: HeroProps) => {
         <h1 className="mr-20 text-8xl font-medium lg:text-9xl">{title1}</h1>
         <h1 className="self-end text-7xl font-medium lg:text-8xl">{title2}</h1>
       </div>
-      {/* <TitleTransition yposition={500}>
-          <p>{title}</p>
-        </TitleTransition> */}
     </div>
   );
 };
