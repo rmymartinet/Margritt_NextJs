@@ -1,7 +1,6 @@
 import { CustomCursorProps } from "@/types/dataTypes";
 import { gsap } from "gsap";
-import { use, useEffect, useRef } from "react";
-import { IoMdAdd } from "react-icons/io";
+import { useEffect, useRef } from "react";
 
 const CustomCursor = ({ isHovering }: CustomCursorProps) => {
   const cursorRef = useRef(null);
