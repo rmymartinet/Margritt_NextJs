@@ -1,96 +1,49 @@
 "use client";
 
 import { useZoom } from "@/app/context/ZoomProvider";
-import {
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-  useUser,
-} from "@clerk/nextjs"; // Ajoute useUser ici
 import { useGSAP } from "@gsap/react";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import gsap from "gsap";
 
 gsap.registerPlugin(useGSAP);
 
 export default function Nav() {
-  const { user, isLoaded, isSignedIn } = useUser();
   const { isZoom } = useZoom();
   const [isClicked, setIsClicked] = useState(0);
   const linksRefs = useRef<(HTMLAnchorElement | null)[]>([]);
-
-  useEffect(() => {
-    if (isSignedIn && user) {
-      const registerUser = async () => {
-        try {
-          const response = await fetch("/api/users/", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email: user.primaryEmailAddress?.emailAddress,
-            }),
-          });
-          if (!response.ok) {
-            const addUser = await fetch(
-              `/api/users/${user.primaryEmailAddress?.emailAddress}`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  email: user.primaryEmailAddress?.emailAddress,
-                }),
-              },
-            );
-
-            if (addUser.ok) {
-              console.log("Utilisateur enregistré avec succès");
-            } else {
-              console.error("Erreur lors de l'enregistrement de l'utilisateur");
-            }
-          }
-        } catch (error) {
-          console.error(
-            "Erreur lors de l'enregistrement de l'utilisateur :",
-            error,
-          );
-        }
-      };
-
-      registerUser();
-    }
-  }, [isSignedIn, user]);
 
   const Links = [
     {
       href: "/",
       name: "Home",
+      img: "/assets/about1.jpeg",
     },
     {
       href: "/about",
       name: "About",
+      img: "/assets/about1.jpeg",
     },
     {
       href: "/artworks",
       name: "Artworks",
+      img: "/assets/about1.jpeg",
     },
     {
       href: "/shop",
       name: "Shop",
+      img: "/assets/about1.jpeg",
     },
     {
       href: "/exhibitions",
       name: "Exhibitions",
+      img: "/assets/about1.jpeg",
     },
     {
       href: "/contact",
       name: "Contact",
+      img: "/assets/about1.jpeg",
     },
   ];
 
@@ -103,21 +56,21 @@ export default function Nav() {
       if (link) {
         if (isClicked === index && isClicked !== 3) {
           gsap.to(link, {
-            duration: 1,
-            backgroundColor: "#60a5fa",
+            duration: 0.5,
+            backgroundColor: "#4A628A",
             color: "white",
             ease: "power2.out",
           });
         } else if (isClicked === 3 && index === 3) {
           gsap.to(link, {
-            duration: 1,
-            backgroundColor: "#4ade80",
+            duration: 0.5,
+            backgroundColor: "#4A628A",
             color: "white",
             ease: "power2.out",
           });
         } else {
           gsap.to(link, {
-            duration: 1,
+            duration: 0.5,
             backgroundColor: "transparent",
             color: "black",
             ease: "power2.out",
@@ -131,7 +84,7 @@ export default function Nav() {
     <nav
       className={`relative left-0 top-0 z-50 mb-[20vh] flex w-full items-center justify-center ${isZoom && "blur-lg"} p-2 pt-4`}
     >
-      <div className="flex gap-20 p-4 text-lg font-semibold">
+      <div className="flex gap-20 p-4 text-lg font-medium">
         {Links.map((link, index) => (
           <Link
             ref={(el) => {
@@ -139,24 +92,16 @@ export default function Nav() {
             }}
             onClick={() => handleCLicked(index)}
             onMouseEnter={() => handleCLicked(index)}
-            className="rounded-full p-2"
+            onMouseLeave={() => handleCLicked(-1)}
+            className="relative overflow-hidden rounded-full p-2"
             key={link.name}
             href={link.href}
           >
-            {link.name}
+            <p className="relative z-10">{link.name}</p>
           </Link>
         ))}
-        {isLoaded && user?.publicMetadata.role === "admin" && (
-          <Link href="/admin">Admin</Link>
-        )}
       </div>
-      <div className="absolute right-4 flex items-center gap-10 rounded-xl bg-black px-4 py-2 text-white">
-        <SignedOut>
-          <SignInButton />
-        </SignedOut>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
+      <div className="absolute right-4 flex items-center gap-10 rounded-full bg-black px-4 py-2 text-white">
         <Link href="/checkout">
           <FaShoppingCart size={20} />
         </Link>
