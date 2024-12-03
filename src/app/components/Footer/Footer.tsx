@@ -1,46 +1,93 @@
+"use client";
+
+import { CONTACT_INFO } from "@/data/user";
 import { motion } from "framer-motion";
-import Link from "next/link";
-import { CONTACT_INFO } from "../../../data/user";
-import UseLocalTime from "../../hooks/useLocalTime";
+import Link from "next/link.js";
+
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SplitType from "split-type";
+import UseLocalTime from "@/app/hooks/useLocalTime";
 import Divider from "../Divider";
-import InfoItem from "../InfosItem";
-import SvgName from "../SvgName";
+import InfosItem from "../InfosItem";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const Footer = () => {
   const localTime = UseLocalTime();
+  const rightTitleRef = useRef<HTMLHeadingElement>(null);
+  const leftTitleRef = useRef<HTMLHeadingElement>(null);
+  const titleContainerRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    const rightText = new SplitType(rightTitleRef.current || "", {
+      types: "chars",
+    });
+    const leftText = new SplitType(leftTitleRef.current || "", {
+      types: "chars",
+    });
+
+    // Animation pour inverser l'ordre des lettres
+    gsap.from(rightText.chars, {
+      delay: 0.5,
+      y: 400,
+      duration: 1,
+      ease: "power2.out",
+      stagger: { amount: 0.4, from: "end" }, // Inverse l'ordre de l'animation
+      scrollTrigger: {
+        trigger: titleContainerRef.current,
+        start: "top 50%",
+      },
+    });
+
+    gsap.from(leftText.chars, {
+      delay: 0.5,
+      y: 400,
+      duration: 1,
+      ease: "power2.out",
+      stagger: { amount: 0.4 },
+      scrollTrigger: {
+        trigger: titleContainerRef.current,
+        start: "top 50%",
+      },
+    });
+  }, []);
 
   return (
-    <motion.footer
-      className="-mx-[4vw] mt-40 flex h-screen flex-col justify-between overflow-hidden bg-black px-5 py-10 text-white lg:p-20"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
-      {/* Contact Section */}
-      <div className="flex flex-col flex-wrap items-center justify-between gap-8 px-6 lg:flex-row lg:px-20">
-        <h1 className="text-4xl lg:text-8xl">Contact</h1>
-        <div className="mt-4 lg:mt-0">
-          <Link
-            href={`mailto:${CONTACT_INFO.email}`}
-            className="mail mail-white text-xl lg:text-6xl"
-          >
-            {CONTACT_INFO.email}
-          </Link>
+    <motion.section className="relative mb-4 mt-40 flex min-h-screen w-full flex-col justify-between overflow-hidden rounded-3xl bg-blue-200 px-5 py-10 lg:p-20">
+      <h1 className="mb-32 text-6xl font-semibold uppercase text-white lg:mb-[20vh] lg:text-9xl">
+        reach me
+      </h1>
+      <div className="flex flex-col-reverse items-center gap-6 text-center lg:flex-row lg:justify-between">
+        <div>
+          <div className="mt-4 lg:mt-0">
+            <Link
+              href={`mailto:${CONTACT_INFO.email}`}
+              className="mail mail-black text-2xl font-semibold md:font-normal lg:text-6xl"
+            >
+              {CONTACT_INFO.email}
+            </Link>
+          </div>
+        </div>
+        <div className="text-2xl lg:w-[30vw] lg:text-4xl">
+          Interested in a piece from my artworks? Let me know!
         </div>
       </div>
       {/* Divider */}
-      <div className="relative my-8">
-        <Divider />
+      <div className="relative my-20 w-full lg:mb-20 lg:mt-40">
+        <Divider bgColor="black" />
       </div>
       {/* Information Section */}
-      <div className="grid grid-cols-2 grid-rows-2 justify-items-center gap-10 lg:flex lg:justify-around lg:space-y-0 lg:px-20 lg:text-center">
-        <InfoItem className="flex-col" label="Local Time" value={localTime} />
-        <InfoItem
+      <div className="mb-[40vh] grid grid-cols-2 grid-rows-2 justify-items-center gap-10 lg:flex lg:justify-around lg:space-y-0 lg:px-20 lg:text-center">
+        <InfosItem className="flex-col" label="Local Time" value={localTime} />
+        <InfosItem
           className="flex-col"
           label="Number"
           value={CONTACT_INFO.number}
         />
-        <InfoItem
+        <InfosItem
           className="flex-col"
           label="Instagram"
           value={
@@ -54,7 +101,7 @@ const Footer = () => {
             </Link>
           }
         />
-        <InfoItem
+        <InfosItem
           className="flex-col"
           label="TikTok"
           value={
@@ -69,10 +116,24 @@ const Footer = () => {
           }
         />
       </div>
-      <div className="mt-12">
-        <SvgName textColor={"white"} />
+      <div
+        ref={titleContainerRef}
+        className="absolute -bottom-[4.3%] left-0 flex w-full items-end justify-center overflow-hidden"
+      >
+        <h1
+          ref={rightTitleRef}
+          className="text-4xl font-medium uppercase leading-none lg:text-[18.4vw]"
+        >
+          marg
+        </h1>
+        <h1
+          ref={leftTitleRef}
+          className="text-4xl font-medium uppercase leading-none lg:text-[18.4vw]"
+        >
+          ritt
+        </h1>
       </div>
-    </motion.footer>
+    </motion.section>
   );
 };
 
