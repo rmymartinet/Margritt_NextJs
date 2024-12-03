@@ -24,8 +24,8 @@ const ProductDetails = ({
   category: string;
   product: ProductItem;
   hasAnimated: boolean;
-  isAnimationFinished: boolean;
   setIsNextButton: (value: boolean) => void;
+  isNextButton: boolean;
 }) => {
   const arrowRef = useRef(null);
   const [tempQuantity, setTempQuantity] = useState(1);
