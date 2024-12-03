@@ -18,10 +18,14 @@ const ProductDetails = ({
   product,
   category,
   hasAnimated,
+  setIsNextButton,
+  isNextButton,
 }: {
   category: string;
   product: ProductItem;
   hasAnimated: boolean;
+  isAnimationFinished: boolean;
+  setIsNextButton: (value: boolean) => void;
 }) => {
   const arrowRef = useRef(null);
   const [tempQuantity, setTempQuantity] = useState(1);
@@ -35,6 +39,16 @@ const ProductDetails = ({
   const itemsRefs = useRef<(HTMLDivElement | null)[]>([]);
   const titleRef = useRef(null);
   const containerRef = useRef(null);
+
+  const [finished, setFinished] = useState(false);
+
+  const infosItem = [
+    { label: "Series", value: product?.serie || "" },
+    { label: "Year", value: product?.date || "" },
+    { label: "Piece", value: product?.piece || "" },
+    { label: "Dimension", value: product?.dimension || "" },
+    { label: "Paper", value: product?.paper || "" },
+  ];
 
   const isQuantityGreaterThanStock =
     (cart?.find((item) => item?.id === product?.id)?.tempQuantity || 0) >=
@@ -77,9 +91,9 @@ const ProductDetails = ({
     }
   }, [tempQuantity]);
 
-  const handleNavigateNextItem = useCallback(() => {
-    router.push(`/shop/${nextItem.id}`);
-  }, [router, nextItem]);
+  const handleNavigateNextItem = () => {
+    setIsNextButton(true);
+  };
 
   useEffect(() => {
     const verticalPostion = (ref: React.RefObject<HTMLDivElement>) => {
@@ -133,13 +147,46 @@ const ProductDetails = ({
     }
   }, [product, hasAnimated]);
 
-  const infosItem = [
-    { label: "Series", value: product?.serie || "" },
-    { label: "Year", value: product?.date || "" },
-    { label: "Piece", value: product?.piece || "" },
-    { label: "Dimension", value: product?.dimension || "" },
-    { label: "Paper", value: product?.paper || "" },
-  ];
+  useEffect(() => {
+    if (isNextButton) {
+      const verticalPostion = (ref: React.RefObject<HTMLDivElement>) => {
+        gsap.to(ref.current, {
+          opacity: 0,
+          y: 100,
+          duration: 0.5,
+          ease: "power2.out",
+          onComplete: () => {
+            setFinished(true);
+          },
+        });
+      };
+      verticalPostion(priceRef);
+      verticalPostion(stockRef);
+      itemsRefs.current.forEach((el, index) => {
+        gsap.to(el, {
+          delay: index * 0.02, // Ajoutez une virgule ici
+          opacity: 0,
+          y: 100,
+          duration: 0.5,
+          ease: "power2.Out",
+        });
+      });
+
+      verticalPostion(titleRef);
+      gsap.to(containerRef.current, {
+        opacity: 0,
+        y: 100,
+        duration: 1,
+        ease: "power2.out",
+      });
+    }
+  }, [isNextButton]);
+
+  useEffect(() => {
+    if (finished) {
+      router.push(`/shop/${nextItem.id}`);
+    }
+  }, [finished, router, nextItem]);
 
   return (
     <div
