@@ -3,7 +3,6 @@ import { Item } from "@/types/dataTypes";
 import Image from "next/image";
 import Link from "next/link";
 import { IoIosArrowForward } from "react-icons/io";
-import Skeleton from "@/app/components/Skeleton/Skeleton";
 
 interface ImagesContainerProps {
   item: Item[];
@@ -28,9 +27,6 @@ const ArtworksContainer = ({ item }: ImagesContainerProps) => {
           className="w-max-screen flex flex-col gap-4 md:h-[70vh] md:w-max"
         >
           <Link className="h-full w-full" href={`/artworks/${imgData.id}`}>
-            {!loadedImages[imgData.id] && (
-              <Skeleton className="h-[70vh] w-full md:w-[30vw]" />
-            )}
             <Image
               className={`h-[70vh] w-full object-contain object-center ${
                 loadedImages[imgData.id] ? "opacity-100" : "opacity-0"
