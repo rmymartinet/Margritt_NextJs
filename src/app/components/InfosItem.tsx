@@ -7,7 +7,7 @@ interface InfosItemProps {
 
 const InfosItem = ({ label, value, className, textColor }: InfosItemProps) => {
   return (
-    <div className={`grid grid-cols-2 gap-10 ${className} `}>
+    <div className={`grid grid-cols-2 gap-2 md:flex md:flex-col ${className} `}>
       <div className="text-lg md:text-xl">{label}</div>
       <div className={`text-base ${textColor} md:text-lg`}>{value}</div>
     </div>
