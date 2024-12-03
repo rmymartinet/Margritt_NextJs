@@ -26,7 +26,7 @@ export interface Item {
   videoUrl?: string;
   stock?: number;
   quantity?: number;
-  tempQuantity?: number;
+  tempQuantity: number;
   finalPrice?: number;
   materials?: string;
   thumbnailUrl?: string;
@@ -52,7 +52,7 @@ export interface User {
 }
 
 export interface ProductItem extends Item {
-  tempQuantity?: number;
+  tempQuantity: number;
   finalPrice?: number;
 }
 
@@ -80,4 +80,24 @@ export interface ImageCarouselProps {
   setCarouselIndex: React.Dispatch<React.SetStateAction<number>>;
   isHovering: boolean;
   setIsHovering: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface CartContextProps {
+  cart: Item[];
+  setCart: React.Dispatch<React.SetStateAction<Item[]>>;
+  isShoppingOpen: boolean;
+  setIsShoppingOpen: (isShoppingOpen: boolean) => void;
+
+  tempQuantity: number;
+
+  setTempQuantity: (tempQuantity: number) => void;
+
+  updateCartQuantity: (itemId: string, newQuantity: number) => void;
+}
+
+export interface QuantitySelectorProps {
+  quantity: number;
+  onAdd: () => void;
+  onRemove: () => void;
+  isQuantityGreaterThanStock: boolean; // Correction ici
 }
