@@ -1,6 +1,6 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import SplitType from "split-type";
 
 gsap.registerPlugin(useGSAP);
@@ -35,9 +35,12 @@ export const TextTransition = ({
   },
   children,
 }: TextTransitionProps) => {
-  const textRef = useRef(null);
+  const textRef = useRef<HTMLDivElement>(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
 
   useGSAP(() => {
+    if (hasAnimated) return;
+
     const element = textRef.current;
     if (!element) return;
 
@@ -45,8 +48,9 @@ export const TextTransition = ({
 
     gsap.from(split.lines, {
       ...animationConfig,
+      onComplete: () => setHasAnimated(true),
     });
-  }, [animationConfig]);
+  }, [animationConfig, hasAnimated]);
 
   return (
     <div ref={textRef} className={textClassName}>
