@@ -59,7 +59,7 @@ export default function Shop() {
   return (
     <div className="flex min-h-screen flex-col items-center">
       <div className="mb-20 flex flex-col items-center justify-center gap-10 lg:gap-20">
-        <h1 className="text-center text-4xl font-semibold lg:text-8xl">
+        <h1 className="text-center text-4xl font-medium lg:text-8xl">
           Prints are{" "}
           <span className="border-b-8 border-[#B9E5E8]">Available</span>
         </h1>

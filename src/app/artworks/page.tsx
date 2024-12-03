@@ -75,7 +75,7 @@ export default function Artworks() {
   return (
     <section className="min-h-screen">
       <div className="mb-20 flex flex-col items-center justify-center gap-10">
-        <div className="text-pretty text-center text-4xl font-semibold leading-tight lg:text-8xl">
+        <div className="text-pretty text-center text-4xl font-medium leading-tight lg:text-8xl">
           My vision in{" "}
           <span ref={maxSizeRef}>
             {category.charAt(0).toLocaleUpperCase() + category.slice(1)} size
