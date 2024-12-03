@@ -1,12 +1,5 @@
 "use client";
 
-import {
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-  useUser,
-} from "@clerk/nextjs";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Link from "next/link";
@@ -15,7 +8,6 @@ import { FaShoppingCart } from "react-icons/fa";
 import { IoCloseOutline } from "react-icons/io5";
 
 export default function MobileNav() {
-  const { user, isLoaded, isSignedIn } = useUser();
   const [isCLicked, setIsClicked] = useState(false);
   const menuRef = useRef(null);
   const linkContainerRef = useRef<HTMLDivElement>(null);
@@ -63,51 +55,6 @@ export default function MobileNav() {
   const handleClickCloseMenu = () => {
     setIsClicked(false);
   };
-
-  useEffect(() => {
-    if (isSignedIn && user) {
-      const registerUser = async () => {
-        try {
-          const response = await fetch("/api/users/", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email: user.primaryEmailAddress?.emailAddress,
-            }),
-          });
-          if (!response.ok) {
-            const addUser = await fetch(
-              `/api/users/${user.primaryEmailAddress?.emailAddress}`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  email: user.primaryEmailAddress?.emailAddress,
-                }),
-              },
-            );
-
-            if (addUser.ok) {
-              console.log("Utilisateur enregistré avec succès");
-            } else {
-              console.error("Erreur lors de l'enregistrement de l'utilisateur");
-            }
-          }
-        } catch (error) {
-          console.error(
-            "Erreur lors de l'enregistrement de l'utilisateur :",
-            error,
-          );
-        }
-      };
-
-      registerUser();
-    }
-  }, [isSignedIn, user]);
 
   return (
     <>
@@ -170,20 +117,11 @@ export default function MobileNav() {
           >
             Contact
           </Link>
-          {isLoaded && user?.publicMetadata.role === "admin" && (
-            <Link href="/admin">Admin</Link>
-          )}
         </div>
         <Link
           href={"/checkout"}
           className="absolute top-40 flex w-full justify-between px-10"
         >
-          <SignedOut>
-            <SignInButton />
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
           <FaShoppingCart onClick={() => handleClickCloseMenu()} size={20} />
         </Link>
       </nav>
