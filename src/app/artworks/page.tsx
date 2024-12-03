@@ -1,7 +1,7 @@
 "use client";
 
 import gsap from "gsap";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useFilteredData } from "../hooks/useFilteredData";
 import useWindowWidth from "../hooks/useWindowWidth";
 import ArtworksContainer from "./components/ArtworksContainer";
@@ -16,39 +16,45 @@ export default function Artworks() {
   const { width } = useWindowWidth();
   const [items, setItems] = useState<Item[]>([]);
 
-  const filterData = (data: Item[]) => {
-    let dataFiltered = data;
-    switch (category) {
-      case "maxi":
-        dataFiltered = data.filter((item) => item.category === "maxi");
-        break;
-      case "mini":
-        dataFiltered = data.filter((item) => item.category === "mini");
-        break;
-      default:
-        dataFiltered = data;
-    }
+  const filterData = useCallback(
+    (data: Item[]) => {
+      let dataFiltered = data;
+      switch (category) {
+        case "maxi":
+          dataFiltered = data.filter((item) => item.category === "maxi");
+          break;
+        case "mini":
+          dataFiltered = data.filter((item) => item.category === "mini");
+          break;
+        default:
+          dataFiltered = data;
+      }
 
-    switch (series) {
-      case "Bibulle":
-        dataFiltered = dataFiltered.filter((item) => item.serie === "Bibulle");
-        break;
-      case "Futurama":
-        dataFiltered = dataFiltered.filter((item) => item.serie === "Futurama");
-        break;
-      default:
-        break;
-    }
+      switch (series) {
+        case "Bibulle":
+          dataFiltered = dataFiltered.filter(
+            (item) => item.serie === "Bibulle",
+          );
+          break;
+        case "Futurama":
+          dataFiltered = dataFiltered.filter(
+            (item) => item.serie === "Futurama",
+          );
+          break;
+        default:
+          break;
+      }
 
-    setItems(dataFiltered);
-  };
+      setItems(dataFiltered);
+    },
+    [category, series],
+  );
 
   useEffect(() => {
     if (data) {
       filterData(data);
-      console.log(data);
     }
-  }, [data, category, series]);
+  }, [data, category, series, filterData]);
 
   useEffect(() => {
     if (width > 768 && category === "maxi") {
@@ -69,7 +75,7 @@ export default function Artworks() {
   return (
     <section className="min-h-screen">
       <div className="mb-20 flex flex-col items-center justify-center gap-10">
-        <div className="text-pretty text-center text-4xl leading-tight lg:text-8xl">
+        <div className="text-pretty text-center text-4xl font-semibold leading-tight lg:text-8xl">
           My vision in{" "}
           <span ref={maxSizeRef}>
             {category.charAt(0).toLocaleUpperCase() + category.slice(1)} size
