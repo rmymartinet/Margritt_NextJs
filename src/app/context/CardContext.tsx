@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { Item } from "../../types/dataTypes";
+import { CartContextProps, Item } from "../../types/dataTypes";
 
 // Fonction pour obtenir l'ID de session unique ou l'utilisateur connecté
 const getUserId = () => {
@@ -32,13 +32,6 @@ const generateUUID = () => {
   return "guest_" + Math.random().toString(36).substr(2, 9);
 };
 
-interface CartContextProps {
-  cart: Item[];
-  setCart: React.Dispatch<React.SetStateAction<Item[]>>;
-  isShoppingOpen: boolean;
-  setIsShoppingOpen: (isShoppingOpen: boolean) => void;
-}
-
 // Créer le contexte du panier
 const CartContext = createContext<CartContextProps | undefined>(undefined);
 
@@ -60,6 +53,17 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const [cart, setCart] = useState<Item[]>(getInitialCart);
   const [isShoppingOpen, setIsShoppingOpen] = useState<boolean>(false);
+  const [tempQuantity, setTempQuantity] = useState<number>(1);
+
+  const updateCartQuantity = (itemId: string, newQuantity: number) => {
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === itemId
+          ? { ...item, tempQuantity: Math.max(1, newQuantity) } // Empêche la quantité d'être inférieure à 1
+          : item,
+      ),
+    );
+  };
 
   // Sauvegarder le panier dans le bon storage selon l'utilisateur
   useEffect(() => {
@@ -76,7 +80,15 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <CartContext.Provider
-      value={{ cart, setCart, isShoppingOpen, setIsShoppingOpen }}
+      value={{
+        cart,
+        setCart,
+        isShoppingOpen,
+        setIsShoppingOpen,
+        tempQuantity,
+        setTempQuantity,
+        updateCartQuantity,
+      }}
     >
       {children}
     </CartContext.Provider>
