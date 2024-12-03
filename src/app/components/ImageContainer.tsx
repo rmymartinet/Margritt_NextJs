@@ -24,7 +24,7 @@ const ImagesContainer = ({ item }: ImagesContainerProps) => {
     >
       <div className="flex flex-col items-center gap-40">
         {item.map((imgData: Item, id: number) => (
-          <div className="flex w-full flex-col gap-10 lg:w-[85%]" key={id}>
+          <div className="flex w-full flex-col gap-10 lg:w-[70%]" key={id}>
             <Link href={`shop/${imgData.id}`}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <Image
@@ -43,7 +43,7 @@ const ImagesContainer = ({ item }: ImagesContainerProps) => {
               } md:justify-between md:gap-0`}
             >
               <div className="flex flex-col gap-6">
-                <div className="md:text-md flex flex-wrap gap-3 lg:text-lg">
+                <div className="md:text-md flex flex-wrap gap-3 font-medium lg:text-lg">
                   <p>{imgData.title}</p>
                   <span>|</span>
                   <p>{imgData.dimension}</p>
@@ -61,18 +61,8 @@ const ImagesContainer = ({ item }: ImagesContainerProps) => {
                   </div>
                 )}
               </div>
-              {item[0].category === "originals" && (
-                <Link href={`shop/${imgData.id}`}>
-                  <div className="group flex items-center gap-2 text-blue-500">
-                    <p className="cursor-pointer">Learn more</p>
-                    <div className="icon transition-all duration-200 ease-in-out group-hover:translate-x-1">
-                      <IoIosArrowForward />
-                    </div>
-                  </div>
-                </Link>
-              )}
               {item[0].category === "prints" && (
-                <div className="mt-5 flex items-center gap-6 text-blue-500 md:mt-0 md:flex-col md:items-start">
+                <div className="mt-5 flex items-center gap-6 md:mt-0 md:flex-col md:items-start">
                   <AddToCartButton
                     product={imgData}
                     finalPrice={imgData?.price ?? 0}
@@ -83,9 +73,11 @@ const ImagesContainer = ({ item }: ImagesContainerProps) => {
                   />
                   <Link href={`shop/${imgData.id}`}>
                     <div className="group flex items-center gap-2">
-                      <p className="cursor-pointer">Learn more</p>
+                      <p className="cursor-pointer font-medium text-[#7AB2D3]">
+                        Learn more
+                      </p>
                       <div className="icon transition-all duration-200 ease-in-out group-hover:translate-x-1">
-                        <IoIosArrowForward />
+                        <IoIosArrowForward color="#7AB2D3" />
                       </div>
                     </div>
                   </Link>
