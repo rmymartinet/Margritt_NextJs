@@ -145,13 +145,13 @@ export const TitleTransitionFromCenter = () => {
     <div className="flex w-full items-end justify-center overflow-hidden">
       <h1
         ref={rightTitleRef}
-        className="text-6xl font-medium uppercase leading-none md:text-9xl lg:text-[18.4vw]"
+        className="text-6xl font-medium uppercase leading-none md:text-9xl lg:text-[18vw]"
       >
         marg
       </h1>
       <h1
         ref={leftTitleRef}
-        className="text-6xl font-medium uppercase leading-none md:text-9xl lg:text-[18.4vw]"
+        className="text-6xl font-medium uppercase leading-none md:text-9xl lg:text-[18vw]"
       >
         ritt
       </h1>
