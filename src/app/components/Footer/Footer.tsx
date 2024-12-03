@@ -30,29 +30,32 @@ const Footer = () => {
     });
 
     // Animation pour inverser l'ordre des lettres
-    gsap.from(rightText.chars, {
-      delay: 0.5,
-      y: 400,
-      duration: 1,
-      ease: "power2.out",
-      stagger: { amount: 0.4, from: "end" }, // Inverse l'ordre de l'animation
-      scrollTrigger: {
-        trigger: titleContainerRef.current,
-        start: "top 50%",
-      },
-    });
+    if (rightText) {
+      gsap.from(rightText.chars, {
+        delay: 0.5,
+        y: 400,
+        duration: 1,
+        ease: "power2.out",
+        stagger: { amount: 0.4, from: "end" }, // Inverse l'ordre de l'animation
+        scrollTrigger: {
+          trigger: titleContainerRef.current,
+          start: "top 70%",
+        },
+      });
+    }
 
-    gsap.from(leftText.chars, {
-      delay: 0.5,
-      y: 400,
-      duration: 1,
-      ease: "power2.out",
-      stagger: { amount: 0.4 },
-      scrollTrigger: {
-        trigger: titleContainerRef.current,
-        start: "top 50%",
-      },
-    });
+    if (leftText) {
+      gsap.from(leftText.chars, {
+        delay: 0.5,
+        y: 400,
+        duration: 1,
+        ease: "power2.out",
+        stagger: { amount: 0.4 },
+        scrollTrigger: {
+          trigger: titleContainerRef.current,
+        },
+      });
+    }
   }, []);
 
   return (
@@ -80,16 +83,19 @@ const Footer = () => {
       {/* Information Section */}
       <div className="mb-[40vh] grid grid-rows-4 place-content-center gap-10 md:grid-cols-2 md:justify-items-center md:gap-0 lg:flex lg:justify-around lg:space-y-0 lg:text-center">
         <InfosItem
+          className="flex-col"
           label="Local Time"
           value={localTime}
           textColor="text-white"
         />
         <InfosItem
+          className="flex-col"
           label="Number"
           value={CONTACT_INFO.number}
           textColor="text-white"
         />
         <InfosItem
+          className="flex-col"
           label="Instagram"
           value={
             <Link
@@ -104,6 +110,7 @@ const Footer = () => {
           textColor="text-white"
         />
         <InfosItem
+          className="flex-col"
           label="TikTok"
           value={
             <Link
