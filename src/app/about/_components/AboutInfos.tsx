@@ -1,3 +1,4 @@
+import { TextTransition } from "@/app/components/Animations/TitleTransition";
 import { LARGE_SCREEN_SIZE } from "@/app/constants/constants";
 import useWindowWidth from "@/app/hooks/useWindowWidth";
 import { useGSAP } from "@gsap/react";
@@ -68,11 +69,13 @@ const AboutInfos = () => {
   return (
     <div className="flex flex-col gap-40">
       <div className="inline-block text-pretty text-center text-2xl md:text-start md:text-4xl lg:text-5xl">
-        <p>
-          <span className="font-semibold">Margritt Martinet</span> is a visual
-          artist from Charente, dedicated to her creations, providing a space
-          for her creativity to flourish
-        </p>
+        <TextTransition>
+          <p>
+            <span className="font-semibold">Margritt Martinet</span> is a visual
+            artist from Charente, dedicated to her creations, providing a space
+            for her creativity to flourish
+          </p>
+        </TextTransition>
       </div>
       <div className="gap-20 lg:grid lg:grid-cols-2">
         <div
