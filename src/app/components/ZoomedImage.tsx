@@ -31,7 +31,7 @@ const ZoomedImage = ({ src, onClose }: ZoomedImageProps) => {
     <>
       <div
         ref={zoomContainerRef}
-        className="absolute left-1/2 top-0 z-50 -mt-[19vh] flex h-screen w-screen -translate-x-1/2 items-center justify-center px-40"
+        className="absolute left-1/2 top-0 z-50 flex h-[90vh] w-screen -translate-x-1/2 items-center justify-center lg:-mt-[12vh] lg:px-40"
       >
         <Image
           className="h-full w-full object-contain"
