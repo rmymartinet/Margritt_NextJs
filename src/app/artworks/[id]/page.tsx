@@ -56,13 +56,13 @@ export default function GalleryItem({ params }: { params: Params }) {
       <div className="absolute left-0 top-0 z-50 flex w-full items-center justify-between">
         <div
           onClick={handleBackToPreviousPage}
-          className="grid cursor-pointer place-content-center rounded-full bg-blue-400 px-2 py-1 text-white"
+          className="grid cursor-pointer place-content-center rounded-full bg-[#7AB2D3] px-2 py-1 font-medium text-white"
         >
           Back
         </div>
         <div
           onClick={handleNextProject}
-          className="grid cursor-pointer place-content-center rounded-full bg-blue-400 px-2 py-1 text-white"
+          className="grid cursor-pointer place-content-center rounded-full bg-[#7AB2D3] px-2 py-1 font-medium text-white"
         >
           Next project
         </div>
