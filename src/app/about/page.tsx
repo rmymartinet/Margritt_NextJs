@@ -8,7 +8,7 @@ import Quote from "./_components/Quote";
 export default function About() {
   return (
     <div>
-      <Hero title="About" />
+      <Hero title1="About" title2="me" />
       <AboutInfos />
       <Quote />
       <SocialMedia />
