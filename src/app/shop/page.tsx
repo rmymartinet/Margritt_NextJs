@@ -1,7 +1,7 @@
 "use client";
 
 import { Item } from "@/types/dataTypes";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Filter from "../components/Filter/Filter";
 import ImagesContainer from "../components/ImageContainer";
 import { useFilteredData } from "../hooks/useFilteredData";
@@ -13,48 +13,55 @@ export default function Shop() {
   const { data } = useFilteredData(category);
   const [items, setItems] = useState<Item[]>([]);
 
-  const filterData = (data: Item[]) => {
-    let dataFiltered = data;
+  const filterData = useCallback(
+    (data: Item[]) => {
+      let dataFiltered = data;
 
-    // Filtrage par format
-    switch (format) {
-      case "large":
-        dataFiltered = dataFiltered.filter((item) => item.format === "large");
-        break;
-      case "medium":
-        dataFiltered = dataFiltered.filter((item) => item.format === "medium");
-        break;
-      default:
-        break;
-    }
+      switch (format) {
+        case "large":
+          dataFiltered = dataFiltered.filter((item) => item.format === "large");
+          break;
+        case "medium":
+          dataFiltered = dataFiltered.filter(
+            (item) => item.format === "medium",
+          );
+          break;
+        default:
+          break;
+      }
 
-    // Filtrage par série
-    switch (series) {
-      case "Bibulle":
-        dataFiltered = dataFiltered.filter((item) => item.serie === "Bibulle");
-        break;
-      case "Futurama":
-        dataFiltered = dataFiltered.filter((item) => item.serie === "Futurama");
-        break;
-      default:
-        break;
-    }
+      switch (series) {
+        case "Bibulle":
+          dataFiltered = dataFiltered.filter(
+            (item) => item.serie === "Bibulle",
+          );
+          break;
+        case "Futurama":
+          dataFiltered = dataFiltered.filter(
+            (item) => item.serie === "Futurama",
+          );
+          break;
+        default:
+          break;
+      }
 
-    setItems(dataFiltered);
-  };
+      setItems(dataFiltered);
+    },
+    [format, series],
+  );
 
   useEffect(() => {
     if (data) {
       filterData(data);
     }
-  }, [data, format, series]);
+  }, [data, format, series, filterData]);
 
   return (
     <div className="flex min-h-screen flex-col items-center">
       <div className="mb-20 flex flex-col items-center justify-center gap-10 lg:gap-20">
-        <h1 className="text-center text-4xl lg:text-8xl">
+        <h1 className="text-center text-4xl font-semibold lg:text-8xl">
           Prints are{" "}
-          <span className="border-b-8 border-green-400">Available</span>
+          <span className="border-b-8 border-[#B9E5E8]">Available</span>
         </h1>
         <p className="text-pretty text-center text-slate-400 md:w-[70%]">
           Prints are high-quality reproductions of my original works, perfect
