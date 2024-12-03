@@ -7,6 +7,7 @@ import useWindowWidth from "../hooks/useWindowWidth";
 import ArtworksContainer from "./components/ArtworksContainer";
 import Filter from "../components/Filter/Filter";
 import { Item } from "@/types/dataTypes";
+import { TextTransition } from "../components/Animations/TitleTransition";
 
 export default function Artworks() {
   const [category, setCategory] = useState("maxi");
@@ -81,10 +82,12 @@ export default function Artworks() {
             {category.charAt(0).toLocaleUpperCase() + category.slice(1)} size
           </span>
         </div>
-        <p className="text-center text-xl text-slate-400">
-          Discover my biggest projects more than{" "}
-          {category === "maxi" ? "2 meters" : "120 x 80 cm"}
-        </p>
+        <TextTransition>
+          <p className="text-center text-xl text-slate-400">
+            Discover my biggest projects more than{" "}
+            {category === "maxi" ? "2 meters" : "120 x 80 cm"}
+          </p>
+        </TextTransition>
       </div>
       <div>
         <Filter
