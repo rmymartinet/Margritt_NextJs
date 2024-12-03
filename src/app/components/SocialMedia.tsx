@@ -14,10 +14,55 @@ const SocialMedia = () => {
   const socialTitleRef = useRef<HTMLDivElement>(null);
   const videoInsta = "/assets/videos/instagram_scroll.mp4";
   const videoTiktok = "/assets/videos/tiktok_scroll.mp4";
+  const iphoneContainerRef = useRef<HTMLDivElement>(null);
+  const socialButtonRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     const socialChild = socialTitleRef.current?.children;
+    const iphoneContainer = iphoneContainerRef.current;
+    const socialButton = socialButtonRef.current?.children;
+    if (socialButton) {
+      gsap.from(socialButton, {
+        opacity: 0,
+        duration: 1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: socialButtonRef.current,
+          start: "top top",
+        },
+      });
+    }
 
+    if (iphoneContainer) {
+      const firstChild = iphoneContainer.firstElementChild;
+      const secondChild = iphoneContainer.children[1];
+
+      if (firstChild) {
+        gsap.from(firstChild, {
+          opacity: 0,
+          x: -100,
+          duration: 1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: iphoneContainer,
+            start: "top top",
+          },
+        });
+      }
+
+      if (secondChild) {
+        gsap.from(secondChild, {
+          opacity: 0,
+          x: 100,
+          duration: 1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: iphoneContainer,
+            start: "top top",
+          },
+        });
+      }
+    }
     if (socialChild) {
       gsap.from(socialChild, {
         skewX: 30,
@@ -49,11 +94,14 @@ const SocialMedia = () => {
           daily life
         </h1>
       </div>
-      <div className="flex gap-10 lg:gap-44">
+      <div ref={socialButtonRef} className="flex gap-10 lg:gap-44">
         <InstagramButton />
         <TiktokButton />
       </div>
-      <div className="flex flex-col gap-10 md:flex-row">
+      <div
+        ref={iphoneContainerRef}
+        className="flex flex-col gap-10 md:flex-row"
+      >
         <Iphone poster={instaPoster} videoUrl={videoInsta} />
         <Iphone poster={tiktokPoster} videoUrl={videoTiktok} />
       </div>
