@@ -80,7 +80,7 @@ const Footer = () => {
         <Divider bgColor="black" />
       </div>
       {/* Information Section */}
-      <div className="mb-[40vh] flex grid-rows-2 flex-col justify-items-center gap-10 md:grid md:grid-cols-2 lg:flex lg:justify-around lg:space-y-0 lg:px-20 lg:text-center">
+      <div className="mb-[40vh] grid grid-rows-4 gap-10 md:grid-cols-2 md:justify-items-center lg:flex lg:justify-around lg:space-y-0 lg:px-20 lg:text-center">
         <InfosItem
           className="flex-col"
           label="Local Time"
