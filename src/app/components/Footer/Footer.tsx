@@ -60,18 +60,16 @@ const Footer = () => {
       <h1 className="mb-32 text-5xl font-semibold uppercase text-white md:text-6xl lg:mb-[20vh] lg:text-9xl">
         reach me
       </h1>
-      <div className="flex flex-col-reverse items-center gap-6 text-center lg:flex-row lg:justify-between">
-        <div>
-          <div className="mt-4 lg:mt-0">
-            <Link
-              href={`mailto:${CONTACT_INFO.email}`}
-              className="mail mail-black text-2xl font-semibold md:font-normal lg:text-6xl"
-            >
-              {CONTACT_INFO.email}
-            </Link>
-          </div>
+      <div className="flex flex-col-reverse items-center justify-between gap-20 text-center md:flex-row">
+        <div className="mt-4 lg:mt-0">
+          <Link
+            href={`mailto:${CONTACT_INFO.email}`}
+            className="mail mail-black text-2xl font-semibold md:font-normal lg:text-4xl"
+          >
+            {CONTACT_INFO.email}
+          </Link>
         </div>
-        <div className="text-2xl lg:w-[30vw] lg:text-4xl">
+        <div className="self-end text-2xl lg:w-[30vw] lg:text-4xl">
           Interested in a piece from my artworks? Let me know!
         </div>
       </div>
@@ -80,7 +78,7 @@ const Footer = () => {
         <Divider bgColor="black" />
       </div>
       {/* Information Section */}
-      <div className="mb-[40vh] grid grid-rows-4 md:grid-cols-2 md:justify-items-center lg:flex lg:justify-around lg:space-y-0 lg:text-center">
+      <div className="mb-[40vh] grid grid-rows-4 place-content-center gap-10 md:grid-cols-2 md:justify-items-center md:gap-0 lg:flex lg:justify-around lg:space-y-0 lg:text-center">
         <InfosItem
           className="flex-col"
           label="Local Time"
