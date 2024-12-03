@@ -19,7 +19,7 @@ const CartSideBar = () => {
   const { cart, isShoppingOpen, setIsShoppingOpen, updateCartQuantity } =
     useCart();
 
-  const [isAnimating, setIsAnimating] = useState(false); // État pour gérer l'animation
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const handleAddQuantity = (item: Item) => {
     if (item.stock && item.tempQuantity < item.stock) {
@@ -43,7 +43,6 @@ const CartSideBar = () => {
   const shoppingContainerRef = useRef<HTMLDivElement>(null);
   const totalWithoutDelivery = cart.reduce((total, item) => {
     const itemPrice = item?.finalPrice || 0;
-    // const itemQuantity = Number(item.quantity) || 0;
     return total + itemPrice;
   }, 0);
   const totalWithDelivery = totalWithoutDelivery;
@@ -90,15 +89,16 @@ const CartSideBar = () => {
     }
   };
 
-  const [loading, setLoading] = useState<boolean>(false);
   const { data } = useFilteredData();
   const allProducts = cart.flat().map((item) => item.id);
   const compare = data.filter((item) => allProducts.includes(item.id));
   const outOfStockProduct = compare.find((item) => item.quantity === 0);
 
-  async function checkout() {
-    setLoading(true);
+  const isQuantityGreaterThanStock = (item: Item) =>
+    (cart?.find((cartItem) => cartItem?.id === item?.id)?.tempQuantity || 0) >=
+    (item?.stock || 0);
 
+  async function checkout() {
     try {
       // Vérification du stock
       if (outOfStockProduct) {
@@ -108,7 +108,6 @@ const CartSideBar = () => {
           icon: "error",
           confirmButtonText: "OK",
         });
-        setLoading(false);
         throw new Error("Stock insuffisant");
       }
 
@@ -117,7 +116,6 @@ const CartSideBar = () => {
 
       if (products.some((product) => product.price === undefined)) {
         console.error("Un ou plusieurs produits n'ont pas de prix défini.");
-        setLoading(false);
         return;
       }
 
@@ -136,7 +134,6 @@ const CartSideBar = () => {
 
       if (data?.url) {
         const url = data.url;
-        setLoading(false);
         window.location.href = url;
       }
     } catch (error) {
@@ -144,7 +141,6 @@ const CartSideBar = () => {
         "Erreur lors de la création de la session de paiement :",
         error,
       );
-      setLoading(false);
     }
   }
 
@@ -185,6 +181,7 @@ const CartSideBar = () => {
                   Remove
                 </button>
                 <QuantitySelector
+                  isQuantityGreaterThanStock={isQuantityGreaterThanStock(item)}
                   quantity={item.tempQuantity || 1}
                   onAdd={() => handleAddQuantity(item)}
                   onRemove={() => handleRemoveQuantity(item)}
@@ -226,7 +223,7 @@ const CartSideBar = () => {
             }}
             className="w-full border border-[#4A628A] bg-white py-2 text-sm uppercase transition hover:bg-[#4A628A] hover:text-white"
           >
-            {loading ? "Loading..." : "Order now"}
+            Order now
           </button>
         </div>
       </div>
