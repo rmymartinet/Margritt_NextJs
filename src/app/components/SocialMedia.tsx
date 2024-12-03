@@ -28,7 +28,7 @@ const SocialMedia = () => {
         ease: "power2.out",
         scrollTrigger: {
           trigger: socialButtonRef.current,
-          start: "top top",
+          start: "top 30%",
         },
       });
     }
@@ -45,7 +45,7 @@ const SocialMedia = () => {
           ease: "power2.out",
           scrollTrigger: {
             trigger: iphoneContainer,
-            start: "top top",
+            start: "top 30%",
           },
         });
       }
@@ -58,7 +58,7 @@ const SocialMedia = () => {
           ease: "power2.out",
           scrollTrigger: {
             trigger: iphoneContainer,
-            start: "top top",
+            start: "top 30%",
           },
         });
       }
@@ -72,7 +72,7 @@ const SocialMedia = () => {
         stagger: 0.1,
         scrollTrigger: {
           trigger: socialContainerRef.current,
-          start: "top top",
+          start: "top 30%",
         },
       });
     }
