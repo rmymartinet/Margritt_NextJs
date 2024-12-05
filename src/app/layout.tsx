@@ -47,6 +47,18 @@ export default function RootLayout({
               async
               src="https://www.googletagmanager.com/gtag/js?id=G-49TRCET0NT"
             ></Script>
+
+            <Script
+              id="disable-right-click"
+              dangerouslySetInnerHTML={{
+                __html: `
+      document.addEventListener("contextmenu", function (e) {
+        e.preventDefault();
+        alert("Le clic droit est désactivé sur ce site !");
+      });
+    `,
+              }}
+            />
             <Script id="google-analytic">
               {`
  window.dataLayer = window.dataLayer || [];
