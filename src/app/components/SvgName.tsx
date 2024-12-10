@@ -60,7 +60,7 @@ export default function SvgName({ textColor }: SvgNameProps) {
   return (
     <svg
       ref={svgRef}
-      width="110%"
+      width="112%"
       height="100%"
       viewBox="0 0 1558.5 217.204"
       xmlns="http://www.w3.org/2000/svg"
