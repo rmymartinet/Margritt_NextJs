@@ -47,7 +47,6 @@ export default function RootLayout({
               async
               src="https://www.googletagmanager.com/gtag/js?id=G-49TRCET0NT"
             ></Script>
-
             <Script
               id="disable-right-click"
               dangerouslySetInnerHTML={{
