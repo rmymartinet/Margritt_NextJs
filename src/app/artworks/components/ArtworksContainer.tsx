@@ -28,7 +28,7 @@ const ArtworksContainer = ({ item }: ImagesContainerProps) => {
         >
           <Link className="h-full w-full" href={`/artworks/${imgData.id}`}>
             <Image
-              className={`h-[70vh] w-full object-contain object-center ${
+              className={`h-[70vh] w-[70vw] object-cover object-center ${
                 loadedImages[imgData.id] ? "opacity-100" : "opacity-0"
               }`}
               width={5000}
