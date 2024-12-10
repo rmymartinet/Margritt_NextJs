@@ -83,10 +83,17 @@ export default function Artworks() {
           </span>
         </div>
         <TextTransition>
-          <p className="text-center text-xl text-slate-400">
-            Discover my biggest projects more than{" "}
-            {category === "maxi" ? "2 meters" : "120 x 80 cm"}
-          </p>
+          {category === "maxi" ? (
+            <p className="text-center text-xl text-slate-400">
+              Discover my biggest projects more than{" "}
+              <span className="font-medium text-[#4A628A]">2 meters</span>
+            </p>
+          ) : (
+            <p className="text-center text-xl text-slate-400">
+              Discover my biggest projects more than{" "}
+              <span className="font-medium text-[#4A628A]">120 x 90 cm</span>
+            </p>
+          )}
         </TextTransition>
       </div>
       <div>
