@@ -16,9 +16,10 @@ export async function GET(request: NextRequest) {
     if (session.payment_status === "paid") {
       return NextResponse.json({ success: true, message: "Paiement réussi" });
     } else {
-      return res
-        .status(200)
-        .json({ success: false, error: "Payment not completed" });
+      return NextResponse.json(
+        { success: false, error: "Payment not completed" },
+        { status: 200 },
+      );
     }
   } catch (err) {
     console.error("Erreur lors de la récupération de la session:", err);
