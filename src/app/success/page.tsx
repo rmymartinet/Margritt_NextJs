@@ -20,21 +20,28 @@ const PaymentSuccess = () => {
 
   useEffect(() => {
     if (sessionId) {
-      fetch(`/api/verify-payment/${sessionId}`)
-        .then((response) => response.json())
+      console.log("Fetching payment status for session ID:", sessionId); // Ajoutez ce log
+      fetch(`/api/payment-status?session_id=${sessionId}`)
+        .then((response) => {
+          console.log("Response from API:", response); // Ajoutez ce log
+          return response.json();
+        })
         .then((data) => {
+          console.log("Data from API:", data); // Ajoutez ce log
           if (data.success) {
+            console.log("Payment verified successfully"); // Ajoutez ce log
             setPaymentVerified(true);
             setCart([]);
           } else {
+            console.log("Payment verification failed:", data.error); // Ajoutez ce log
             setPaymentVerified(false);
             setError(data.error || "Payment verification failed.");
           }
         })
         .catch((error) => {
-          console.error("Error during payment verification:", error);
+          console.error("Error during payment status fetch:", error); // Ajoutez ce log
           setPaymentVerified(false);
-          setError("An error occurred during payment verification.");
+          setError("An error occurred while fetching payment status.");
         });
     }
   }, [sessionId, setCart]);
