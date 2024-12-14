@@ -223,7 +223,7 @@ const CartSideBar = () => {
             }}
             className="w-full border border-[#4A628A] bg-white py-2 text-sm uppercase transition hover:bg-[#4A628A] hover:text-white"
           >
-            Order now
+            Pay now
           </button>
         </div>
       </div>
