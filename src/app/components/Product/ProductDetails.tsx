@@ -206,6 +206,7 @@ const ProductDetails = ({
                 </div>
               </div>
               <QuantitySelector
+                productStock={product?.stock ?? 0}
                 quantity={tempQuantity}
                 onAdd={handleAddQuantity}
                 onRemove={handleRemoveQuantity}
