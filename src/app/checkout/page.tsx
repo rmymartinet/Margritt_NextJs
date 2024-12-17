@@ -19,12 +19,12 @@ export default function Checkout() {
   const compare = data.filter((item) => allProducts.includes(item.id));
   const outOfStockProduct = compare.find((item) => item.quantity === 0);
 
-  // Calculer le montant total basé sur le panier sans ajouter les frais de livraison ici
   useEffect(() => {
     const total = cart.reduce((total, item) => {
       const itemPrice = item?.finalPrice || 0;
+      const itemQuantity = item.tempQuantity || 0;
       // const itemQuantity = Number(item.quantity) || 0;
-      return total + itemPrice;
+      return total + itemPrice * itemQuantity;
     }, 0);
 
     setTotalAmount(Number(total.toFixed(2)));
@@ -103,6 +103,12 @@ export default function Checkout() {
   const isQuantityGreaterThanStock = (item: Item) =>
     (cart?.find((cartItem) => cartItem?.id === item?.id)?.tempQuantity || 0) >=
     (item?.stock || 0);
+
+  const productStock = (item: Item) => {
+    const cartItem = cart.find((cartItem) => cartItem?.id === item?.id);
+    return cartItem?.stock || 0;
+  };
+
   return (
     <section className="fixed left-0 -z-10 flex h-[85vh] w-full lg:top-0 lg:h-[60vh]">
       <div className="flex h-full w-full flex-col items-center justify-end overflow-hidden">
@@ -130,6 +136,7 @@ export default function Checkout() {
                     </p>
                     <p>Quantity: {item.tempQuantity}</p>
                     <QuantitySelector
+                      productStock={productStock(item)}
                       isQuantityGreaterThanStock={isQuantityGreaterThanStock(
                         item,
                       )}
@@ -142,7 +149,7 @@ export default function Checkout() {
                     onClick={() => removeItemFromCart(item.id)}
                     className="mb-2 cursor-pointer text-sm text-red-500"
                   >
-                    Supprimer
+                    Remove
                   </button>
                 </div>
               ))}
@@ -155,12 +162,17 @@ export default function Checkout() {
         </div>
         <div className="sticky bottom-0 flex w-full items-center justify-end gap-8 border border-black bg-white px-2">
           <div className="flex flex-col gap-4">
-            <p>Delivery: Free</p>
-            <span>Total: {totalAmount},00 €</span>
+            <div className="flex gap-2">
+              <p className="font-semibold"> Delivery:</p> <span>Free</span>
+            </div>
+            <div className="flex gap-2">
+              <p className="font-semibold"> Total: </p>{" "}
+              <span>{totalAmount},00 €</span>
+            </div>
           </div>
           <button
             onClick={checkout}
-            className={`cursor-pointer bg-black px-4 py-3 text-white ${
+            className={`ml-10 cursor-pointer bg-black px-4 py-3 text-white ${
               cart.length === 0 ? "cursor-not-allowed opacity-50" : ""
             }`}
             disabled={loading || cart.length === 0}

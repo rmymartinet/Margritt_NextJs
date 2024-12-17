@@ -32,7 +32,6 @@ const ProductDetails = ({
   const router = useRouter();
   const { data } = useFilteredData();
   const { cart, setIsShoppingOpen } = useCart();
-  const addToCart = useAddToCart();
   const finalPrice = tempQuantity * (product?.price || 0);
   const priceRef = useRef(null);
   const stockRef = useRef(null);
@@ -257,7 +256,6 @@ const ProductDetails = ({
                 finalPrice={finalPrice}
                 tempQuantity={tempQuantity}
                 setIsShoppingOpen={setIsShoppingOpen}
-                addToCart={addToCart}
                 setTempQuantity={setTempQuantity}
               />
             </div>
