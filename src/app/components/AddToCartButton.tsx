@@ -2,13 +2,13 @@
 import React from "react";
 import Swal from "sweetalert2";
 import { ProductItem } from "../../types/dataTypes";
+import { useAddToCart } from "../hooks/useAddToCart";
 
 interface AddToCartButtonProps {
   product: ProductItem;
   finalPrice: number;
   tempQuantity: number;
   setIsShoppingOpen: (isOpen: boolean) => void;
-  addToCart: (product: ProductItem) => void;
   setTempQuantity: (quantity: number) => void;
 }
 
@@ -17,9 +17,10 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   finalPrice,
   tempQuantity,
   setIsShoppingOpen,
-  addToCart,
   setTempQuantity,
 }) => {
+  const addToCart = useAddToCart();
+
   const handleClick = () => {
     setIsShoppingOpen(true);
     if (product?.stock === 0) {
