@@ -6,8 +6,6 @@ export function useFilteredData(filter?: string) {
   const [data, setData] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
-  console.log(data);
-
   useEffect(() => {
     async function fetchData() {
       try {
