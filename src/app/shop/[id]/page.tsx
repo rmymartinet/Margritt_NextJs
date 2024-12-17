@@ -9,8 +9,8 @@ import ProductDetails from "@/app/components/Product/ProductDetails";
 import CustomCursor from "@/app/components/CustomCursor";
 import ZoomedImage from "@/app/components/ZoomedImage";
 import { useZoom } from "@/app/context/ZoomProvider";
-import useHover from "../../../hooks/Hover";
 import ImageCarousel from "@/app/components/ImagesCarousel";
+import useHover from "@/app/hooks/Hover";
 
 interface OriginalItemProps {
   params: {
