@@ -20,10 +20,11 @@ async function updateStockAndRecordPurchase(
     const quantity = quantities[i];
 
     if (typeof quantity !== "number" || quantity <= 0) {
-      console.log(`Invalid quantity for product ${productId}: ${quantity}`);
+      if (process.env.NODE_ENV === "development") {
+        console.log(`Invalid quantity for product ${productId}: ${quantity}`);
+      }
       continue; // Ignore les quantités invalides
     }
-
     try {
       // Mettre à jour le stock
       await prisma.prints.update({
@@ -143,7 +144,6 @@ export async function POST(req: Request) {
             });
           }
         }
-
         break;
 
       default:
