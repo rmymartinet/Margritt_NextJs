@@ -1,7 +1,6 @@
 "use client";
 
 import { useCart } from "@/app/context/CardContext";
-import { useAddToCart } from "@/app/hooks/useAddToCart";
 import { useFilteredData } from "@/app/hooks/useFilteredData";
 import { ProductItem } from "@/types/dataTypes";
 import gsap from "gsap";
