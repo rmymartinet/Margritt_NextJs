@@ -98,6 +98,7 @@ export interface CartContextProps {
 }
 
 export interface QuantitySelectorProps {
+  productStock: number;
   quantity: number;
   onAdd: () => void;
   onRemove: () => void;
