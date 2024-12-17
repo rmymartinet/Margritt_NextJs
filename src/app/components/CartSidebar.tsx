@@ -41,12 +41,14 @@ const CartSideBar = () => {
 
   const removeFromCart = useRemoveFromCart();
   const shoppingContainerRef = useRef<HTMLDivElement>(null);
-  const totalWithoutDelivery = cart.reduce((total, item) => {
-    const itemPrice = item?.finalPrice || 0;
-    return total + itemPrice;
-  }, 0);
-  const totalWithDelivery = totalWithoutDelivery;
-  const formattedTotalWithDelivery = totalWithDelivery.toFixed(2);
+  const formattedTotalWithDelivery = cart
+    .reduce((total, item) => {
+      const itemPrice = Number(item?.finalPrice) || 0; // Prend le prix de l'article ou 0 si le prix est invalide
+      const itemQuantity = item.tempQuantity || 0; // Prend la quantité de l'article ou 0 si la quantité est invalide
+
+      return total + itemPrice * itemQuantity; // Ajoute le prix total de l'article (prix * quantité) au total
+    }, 0)
+    .toFixed(2); // Commence avec un total de 0 et arrondit à deux décimales
 
   useGSAP(() => {
     const element = shoppingContainerRef.current;
@@ -97,6 +99,11 @@ const CartSideBar = () => {
   const isQuantityGreaterThanStock = (item: Item) =>
     (cart?.find((cartItem) => cartItem?.id === item?.id)?.tempQuantity || 0) >=
     (item?.stock || 0);
+
+  const productStock = (item: Item) => {
+    const cartItem = cart.find((cartItem) => cartItem?.id === item?.id);
+    return cartItem?.stock || 0;
+  };
 
   async function checkout() {
     try {
@@ -181,6 +188,7 @@ const CartSideBar = () => {
                   Remove
                 </button>
                 <QuantitySelector
+                  productStock={productStock(item)}
                   isQuantityGreaterThanStock={isQuantityGreaterThanStock(item)}
                   quantity={item.tempQuantity || 1}
                   onAdd={() => handleAddQuantity(item)}
@@ -196,9 +204,6 @@ const CartSideBar = () => {
         )}
       </div>
       <div className="fixed bottom-0 z-10 w-full border-t border-gray-200 bg-white p-5">
-        <div className="mb-2 flex justify-between">
-          <p>ORDER VALUE</p>
-        </div>
         <div className="mb-2 flex justify-between">
           <p>DELIVERY</p>
           <p>Free</p>
