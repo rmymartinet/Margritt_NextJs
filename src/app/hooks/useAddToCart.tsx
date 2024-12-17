@@ -10,21 +10,20 @@ export const useAddToCart = () => {
     if (isExistingProduct >= 0) {
       const existingProduct = cart[isExistingProduct];
 
-      const existingTempQuantity = existingProduct?.tempQuantity ?? 0;
-      const productTempQuantity = product?.tempQuantity ?? 0;
+      const existingQuantity = existingProduct?.quantity ?? 0;
+      const productQuantity = product?.quantity ?? 0;
       const productStock = product?.stock ?? 0;
       const existingFinalPrice = existingProduct?.finalPrice ?? 0;
       const productFinalPrice = product?.finalPrice ?? 0;
 
-      if (existingTempQuantity + productTempQuantity <= productStock) {
-        existingProduct.tempQuantity =
-          existingTempQuantity + productTempQuantity;
+      if (existingQuantity + productQuantity <= productStock) {
+        existingProduct.quantity = existingQuantity + productQuantity;
         existingProduct.finalPrice = existingFinalPrice + productFinalPrice;
       }
     } else {
       const newProduct = {
         ...product,
-        tempQuantity: product?.tempQuantity ?? 1,
+        quantity: product?.quantity ?? 1,
         finalPrice: product?.finalPrice ?? 0,
       };
       cart.push(newProduct);
