@@ -3,7 +3,6 @@ import { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import { Item } from "../../types/dataTypes";
 import { useCart } from "../context/CardContext";
-import { useAddToCart } from "../hooks/useAddToCart";
 import AddToCartButton from "./AddToCartButton";
 import Image from "next/image";
 interface ImagesContainerProps {
@@ -16,7 +15,6 @@ interface ImagesContainerProps {
 const ImagesContainer = ({ item }: ImagesContainerProps) => {
   const [tempQuantity, setTempQuantity] = useState(1);
   const { isShoppingOpen, setIsShoppingOpen } = useCart();
-  const addToCart = useAddToCart();
 
   return (
     <section
@@ -68,7 +66,6 @@ const ImagesContainer = ({ item }: ImagesContainerProps) => {
                     finalPrice={imgData?.price ?? 0}
                     tempQuantity={tempQuantity}
                     setIsShoppingOpen={setIsShoppingOpen}
-                    addToCart={addToCart}
                     setTempQuantity={setTempQuantity}
                   />
                   <Link href={`shop/${imgData.id}`}>

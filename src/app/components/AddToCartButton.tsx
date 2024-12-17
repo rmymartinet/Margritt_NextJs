@@ -5,6 +5,8 @@ import { ProductItem } from "../../types/dataTypes";
 import { useAddToCart } from "../hooks/useAddToCart";
 
 interface AddToCartButtonProps {
+
+  
   product: ProductItem;
   finalPrice: number;
   tempQuantity: number;
