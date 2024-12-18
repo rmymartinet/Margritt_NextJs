@@ -69,11 +69,7 @@ export const POST = async (req: Request) => {
       data = await prisma.prints.create({
         data: item,
       });
-    } else if (item.category === "artworks") {
-      data = await prisma.artworks.create({
-        data: item,
-      });
-    } else if (item.category === "project") {
+    } else if (item.subCategory === "maxi" || item.subCategory === "mini") {
       data = await prisma.artworks.create({
         data: item,
       });
