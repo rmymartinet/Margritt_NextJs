@@ -14,7 +14,10 @@ export function useFilteredData(filter?: string) {
         let filteredData = response.data;
         if (filter) {
           filteredData = response.data.filter(
-            (item) => item.category === filter || item.id === filter,
+            (item) =>
+              item.category === filter ||
+              item.id === filter ||
+              item.subCategory === filter,
           );
         }
         setData(filteredData);
