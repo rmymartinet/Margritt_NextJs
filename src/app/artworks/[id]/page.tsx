@@ -75,7 +75,7 @@ export default function GalleryItem({ params }: { params: Params }) {
             width={5000}
             height={5000}
             className={`max-h-[80vh] w-full object-contain ${isImageLoaded ? "opacity-100" : "opacity-0"}`}
-            src={datas?.imageUrls[0]}
+            src={datas?.thumbnailUrl || datas?.imageUrls[0]}
             alt=""
             onLoadingComplete={handleImageLoad}
           />
