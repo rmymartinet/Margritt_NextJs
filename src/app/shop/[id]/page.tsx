@@ -112,7 +112,7 @@ export default function OriginalItem({ params }: OriginalItemProps) {
                 <div ref={mainImgRef} className="opacity-1">
                   <Image
                     className="h-full w-full object-contain"
-                    src={product.imageUrls[0] || ""}
+                    src={product.thumbnailUrl || ""}
                     alt={product.title || ""}
                     width={5000}
                     height={5000}
