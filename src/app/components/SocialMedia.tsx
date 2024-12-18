@@ -12,7 +12,7 @@ const SocialMedia = () => {
   const tiktokPoster = "/assets/tiktok_poster.png";
   const socialContainerRef = useRef<HTMLDivElement>(null);
   const socialTitleRef = useRef<HTMLDivElement>(null);
-  const videoInsta = "/assets/videos/instagram_scroll.mp4";
+  const videoInsta = "/assets/videos/instagram_scroll.mov";
   const videoTiktok = "/assets/videos/tiktok_scroll.mp4";
   const iphoneContainerRef = useRef<HTMLDivElement>(null);
   const socialButtonRef = useRef<HTMLDivElement>(null);
