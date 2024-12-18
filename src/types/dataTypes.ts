@@ -1,4 +1,4 @@
-import { FILTERS } from "@/utils/constant";
+import { FILTERS } from "../utils/constant";
 
 export interface Gallery {
   id: string;
@@ -13,6 +13,7 @@ export interface Gallery {
 export interface Item {
   id: string;
   category?: string;
+  subCategory?: string;
   title: string;
   text?: string;
   serie?: string;
@@ -103,4 +104,29 @@ export interface QuantitySelectorProps {
   onAdd: () => void;
   onRemove: () => void;
   isQuantityGreaterThanStock: boolean;
+}
+
+export interface ImagesContainerProps {
+  item: Item[];
+  isCursorPointer?: boolean;
+  isOriginal?: boolean;
+  isTirage?: boolean;
+}
+
+export interface NewItem {
+  category?: string;
+  subCategory?: string;
+  title: string;
+  dimension: string;
+  date: string;
+  format: string;
+  imageUrls: string[];
+  serie?: string;
+  piece?: string;
+  paper?: string;
+  price?: number;
+  stock?: number;
+  text?: string;
+  videoUrl?: string;
+  thumbnailUrl: string;
 }

@@ -1,4 +1,4 @@
-import { FILTERS } from "@/utils/constant";
+import { FILTERS } from "../src/utils/constant";
 
 export interface Gallery {
   id: string;

@@ -1,37 +1,62 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { IoIosArrowForward } from "react-icons/io";
-import { Item } from "../../types/dataTypes";
+import { ImagesContainerProps, Item } from "../../types/dataTypes";
 import { useCart } from "../context/CardContext";
 import AddToCartButton from "./AddToCartButton";
 import Image from "next/image";
-interface ImagesContainerProps {
-  item: Item[];
-  isCursorPointer?: boolean;
-  isOriginal?: boolean;
-  isTirage?: boolean;
-}
 
 const ImagesContainer = ({ item }: ImagesContainerProps) => {
   const [tempQuantity, setTempQuantity] = useState(1);
   const { isShoppingOpen, setIsShoppingOpen } = useCart();
+  const [orientations, setOrientations] = useState<{ [key: number]: boolean }>(
+    {},
+  );
+  const imageRefs = useRef<Array<HTMLImageElement | null>>([]);
+
+  // Vérifie l'orientation des images après leur chargement
+  useEffect(() => {
+    item.forEach((_, index) => {
+      const img = imageRefs.current[index];
+      if (img) {
+        const width = img.naturalWidth;
+        const height = img.naturalHeight;
+        setOrientations((prev) => ({
+          ...prev,
+          [index]: height > width, // true si portrait, false si paysage
+        }));
+      }
+    });
+  }, [item]);
 
   return (
     <section
-      className={`flex min-h-screen justify-center ${isShoppingOpen ? "opacity-60" : "opacity-100"}`}
+      className={`flex min-h-screen justify-center ${
+        isShoppingOpen ? "opacity-60" : "opacity-100"
+      }`}
     >
       <div className="flex flex-col items-center gap-40">
         {item.map((imgData: Item, id: number) => (
-          <div className="flex w-full flex-col gap-10 lg:w-[70%]" key={id}>
+          <div className="flex w-full flex-col gap-10" key={id}>
             <Link href={`shop/${imgData.id}`}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <Image
-                src={imgData.imageUrls[0]}
-                alt="Image"
-                className="h-full w-full cursor-pointer object-contain"
-                width={5000}
-                height={5000}
-              />
+              <div
+                className={`relative ${
+                  orientations[id]
+                    ? "h-[70vh] w-screen lg:h-[100vh] lg:w-[70vw]"
+                    : "h-[30vh] w-screen lg:h-[80vh] lg:w-[70vw]"
+                } overflow-hidden`}
+              >
+                <Image
+                  ref={(el) => {
+                    imageRefs.current[id] = el;
+                  }}
+                  src={imgData.thumbnailUrl ?? ""}
+                  alt="Image"
+                  className="h-full w-full cursor-pointer object-contain"
+                  layout="fill"
+                  objectFit="contain"
+                />
+              </div>
             </Link>
             <div
               className={`flex flex-col items-center md:flex-row md:px-10 ${
