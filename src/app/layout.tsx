@@ -13,6 +13,7 @@ import { CartProvider } from "./context/CardContext";
 import useWindowWidth from "./hooks/useWindowWidth";
 import { ZoomProvider } from "./context/ZoomProvider";
 import Footer from "./components/Footer/Footer";
+import { ClerkProvider } from "@clerk/nextjs";
 
 export default function RootLayout({
   children,
@@ -47,7 +48,7 @@ export default function RootLayout({
               async
               src="https://www.googletagmanager.com/gtag/js?id=G-49TRCET0NT"
             ></Script>
-            <Script
+            {/* <Script
               id="disable-right-click"
               dangerouslySetInnerHTML={{
                 __html: `
@@ -57,7 +58,7 @@ export default function RootLayout({
       });
     `,
               }}
-            />
+            /> */}
             <Script id="google-analytic">
               {`
  window.dataLayer = window.dataLayer || [];
@@ -70,28 +71,30 @@ export default function RootLayout({
           <body
             className={`relative antialiased ${!isShopPageId ? "px-2 md:px-4" : ""}`}
           >
-            <motion.div>
-              {isMounted &&
-              pathname !== "/success" &&
-              pathname !== "/cancel" ? (
-                width <= 1024 ? (
-                  <MobileNav />
-                ) : (
-                  <Nav />
-                )
-              ) : null}
-              <CartProvider>
-                <Transition>{children}</Transition>
-                {isMounted && <CartSideBar />}
-              </CartProvider>
-              {!isShopPageId &&
-                pathname !== "/contact" &&
-                pathname !== "/checkout" &&
+            <ClerkProvider>
+              <motion.div>
+                {isMounted &&
                 pathname !== "/success" &&
-                pathname !== "/cancel" &&
-                pathname !== "/admin" &&
-                pathname !== "/404" && <Footer />}
-            </motion.div>
+                pathname !== "/cancel" ? (
+                  width <= 1024 ? (
+                    <MobileNav />
+                  ) : (
+                    <Nav />
+                  )
+                ) : null}
+                <CartProvider>
+                  <Transition>{children}</Transition>
+                  {isMounted && <CartSideBar />}
+                </CartProvider>
+                {!isShopPageId &&
+                  pathname !== "/contact" &&
+                  pathname !== "/checkout" &&
+                  pathname !== "/success" &&
+                  pathname !== "/cancel" &&
+                  pathname !== "/admin" &&
+                  pathname !== "/404" && <Footer />}
+              </motion.div>
+            </ClerkProvider>
           </body>
         </html>
       </ZoomProvider>
