@@ -10,8 +10,10 @@ import { Item } from "@/types/dataTypes";
 import { TextTransition } from "../components/Animations/TitleTransition";
 
 export default function Artworks() {
-  const [category, setCategory] = useState("maxi");
-  const { data } = useFilteredData(category);
+  const [subCategory, setSubCategory] = useState("maxi");
+  const { data } = useFilteredData(subCategory);
+
+  console.log(data);
   const [series, setSeries] = useState("all");
   const maxSizeRef = useRef(null);
   const { width } = useWindowWidth();
@@ -20,12 +22,12 @@ export default function Artworks() {
   const filterData = useCallback(
     (data: Item[]) => {
       let dataFiltered = data;
-      switch (category) {
+      switch (subCategory) {
         case "maxi":
-          dataFiltered = data.filter((item) => item.category === "maxi");
+          dataFiltered = data.filter((item) => item.subCategory === "maxi");
           break;
         case "mini":
-          dataFiltered = data.filter((item) => item.category === "mini");
+          dataFiltered = data.filter((item) => item.subCategory === "mini");
           break;
         default:
           dataFiltered = data;
@@ -48,17 +50,17 @@ export default function Artworks() {
 
       setItems(dataFiltered);
     },
-    [category, series],
+    [subCategory, series],
   );
 
   useEffect(() => {
     if (data) {
       filterData(data);
     }
-  }, [data, category, series, filterData]);
+  }, [data, subCategory, series, filterData]);
 
   useEffect(() => {
-    if (width > 768 && category === "maxi") {
+    if (width > 768 && subCategory === "maxi") {
       gsap.to(maxSizeRef.current, {
         fontSize: "8rem",
         duration: 1.5,
@@ -71,7 +73,7 @@ export default function Artworks() {
         ease: "power3.inOut",
       });
     }
-  }, [width, category]);
+  }, [width, subCategory]);
 
   return (
     <section className="min-h-screen">
@@ -79,11 +81,12 @@ export default function Artworks() {
         <div className="text-pretty text-center text-4xl font-medium leading-tight lg:text-8xl">
           My vision in{" "}
           <span ref={maxSizeRef}>
-            {category.charAt(0).toLocaleUpperCase() + category.slice(1)} size
+            {subCategory.charAt(0).toLocaleUpperCase() + subCategory.slice(1)}{" "}
+            size
           </span>
         </div>
         <TextTransition>
-          {category === "maxi" ? (
+          {subCategory === "maxi" ? (
             <p className="text-center text-xl text-slate-400">
               Discover my biggest projects more than{" "}
               <span className="font-medium text-[#4A628A]">2 meters</span>
@@ -99,8 +102,8 @@ export default function Artworks() {
       <div>
         <Filter
           categories={["maxi", "mini"]}
-          setCategory={setCategory}
-          categoryState={category}
+          setCategory={setSubCategory}
+          categoryState={subCategory}
           series={["all", "Bibulle", "Futurama"]}
           setSeries={setSeries}
           seriesState={series}
