@@ -1,5 +1,5 @@
 import { FilterType } from "@/types/dataTypes";
-import { FILTERS } from "@/utils/constant";
+import { FILTERS } from "../../../utils/constant";
 import FilterButton from "./FilterButton";
 
 type FilterProps = {
@@ -9,7 +9,7 @@ type FilterProps = {
 
 const Filter = ({ setFilter, currentFilter }: FilterProps) => {
   return (
-    <div className="flex gap-10 text-xl">
+    <div className="flex gap-10 self-center text-xl">
       <FilterButton
         label="Ajouter"
         filter={FILTERS.AJOUTER}
@@ -22,12 +22,12 @@ const Filter = ({ setFilter, currentFilter }: FilterProps) => {
         currentFilter={currentFilter}
         setFilter={setFilter}
       />
-      <FilterButton
+      {/* <FilterButton
         label="Mettre à jour"
         filter={FILTERS.MAJ}
         currentFilter={currentFilter}
         setFilter={setFilter}
-      />
+      /> */}
     </div>
   );
 };
